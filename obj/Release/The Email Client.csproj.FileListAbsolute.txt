@@ -1,0 +1,13 @@
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\bin\Release\The Email Client.exe.config
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\bin\Release\The Email Client.exe
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\bin\Release\The Email Client.pdb
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\MainWindow.g.cs
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\App.g.cs
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The Email Client_MarkupCompile.cache
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The Email Client_MarkupCompile.lref
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\MainWindow.baml
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The Email Client.g.resources
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The_Email_Client.Properties.Resources.resources
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The Email Client.csproj.GenerateResource.Cache
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The Email Client.exe
+C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\The Email Client.pdb
