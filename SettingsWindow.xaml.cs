@@ -78,14 +78,34 @@ namespace The_Email_Client
         }
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
+            bool defaultvalues = true;
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            try
+            {  
+                cnctDTB.Open();
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{Common.Email}'", cnctDTB);
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (reader[2].ToString() != UserNameBox.Text || reader[3].ToString() != PortBox.Text
+                        || reader[4].ToString() != ServerBox.Text) defaultvalues = false;
+                }
+            }
+            catch (Exception err)
+            {
+                System.Windows.MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                cnctDTB.Close();
+            }
 
-
-            if (Title != "Settings Window - Unsaved")
+            if (!defaultvalues)
             {
                 Title = "Settings Window - Unsaved";
-
-                SaveButton.IsEnabled = true; ;
+                SaveButton.IsEnabled = true;
             }
+            else Title = "Settings Window";
         }
         
         protected bool visible = false;
