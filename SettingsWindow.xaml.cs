@@ -81,7 +81,7 @@ namespace The_Email_Client
             bool defaultvalues = true;
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
-            {  
+            {
                 cnctDTB.Open();
                 OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{Common.Email}'", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
@@ -105,11 +105,12 @@ namespace The_Email_Client
                 Title = "Settings Window - Unsaved";
                 SaveButton.IsEnabled = true;
             }
-            else Title = "Settings Window";
+            else
+            {
+                Title = "Settings Window";
+                SaveButton.IsEnabled = false;
+            }
         }
-        
-        protected bool visible = false;
-        
     }
     public class Settings 
     {
