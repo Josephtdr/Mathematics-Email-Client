@@ -33,6 +33,9 @@ namespace The_Email_Client
             this.ShowEmailPage = ShowEmailPage;
             InitializeComponent();
             DataContext = this;
+            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
+                { if (EmailExists()) if (passcorrect(Email)) ShowEmailPage?.Invoke(); }
+            };
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
