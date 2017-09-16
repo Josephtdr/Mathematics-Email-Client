@@ -23,9 +23,9 @@ namespace The_Email_Client
     {
         public static string Email { get; set; }
 
-        public static string Cleanstr(string unregexed)
+        public static string Cleanstr(object unregexed)
         {
-            return Regex.Replace(unregexed, "<.*?>", String.Empty);
+            return Regex.Replace(unregexed.ToString(), "<.*?>", String.Empty);
         }
 
         public static bool inccorectemailformat(string email)

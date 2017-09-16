@@ -58,7 +58,7 @@ namespace The_Email_Client
                 OleDbCommand cmd = new OleDbCommand("SELECT * FROM Profiles", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read()) if (Email == Common.Cleanstr((string)reader[1])) {
+                while (reader.Read()) if (Email == Common.Cleanstr(reader[1])) {
                         MessageBox.Show("Email Already Exists!", "Error!");
                         return false; }             
             }
@@ -96,7 +96,7 @@ namespace The_Email_Client
 
                 cmd.CommandText = $"SELECT * FROM Passwords WHERE Password ='{Passwordbox.Password}';";
                 OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) PassID = Convert.ToInt16(Common.Cleanstr(reader[0].ToString()));
+                while (reader.Read()) PassID = Convert.ToInt16(Common.Cleanstr(reader[0]));
 
                 cnctDTB.Close();
                 cnctDTB.Open();

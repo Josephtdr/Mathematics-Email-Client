@@ -61,15 +61,15 @@ namespace The_Email_Client
                     includecontact = true;
                     foreach (var contact in preexistingcontacts)
                     {
-                        if (contact.EmailAddress == Common.Cleanstr((string)reader[2]))
+                        if (contact.EmailAddress == Common.Cleanstr(reader[2]))
                         {
                             includecontact = false;
                         }
                     }
                     if (includecontact)
                     {
-                        contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr((string)reader[1]), EmailAddress = Common.Cleanstr((string)reader[2]) });
-                        emaillist.Add(Common.Cleanstr((string)reader[2]));
+                        contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
+                        emaillist.Add(Common.Cleanstr(reader[2]));
                     }
                 }
             }

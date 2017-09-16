@@ -109,7 +109,7 @@ namespace The_Email_Client
 
                 while (reader.Read())
                 {
-                    temppass = Common.Cleanstr(reader[0].ToString());
+                    temppass = Common.Cleanstr(reader[0]);
                 }
             }
             catch (Exception err)

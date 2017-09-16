@@ -58,8 +58,8 @@ namespace The_Email_Client
 
                 while (reader.Read())
                 {
-                    if (Email == Common.Cleanstr((string)reader[1])) {
-                        passID = Convert.ToInt16(Common.Cleanstr(reader[5].ToString()));
+                    if (Email == Common.Cleanstr(reader[1])) {
+                        passID = Convert.ToInt16(Common.Cleanstr(reader[5]));
                         return true; } 
                 }
             }
@@ -87,7 +87,7 @@ namespace The_Email_Client
 
                 while (reader.Read())
                 {
-                    if (Common.Cleanstr(reader[0].ToString()) == Passwordbox.Password) return true;
+                    if (Common.Cleanstr(reader[0]) == Passwordbox.Password) return true;
                 }
             }
             catch (Exception err)

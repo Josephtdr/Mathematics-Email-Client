@@ -168,11 +168,11 @@ namespace The_Email_Client
                 {
                     newsettings = new Settings
                     {
-                        Email = Common.Cleanstr((string)reader[1]),
-                        PasswordID = Common.Cleanstr(reader[5].ToString()),
-                        Name = Common.Cleanstr((string)reader[2]),
-                        Port = Common.Cleanstr(reader[3].ToString()),
-                        Server = Common.Cleanstr((string)reader[4])
+                        Email = Common.Cleanstr(reader[1]),
+                        PasswordID = Common.Cleanstr(reader[5]),
+                        Name = Common.Cleanstr(reader[2]),
+                        Port = Common.Cleanstr(reader[3]),
+                        Server = Common.Cleanstr(reader[4])
                     };
                 }
             }

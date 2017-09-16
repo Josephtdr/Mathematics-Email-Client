@@ -57,8 +57,8 @@ namespace The_Email_Client
                 emaillist.Clear();
                 while (reader.Read())
                 {
-                    contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr((string)reader[1]), EmailAddress = Common.Cleanstr((string)reader[2]) });
-                    emaillist.Add(Common.Cleanstr((string)reader[2]));
+                    contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
+                    emaillist.Add(Common.Cleanstr(reader[2]));
                 }
             }
             catch (Exception err)
