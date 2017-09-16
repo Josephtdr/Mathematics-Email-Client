@@ -37,7 +37,9 @@ namespace The_Email_Client
         public ContactsManagerWindows()
         {
             InitializeComponent();
-
+            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
+                && addcontactButton.IsEnabled) addcontact(); };
+            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             updatetable();
         }
 
@@ -94,6 +96,11 @@ namespace The_Email_Client
             }
         }
         private void addcontactButton_Click(object sender, RoutedEventArgs e)
+        {
+            addcontact();
+        }
+
+        private void addcontact()
         {
             if (addcontacterrorchecking(emailtextbox.Text.ToString()))
             {

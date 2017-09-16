@@ -33,6 +33,7 @@ namespace The_Email_Client
         public selectingcontactWindow(Contacts[] contacts)
         {
             InitializeComponent();
+            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             SelectedContacts = new Contacts[0];
             this.preexistingcontacts = contacts;
             updatetable();

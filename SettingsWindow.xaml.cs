@@ -47,6 +47,8 @@ namespace The_Email_Client
 
         public SettingsWindow(Settings settings)
         {
+            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
+
             SettingsResetValues = new List<string>();
             if (settings != null) {
                 SettingsObject = settings;
