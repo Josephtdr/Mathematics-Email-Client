@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Debug\
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\
 The_Email_Client
 none
 false
 DEBUG;TRACE
-C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\App.xaml
-6-282946836
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\App.xaml
+7-1650419810
 
-16-1600206463
+17-588469168
 15767094614
-ContactsManagerWindows.xaml;EmailPage.xaml;LoginPage.xaml;MainWindow.xaml;selectingcontactWindow.xaml;SettingsWindow.xaml;
+ContactsManagerWindows.xaml;EmailPage.xaml;LoginPage.xaml;MainWindow.xaml;RegistrationPage.xaml;selectingcontactWindow.xaml;SettingsWindow.xaml;
 
-True
+False
 
