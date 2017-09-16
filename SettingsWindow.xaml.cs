@@ -72,7 +72,7 @@ namespace The_Email_Client
         {
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
             SettingsObject.UpdateDatabasefromSettings(SettingsObject);
-            SaveButton.IsEnabled = false;
+            SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             Title = "Settings Window - Saved";
         }
         
@@ -110,12 +110,12 @@ namespace The_Email_Client
             if(!defaultvalues)
             {
                 Title = "Settings Window - Unsaved";
-                SaveButton.IsEnabled = true;
+                SaveButton.IsEnabled = true; SaveExitButton.IsEnabled = true;
             }
             else
             {
                 Title = "Settings Window";
-                SaveButton.IsEnabled = false;
+                SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             }
             if (UserNameBox.Text != SettingsResetValues[0] || PortBox.Text != SettingsResetValues[1]
                || ServerBox.Text != SettingsResetValues[2]) ResetButton.IsEnabled = true;
@@ -129,7 +129,6 @@ namespace The_Email_Client
             ServerBox.Text = SettingsResetValues[2];
             //foreach (BindingExpression bind in expressions) bind.UpdateSource();
             //SettingsObject.UpdateDatabasefromSettings(SettingsObject);
-            //UserNameBox.Text = SettingsResetValues[0];
         }
     }
     public class Settings 
