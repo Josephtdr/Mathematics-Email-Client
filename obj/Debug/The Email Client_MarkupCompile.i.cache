@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\App.xaml
-7-1650419810
+7379404561
 
-18-250231820
+181405089738
 15767094614
-ContactsManagerWindows.xaml;EmailPage.xaml;LoginPage.xaml;MainWindow.xaml;RegistrationPage.xaml;selectingcontactWindow.xaml;SettingsWindow.xaml;
+Windows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\selectingcontactWindow.xaml;Windows\SettingsWindow.xaml;
 
 False
 

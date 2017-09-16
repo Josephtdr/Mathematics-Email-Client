@@ -26,26 +26,26 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\The
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\The Email Client.exe
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\The Email Client.pdb
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.csprojResolveAssemblyReference.cache
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ContactsManagerWindows.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\EmailPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\LoginPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\MainWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\selectingcontactWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\SettingsWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\App.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client_MarkupCompile.cache
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client_MarkupCompile.lref
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ContactsManagerWindows.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\EmailPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\LoginPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\MainWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\selectingcontactWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\SettingsWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.g.resources
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The_Email_Client.Properties.Resources.resources
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.csproj.GenerateResource.Cache
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.csproj.CoreCompileInputs.cache
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.exe
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.pdb
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\RegistrationPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\RegistrationPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ContactsManagerWindows.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\EmailPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\SettingsWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ContactsManagerWindows.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\EmailPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\SettingsWindow.baml

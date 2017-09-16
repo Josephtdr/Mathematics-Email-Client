@@ -19,7 +19,7 @@ namespace The_Email_Client
         public string PasswordID { get; set; }
         public string Name { get; set; }
 
-        public Settings defaults()
+        public Settings Defaults()
         {
             Settings Defaults = new Settings()
             {
