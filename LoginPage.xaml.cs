@@ -75,33 +75,7 @@ namespace The_Email_Client
             MessageBox.Show("Email does not exist!", "Error!");
             return false;
         }
-
-        private bool passcorrect(string Email)
-        {
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT Password FROM Passwords WHERE ID={passID}", cnctDTB);
-                OleDbDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    if (Common.Cleanstr(reader[0]) == Passwordbox.Password) return true;
-                }
-            }
-            catch (Exception err)
-            {
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
-            MessageBox.Show("Incorrect Password","Error!");
-            return false;
-        }
-
+        
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
