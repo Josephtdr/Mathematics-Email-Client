@@ -16,6 +16,7 @@ using System.Data.OleDb;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
+
 namespace The_Email_Client
 {
     internal class Common
