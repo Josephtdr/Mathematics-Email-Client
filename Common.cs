@@ -26,5 +26,25 @@ namespace The_Email_Client
         {
             return Regex.Replace(unregexed, "<.*?>", String.Empty);
         }
+
+        public static bool inccorectemailformat(string email)
+        {
+            if (Regex.IsMatch(email, Constants.VALIDEMAILPATTERN, RegexOptions.IgnoreCase)) return true;
+            else
+            {
+                MessageBox.Show("Invalid Email Format", "Error!");
+                return false;
+            }
+        }
+
+        public static bool inccorectpasswordformat(string password)
+        {
+            if (Regex.IsMatch(password, Constants.VALIDPASSWORDPATTERN)) return true;
+            else
+            {
+                MessageBox.Show("Invalid Password Format. Must Contain at least 1 captial letter, 1 lowercase letters, 1 digit and be a minimum of 8 characters in length.", "Error!");
+                return false;
+            }
+        }
     }
 }

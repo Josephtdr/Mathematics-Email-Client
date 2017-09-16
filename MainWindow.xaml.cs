@@ -24,14 +24,16 @@ namespace The_Email_Client
 
         protected EmailPage EmailPage { get; set; }
         protected LoginPage LoginPage { get; set; }
+        protected RegistrationPage RegistrationPage { get; set; }
         protected Page PreviousPage { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            LoginPage = new LoginPage(ShowEmailPage);
+            LoginPage = new LoginPage(ShowEmailPage, ShowRegistrationPage);
             EmailPage = new EmailPage(ShowLoginPage);
+            RegistrationPage = new RegistrationPage(ShowLoginPage);
 
             ShowLoginPage();
         }
@@ -41,6 +43,11 @@ namespace The_Email_Client
             Common.Email = LoginPage.Email;
             EmailPage.GetEmail(Common.Email);
             ShowPage(EmailPage);
+        }
+
+        public void ShowRegistrationPage()
+        {
+            ShowPage(RegistrationPage);
         }
 
         public void ShowLoginPage()

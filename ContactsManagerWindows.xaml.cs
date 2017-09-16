@@ -32,9 +32,7 @@ namespace The_Email_Client
     public partial class ContactsManagerWindows : Window
     {
         List<string> emaillist = new List<string>();
-        const string validEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-                + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-                + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+        
 
         public ContactsManagerWindows()
         {
@@ -122,7 +120,7 @@ namespace The_Email_Client
 
         private bool addcontacterrorchecking(string email)
         {
-            if (preexistingemail(email) && inccorectemailformat(email)) return true;
+            if (preexistingemail(email) && Common.inccorectemailformat(email)) return true;
             else return false;
         }
 
@@ -136,15 +134,6 @@ namespace The_Email_Client
                 }
             }
             return true;
-        }
-        
-        private bool inccorectemailformat(string email)
-        {
-            if (Regex.IsMatch(email, validEmailPattern, RegexOptions.IgnoreCase)) return true;
-            else {
-                MessageBox.Show("Invalid Email Format", "Error!");
-                return false;
-            }
         }
 
         private void contactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

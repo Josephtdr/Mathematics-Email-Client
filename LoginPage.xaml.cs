@@ -25,12 +25,14 @@ namespace The_Email_Client
     public partial class LoginPage : Page
     {
         protected Action ShowEmailPage { get; set; }
+        protected Action ShowRegistationPage { get; set; }
         public string Email { get; set; }
         protected string Password { get; set; }
-        protected int passID { get; set; }
-        public LoginPage(Action ShowEmailPage)
+        private int passID { get; set; }
+        public LoginPage(Action ShowEmailPage, Action ShowRegistationPage)
         {
             this.ShowEmailPage = ShowEmailPage;
+            this.ShowRegistationPage = ShowRegistationPage;
             InitializeComponent();
             DataContext = this;
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
@@ -70,7 +72,7 @@ namespace The_Email_Client
             {
                 cnctDTB.Close();
             }
-            MessageBox.Show("Email does not exist!", "Email");
+            MessageBox.Show("Email does not exist!", "Error!");
             return false;
         }
 
@@ -103,6 +105,11 @@ namespace The_Email_Client
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void Registrationbutton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowRegistationPage?.Invoke();
         }
     }
 }
