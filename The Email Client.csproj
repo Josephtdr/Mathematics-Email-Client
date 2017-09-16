@@ -77,6 +77,7 @@
     <Compile Include="selectingcontactWindow.xaml.cs">
       <DependentUpon>selectingcontactWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LooseClasses.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>

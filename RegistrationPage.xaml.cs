@@ -91,10 +91,10 @@ namespace The_Email_Client
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Passwords ([Password]) VALUES ('{Common.HashPassword(Passwordbox.Password)}');", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Passwords ([Password]) VALUES ('{PasswordHashing.HashPassword(Passwordbox.Password)}');", cnctDTB);
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = $"SELECT * FROM Passwords WHERE Password ='{Common.HashPassword(Passwordbox.Password)}';";
+                cmd.CommandText = $"SELECT * FROM Passwords WHERE Password ='{PasswordHashing.HashPassword(Passwordbox.Password)}';";
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) PassID = Convert.ToInt16(Common.Cleanstr(reader[0]));
 
