@@ -20,7 +20,7 @@ namespace The_Email_Client
         public string Name { get; set; }
 
         public Settings Defaults()
-        {//ll
+        {
             Settings Defaults = new Settings()
             {
                 Email = "testofcsharperinoemailerino@gmail.com",
