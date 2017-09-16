@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:The_Email_Client"
       mc:Ignorable="d"
-      MinWidth="900" MinHeight="450"
+      MinWidth="900" MinHeight="350"
       Title="Gmail Only Email Sender">
 
     <Grid Margin="0,0,0,0" Background="#FFF1D7FF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
