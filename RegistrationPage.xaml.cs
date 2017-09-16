@@ -119,7 +119,7 @@ namespace The_Email_Client
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             EmailTextBox.Clear(); NameTextBox.Clear();
             ShowEmailPage?.Invoke();
