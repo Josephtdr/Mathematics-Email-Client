@@ -25,12 +25,13 @@ namespace The_Email_Client
     {
         protected BindingExpression[] expressions;
         public Settings SettingsObject { get; set; }
-        
+        public List<string> SettingsResetValues { get; set; }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             if (Title == "Settings Window - Unsaved")
             {
-                switch (MessageBox.Show("Are you sure you want to Quit without Saving?", "??", MessageBoxButton.YesNo))
+                switch (MessageBox.Show("Are you sure you want to Quit without Saving?", "Unsaved Data!", MessageBoxButton.YesNo))
                 {
                     case MessageBoxResult.Yes:
                         break;
@@ -46,10 +47,16 @@ namespace The_Email_Client
 
         public SettingsWindow(Settings settings)
         {
-            SettingsObject = new Settings();
-            if (settings != null) SettingsObject = settings;
-            else SettingsObject = SettingsObject.defaults();
-
+            SettingsResetValues = new List<string>();
+            if (settings != null) {
+                SettingsObject = settings;
+                SettingsResetValues.Add(settings.Name); SettingsResetValues.Add(settings.Port);
+                SettingsResetValues.Add(settings.Server);
+            }
+            else {
+                MessageBox.Show("Settings could not be found", "Error!");
+                Close();
+            }
             InitializeComponent();
 
             DataContext = SettingsObject;
@@ -77,7 +84,7 @@ namespace The_Email_Client
             Close();
         }
         private void TextChanged(object sender, TextChangedEventArgs e)
-        {
+       {
             bool defaultvalues = true;
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
@@ -100,7 +107,7 @@ namespace The_Email_Client
                 cnctDTB.Close();
             }
 
-            if (!defaultvalues)
+            if(!defaultvalues)
             {
                 Title = "Settings Window - Unsaved";
                 SaveButton.IsEnabled = true;
@@ -110,6 +117,19 @@ namespace The_Email_Client
                 Title = "Settings Window";
                 SaveButton.IsEnabled = false;
             }
+            if (UserNameBox.Text != SettingsResetValues[0] || PortBox.Text != SettingsResetValues[1]
+               || ServerBox.Text != SettingsResetValues[2]) ResetButton.IsEnabled = true;
+            else ResetButton.IsEnabled = false;
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserNameBox.Text = SettingsResetValues[0];
+            PortBox.Text = SettingsResetValues[1];
+            ServerBox.Text = SettingsResetValues[2];
+            //foreach (BindingExpression bind in expressions) bind.UpdateSource();
+            //SettingsObject.UpdateDatabasefromSettings(SettingsObject);
+            //UserNameBox.Text = SettingsResetValues[0];
         }
     }
     public class Settings 

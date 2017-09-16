@@ -28,8 +28,9 @@
         <TextBox x:Name="ServerBox" Height="23" Margin="0,58,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Server, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
         <TextBox x:Name="PortBox" Height="23" Margin="0,82,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Port, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
 
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Height="26" Margin="0,0,130,34" VerticalAlignment="Bottom" Width="43" Click="SaveButton_Click" Background="#FFF0F0F0" IsEnabled="False"/>
-        <Button x:Name="SaveExitButton" Content="Save &amp; Exit" HorizontalAlignment="Right" Height="26" Margin="0,0,37,34" VerticalAlignment="Bottom" Width="69" Click="SaveExitButton_Click" Background="#FFF0F0F0"/>
+        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="69" Background="#FFF0F0F0" Click="ResetButton_Click" Margin="0,0,192,31"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Height="26"  VerticalAlignment="Bottom" Width="43" Click="SaveButton_Click" Background="#FFF0F0F0" IsEnabled="False" Margin="0,0,113,31" />
+        <Button x:Name="SaveExitButton" Content="Save &amp; Exit" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="69" Click="SaveExitButton_Click" Background="#FFF0F0F0" Margin="0,0,10,31" />
 
 
     </Grid>
