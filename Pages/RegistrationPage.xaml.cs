@@ -42,7 +42,7 @@ namespace The_Email_Client
         {
             string Email = EmailTextBox.Text;
             if (Common.inccorectemailformat(Email) && EmailAlreadyExists(Email)
-                && Common.inccorectpasswordformat(Passwordbox.Password) && PasswordsMatch()) {
+                && PasswordsMatch()) {
 
             RegisterUser();
             }
@@ -91,10 +91,12 @@ namespace The_Email_Client
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Passwords ([Password]) VALUES ('{PasswordHashing.HashPassword(Passwordbox.Password)}');", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand("INSERT INTO Passwords ([Password]) VALUES " + 
+                    $"('{Convert.ToBase64String(PasswordHashing.EncryptPassword(Passwordbox.Password, EmailTextBox.Text + NameTextBox.Text))}');", cnctDTB);
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = $"SELECT * FROM Passwords WHERE Password ='{PasswordHashing.HashPassword(Passwordbox.Password)}';";
+                cmd.CommandText = "SELECT * FROM Passwords WHERE Password " +
+                    $"='{Convert.ToBase64String(PasswordHashing.EncryptPassword(Passwordbox.Password, EmailTextBox.Text + NameTextBox.Text))}';";
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) PassID = Convert.ToInt16(Common.Cleanstr(reader[0]));
 

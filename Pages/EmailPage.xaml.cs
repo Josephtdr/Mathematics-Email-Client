@@ -99,6 +99,7 @@ namespace The_Email_Client
 
             //extracts password from database
             #region 
+            byte[] temppassbytearray = new byte[0];
             string temppass = "";
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
@@ -107,10 +108,8 @@ namespace The_Email_Client
                 OleDbCommand cmd = new OleDbCommand($"SELECT Password FROM Passwords WHERE ID={Convert.ToInt16(settings.PasswordID)}", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read())
-                {
-                    temppass = Common.Cleanstr(reader[0]);
-                }
+                while (reader.Read()) temppassbytearray = Convert.FromBase64String(Common.Cleanstr(reader[0]));
+                temppass = PasswordHashing.DecryptPassword(temppassbytearray,settings.Email + settings.Name);
             }
             catch (Exception err)
             {
