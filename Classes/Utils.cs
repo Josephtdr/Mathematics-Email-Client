@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Shapes;
@@ -8,7 +9,6 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.IO;
 using System.Net;
-using System.Windows.Forms;
 namespace The_Email_Client
 {
     public class Settings
@@ -87,78 +87,62 @@ namespace The_Email_Client
 
     public class PasswordHashing
     {
-        public static byte[] EncryptPassword(string password, string userData)
+        public static string HashPassword(string password)
         {
-            byte[] data = new byte[64];
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                data[i] = i < password.Length ? (byte)password[i] : (byte)0x00;
-                data[i] ^= i < userData.Length ? (byte)userData[i] : (byte)0xFF;
-            }
-
-            for (int i = 0; i < userData.Length; i++)
-            {
-                data[i % data.Length] ^= (byte)userData[i];
-            }
-
-            return data;
+            //Create the salt value with a cryptographic PRNG
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            //Create the Rfc2898DeriveBytes and get the hash value
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            //Combine the salt and password bytes for later use
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+            //Turn the combined salt+hash into a string for storage
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+            return savedPasswordHash;
         }
 
-        public static string DecryptPassword(byte[] data, string userData)
+        public static bool VerifyHash(string email, string password)
         {
-            Random random = new Random(userData.GetHashCode());
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                data[i] ^= i < userData.Length ? (byte)userData[i] : (byte)0xFF;
-            }
-            for (int i = 0; i < userData.Length; i++)
-            {
-                data[i % data.Length] ^= (byte)userData[i];
-            }
-            
-            string result = "";
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                if (data[i] != 0x00) result += (char)data[i];
-            }
-
-            return result;
-        }
-
-
-        public static bool VerifyPassword(string email, string password)
-        {
+            //Fetch the stored value
+            string savedPasswordHash = "";
             int passID = 0;
-            string name = "";
-            byte[] passwordByteArray = new byte[0];
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
             {
                 cnctDTB.Open();
                 OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{email}';", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    passID = Convert.ToInt16(Common.Cleanstr(reader[5]));
-                    name = Common.Cleanstr(reader[2]);
-                }
-
+                while (reader.Read()) { passID = Convert.ToInt16(Common.Cleanstr(reader[5])); }
                 cnctDTB.Close();
                 cnctDTB.Open();
                 cmd.CommandText = $"SELECT Password FROM Passwords WHERE ID={passID};";
                 reader = cmd.ExecuteReader();
-                while (reader.Read()) passwordByteArray = Convert.FromBase64String(Common.Cleanstr(reader[0]));
+                while (reader.Read()) savedPasswordHash = Common.Cleanstr(reader[0]);
             }
-            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            catch (Exception err) { MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
-
-            if (password == DecryptPassword(passwordByteArray, email + name)) return true;
-            else {
-                System.Windows.MessageBox.Show("Incorrect Password", "Error!");
-                return false; }
+            //Extract the bytes
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            //Get the salt
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            //Compute the hash on the password the user entered
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            //Compare the results
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    MessageBox.Show("Incorrect Password", "Error!");
+                    Common.TempPassword = password;
+                    return false;
+                }
+            return true;
         }
+        
     }
 
     public class Email

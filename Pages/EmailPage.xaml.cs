@@ -28,7 +28,8 @@ namespace The_Email_Client
         long TotalFileLength = 0;
         protected Action ShowLoginPage { get; set; }
         public Settings settings { get; set; }
-        
+
+
         public EmailPage(Action ShowLoginPage)
         {
             settings = new Settings();
@@ -45,6 +46,7 @@ namespace The_Email_Client
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
+            Common.TempPassword = "";
             settings = new Settings();
             ShowLoginPage?.Invoke();
         }
@@ -97,31 +99,6 @@ namespace The_Email_Client
 
             foreach (System.Windows.Controls.Button Button in buttons) Button.IsEnabled = false;
 
-            //extracts password from database
-            #region 
-            byte[] temppassbytearray = new byte[0];
-            string temppass = "";
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT Password FROM Passwords WHERE ID={Convert.ToInt16(settings.PasswordID)}", cnctDTB);
-                OleDbDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read()) temppassbytearray = Convert.FromBase64String(Common.Cleanstr(reader[0]));
-                temppass = PasswordHashing.DecryptPassword(temppassbytearray,settings.Email + settings.Name);
-            }
-            catch (Exception err)
-            {
-                
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
-            #endregion
-
             try
             {
                 Email tempemail = new Email()
@@ -129,7 +106,7 @@ namespace The_Email_Client
                     Server = settings.Server,
                     Port = Convert.ToInt16(settings.Port),
                     UserEmail = settings.Email,
-                    UserPassword = temppass,
+                    UserPassword = Common.TempPassword,
                     UserName = settings.Name,
                     Recipients = RecipientsBox.Text.Split(';'),
                     CC = CCBox.Text.Split(';'),

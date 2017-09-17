@@ -24,6 +24,8 @@ namespace The_Email_Client
     {
         public static string Email { get; set; }
 
+        public static string TempPassword { get; set; }
+
         public static string Cleanstr(object unregexed)//Takes a string from DB and returns it without any formating
         {
             return Regex.Replace(unregexed.ToString(), "<.*?>", String.Empty);

@@ -26,7 +26,6 @@ namespace The_Email_Client
         protected LoginPage LoginPage { get; set; }
         protected RegistrationPage RegistrationPage { get; set; }
         protected Page PreviousPage { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();

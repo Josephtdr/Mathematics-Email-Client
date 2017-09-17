@@ -88,15 +88,14 @@ namespace The_Email_Client
         {
             int PassID = 0;
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            string hashedPassword = PasswordHashing.HashPassword(Passwordbox.Password);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand("INSERT INTO Passwords ([Password]) VALUES " + 
-                    $"('{Convert.ToBase64String(PasswordHashing.EncryptPassword(Passwordbox.Password, EmailTextBox.Text + NameTextBox.Text))}');", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Passwords ([Password]) VALUES ('{hashedPassword}');", cnctDTB);
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = "SELECT * FROM Passwords WHERE Password " +
-                    $"='{Convert.ToBase64String(PasswordHashing.EncryptPassword(Passwordbox.Password, EmailTextBox.Text + NameTextBox.Text))}';";
+                cmd.CommandText = $"SELECT * FROM Passwords WHERE Password='{hashedPassword}';";
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) PassID = Convert.ToInt16(Common.Cleanstr(reader[0]));
 
