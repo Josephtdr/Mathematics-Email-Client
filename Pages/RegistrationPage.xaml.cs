@@ -31,6 +31,15 @@ namespace The_Email_Client
         {
             InitializeComponent();
             this.ShowEmailPage = ShowEmailPage;
+
+            KeyDown += delegate {
+                string Email = EmailTextBox.Text;
+                if (Keyboard.IsKeyDown(Key.Enter)) {
+                    if (Common.inccorectemailformat(Email) && EmailAlreadyExists(Email)
+                        && PasswordsMatch())
+                        RegisterUser();
+                }
+            };
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -42,10 +51,8 @@ namespace The_Email_Client
         {
             string Email = EmailTextBox.Text;
             if (Common.inccorectemailformat(Email) && EmailAlreadyExists(Email)
-                && PasswordsMatch()) {
-
-            RegisterUser();
-            }
+                && PasswordsMatch())
+                RegisterUser();
         }
 
         private bool EmailAlreadyExists(string Email)
