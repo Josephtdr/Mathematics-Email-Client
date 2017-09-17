@@ -8,7 +8,7 @@
         MinWidth="900" MinHeight="450"
         Title="Gmail Only Email Sender">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF1D7FF">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD9D0FF">
         <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

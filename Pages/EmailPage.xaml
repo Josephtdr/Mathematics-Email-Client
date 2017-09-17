@@ -8,7 +8,7 @@
       MinWidth="900" MinHeight="350"
       Title="Gmail Only Email Sender">
 
-    <Grid Margin="0,0,0,0" Background="#FFF1D7FF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid Margin="0,0,0,0" Background="#FFD9D0FF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <TextBox x:Name="RecipientsBox" Height="23" Margin="81,10,137,0" VerticalAlignment="Top" VerticalContentAlignment="Center" />
         <TextBox x:Name="CCBox" Height="23" Margin="81,38,137,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" />

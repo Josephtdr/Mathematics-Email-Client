@@ -9,7 +9,7 @@
         
     Title="Settings Window" Height="213.357" Width="338.667"  ResizeMode="NoResize">
 
-    <Grid Margin="0,1,0,-1" Background="#FFF1D7FF">
+    <Grid Margin="0,1,0,-1" Background="#FFD9D0FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
