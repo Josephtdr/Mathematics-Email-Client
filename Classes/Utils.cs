@@ -137,9 +137,9 @@ namespace The_Email_Client
                 if (hashBytes[i + 16] != hash[i])
                 {
                     MessageBox.Show("Incorrect Password", "Error!");
-                    Common.TempPassword = password;
                     return false;
                 }
+            Common.TempPassword = password;
             return true;
         }
         
