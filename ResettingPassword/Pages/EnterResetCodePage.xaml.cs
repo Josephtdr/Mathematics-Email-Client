@@ -25,14 +25,18 @@ namespace The_Email_Client
         {
             InitializeComponent();
             this.ShowResetPasswordPage = ShowResetPasswordPage;
+            KeyDown += delegate {
+                if (Keyboard.IsKeyDown(Key.Enter))
+                    if (Convert.ToInt32(ResetCodeTextbox.Text) == ForgottonPasswordPage.ResetCode)
+                        ShowResetPasswordPage();
+            };
         }
 
         private void SumbitResetCode_Click(object sender, RoutedEventArgs e)
         {
             if (Convert.ToInt32(ResetCodeTextbox.Text) == ForgottonPasswordPage.ResetCode)
-            {
                 ShowResetPasswordPage();
-            }
+            else MessageBox.Show("Code is incorrect.", "Error!");
         }
     }
 }

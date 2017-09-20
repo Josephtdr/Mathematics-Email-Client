@@ -28,10 +28,8 @@
         <TextBox x:Name="EmailTextBox" Grid.Column="1" Grid.Row="3"  Text="{Binding Email}" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
         <PasswordBox x:Name="Passwordbox" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
         <PasswordBox x:Name="PasswordboxCopy" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
-
-        <Button Grid.Row="6" Grid.Column="0" Content="Exit" HorizontalAlignment="Center" Margin="28,5,28,0" VerticalAlignment="Top" Width="75" Click="ExitButton_Click" Height="20"/>
-        <Button Content="Back" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="62" Click="BackButton_Click" />
-        <Button Content="Sign Up" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="62" Click="SignUpbutton_Click" />
+        <Button Content="Back" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="62" Click="BackButton_Click" />
+        <Button Content="Sign Up" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="62" Click="SignUpbutton_Click" />
 
 
         <Label x:Name="Emaillabel" Content="Email" HorizontalAlignment="Center" Height="28" Margin="0,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="39" />

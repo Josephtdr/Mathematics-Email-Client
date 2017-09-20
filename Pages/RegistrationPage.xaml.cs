@@ -40,12 +40,7 @@ namespace The_Email_Client
                  }
             };
         }
-
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
+        
         private void SignUpbutton_Click(object sender, RoutedEventArgs e)
         {
             if (Common.inccorectemailformat(EmailTextBox.Text) && EmailAlreadyExists(EmailTextBox.Text)

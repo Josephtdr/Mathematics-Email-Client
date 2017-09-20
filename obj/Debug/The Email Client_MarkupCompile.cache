@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\App.xaml
-121064201899
+12-1530394731
 
-191308804680
+191713022597
 15767094614
-ResettingPassword\Pages\ResetPasswordPage.xaml;ResettingPassword\Pages\EnterResetCodePage.xaml;ResettingPassword\Pages\ForgottonPasswordPage.xaml;ResettingPassword\Windows\ForgotPasswordWindow.xaml;Windows\MangerAttachmentsWindow.xaml;Windows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\selectingcontactWindow.xaml;Windows\ProfilesWindow.xaml;
+ResettingPassword\Pages\ResetPasswordPage.xaml;ResettingPassword\Pages\EnterResetCodePage.xaml;ResettingPassword\Pages\ForgottonPasswordPage.xaml;ResettingPassword\Windows\ResettingPasswordWindow.xaml;Windows\MangerAttachmentsWindow.xaml;Windows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\selectingcontactWindow.xaml;Windows\ProfilesWindow.xaml;
 
 False
 

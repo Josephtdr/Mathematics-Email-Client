@@ -29,11 +29,10 @@ namespace The_Email_Client
         {
             Profiles Defaults = new Profiles()
             {
+                ID = "10",
                 Email = "testofcsharperinoemailerino@gmail.com",
                 Password = "nocopypasterino",
-                Name = "Stool",
-                Port = "587",
-                Server = "smtp.gmail.com"
+                UserName = "Stool"
             };
             return Defaults;
         }

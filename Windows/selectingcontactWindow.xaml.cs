@@ -28,9 +28,9 @@ namespace The_Email_Client
 
         List<string> emaillist = new List<string>();
         public Contacts[] SelectedContacts { get; protected set; }
-        public Contacts[] preexistingcontacts;
+        public string[] preexistingcontacts;
 
-        public selectingcontactWindow(Contacts[] contacts)
+        public selectingcontactWindow(string[] contacts)
         {
             InitializeComponent();
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
@@ -62,7 +62,7 @@ namespace The_Email_Client
                     includecontact = true;
                     foreach (var contact in preexistingcontacts)
                     {
-                        if (contact.EmailAddress == Common.Cleanstr(reader[2]))
+                        if (contact == Common.Cleanstr(reader[2]))
                         {
                             includecontact = false;
                         }

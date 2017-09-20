@@ -26,11 +26,14 @@ namespace The_Email_Client
         {
             InitializeComponent();
             this.Close = Close;
+            KeyDown += delegate {
+                if (Keyboard.IsKeyDown(Key.Enter))
+                    ResetPassword();
+            };
         }
-
-        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
+        private void ResetPassword()
         {
-            if(PasswordBox.Password == PasswordConfirmationBox.Password)
+            if (PasswordBox.Password == PasswordConfirmationBox.Password)
             {
                 bool finished = false;
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
@@ -43,9 +46,13 @@ namespace The_Email_Client
                 }
                 catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
                 finally { cnctDTB.Close(); }
-                if(finished) Close();
+                if (finished) Close();
             }
             else MessageBox.Show("Passwords Do not Match", "Error!");
+        }
+        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResetPassword();
         }
     }
 }

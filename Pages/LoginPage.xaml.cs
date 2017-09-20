@@ -49,11 +49,6 @@ namespace The_Email_Client
             if (Hashing.VerifyHash(UserName, Email, 0) && Hashing.VerifyHash(UserName, Password, 1)) ShowEmailPage?.Invoke();
         }
         
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
         private void Registrationbutton_Click(object sender, RoutedEventArgs e)
         {
             ShowRegistationPage?.Invoke();

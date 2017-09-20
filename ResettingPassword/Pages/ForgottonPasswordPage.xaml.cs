@@ -29,11 +29,15 @@ namespace The_Email_Client
         {
             InitializeComponent();
             this.ShowenterResetCodePage = ShowenterResetCodePage;
+            KeyDown += delegate {
+                if (Keyboard.IsKeyDown(Key.Enter))
+                    SendResetEmail();
+            };
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SendResetEmail()
         {
-            if (Hashing.VerifyHash(UserNameTextBox.Text,EmailTextBox.Text,0))
+            if (Hashing.VerifyHash(UserNameTextBox.Text, EmailTextBox.Text, 0))
             {
                 UserName = UserNameTextBox.Text;
                 Random rnd = new Random();
@@ -53,7 +57,7 @@ namespace The_Email_Client
                         BCC = null,
                         Subject = "Reset Password Request",
                         Body = "Somebody has Requested a Password Reset for this email.\nIf this was not you please ignore this email.\n" +
-                        $"If this was you your email reset code is as follows: {ResetCode}.\nPlease copy this code down this code, " + 
+                        $"If this was you your email reset code is as follows: {ResetCode}.\nPlease copy this code down this code, " +
                         "return to the email client and follow the on screen instructions.",
                         AttachmentNames = null
                     };
@@ -65,6 +69,11 @@ namespace The_Email_Client
                     System.Windows.Forms.MessageBox.Show(error.Message);
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SendResetEmail();
         }
     }
 }

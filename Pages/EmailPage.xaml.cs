@@ -20,7 +20,7 @@ namespace The_Email_Client
     /// </summary>
     public partial class EmailPage : Page
     {
-        public List<Contacts> SelectedContacts = new List<Contacts>();
+        public List<string> SelectedContacts = new List<string>();
         
         protected Action ShowLoginPage { get; set; }
        
@@ -82,23 +82,23 @@ namespace The_Email_Client
         private void send_button_Click(object sender, RoutedEventArgs e)
         {
             StatusLabel.Content = "Sending...";
-            
-            try
+            List<string> Attachments = Common.Attachments;
+            Email tempemail = new Email()
             {
-                Email tempemail = new Email()
-                {
-                    Server = Common.Profile.Server,
-                    Port = Convert.ToInt16(Common.Profile.Port),
-                    UserEmail = Common.Profile.Email,
-                    UserPassword = Common.Profile.Password,
-                    UserName = Common.Profile.Name,
-                    Recipients = RecipientsBox.Text.Split(';'),
-                    CC = CCBox.Text.Split(';'),
-                    BCC = BCCBox.Text.Split(';'),
-                    Subject = SubjectBox.Text,
-                    Body = new TextRange(BodyBox.Document.ContentStart, BodyBox.Document.ContentEnd).Text,
-                    AttachmentNames = Common.Attachments
-                };
+                Server = Common.Profile.Server,
+                Port = Convert.ToInt16(Common.Profile.Port),
+                UserEmail = Common.Profile.Email,
+                UserPassword = Common.Profile.Password,
+                UserName = Common.Profile.Name,
+                Recipients = RecipientsBox.Text.Split(';'),
+                CC = CCBox.Text.Split(';'),
+                BCC = BCCBox.Text.Split(';'),
+                Subject = SubjectBox.Text,
+                Body = new TextRange(BodyBox.Document.ContentStart, BodyBox.Document.ContentEnd).Text,
+                AttachmentNames = Common.Attachments
+            };
+            try
+            { 
                 //tempemail.Send();
                 new Thread(new ParameterizedThreadStart(delegate { tempemail.Send(); })) { IsBackground = true }.Start();
             }
@@ -109,8 +109,8 @@ namespace The_Email_Client
             finally
             {
                 StatusLabel.Content = "Sent";
-                ClearPage();
             }
+            ClearPage();
         }
 
         private void addemailstotextboxes(Contacts[] contacts, System.Windows.Controls.TextBox textbox)
@@ -123,12 +123,19 @@ namespace The_Email_Client
                 {
                     textbox.Text += (";" + contact.EmailAddress);
                 }
-                SelectedContacts.Add(contact);
             }
         }
 
         private void addemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)
         {
+            SelectedContacts.Clear();
+            foreach (string email in (RecipientsBox.Text).Split(';'))
+                if (!string.IsNullOrEmpty(email)) SelectedContacts.Add(email);
+            foreach (string email in (CCBox.Text).Split(';'))
+                if (!string.IsNullOrEmpty(email)) SelectedContacts.Add(email);
+            foreach (string email in (BCCBox.Text).Split(';'))
+                if (!string.IsNullOrEmpty(email)) SelectedContacts.Add(email);
+
             selectingcontactWindow selectingcontactWindow = new selectingcontactWindow(SelectedContacts.ToArray());
             selectingcontactWindow.ShowDialog();
 

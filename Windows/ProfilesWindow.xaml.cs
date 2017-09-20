@@ -91,12 +91,12 @@ namespace The_Email_Client
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{Common.Profile.Email}'", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{Common.Profile.UserName}'", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    if (reader[2].ToString() != UserNameBox.Text || reader[3].ToString() != PortBox.Text
-                        || reader[4].ToString() != ServerBox.Text) defaultvalues = false;
+                    if (Common.Cleanstr(reader[1]) != UserNameBox.Text || Common.Cleanstr(reader[3]) != PortBox.Text
+                        || Common.Cleanstr(reader[4]) != ServerBox.Text || Common.Cleanstr(reader[6]) !=  UserUserNameBox.Text) defaultvalues = false;
                 }
             }
             catch (Exception err)

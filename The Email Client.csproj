@@ -69,8 +69,8 @@
     <Compile Include="ResettingPassword\Pages\ForgottonPasswordPage.xaml.cs">
       <DependentUpon>ForgottonPasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResettingPassword\Windows\ForgotPasswordWindow.xaml.cs">
-      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
+    <Compile Include="ResettingPassword\Windows\ResettingPasswordWindow.xaml.cs">
+      <DependentUpon>ResettingPasswordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MangerAttachmentsWindow.xaml.cs">
       <DependentUpon>MangerAttachmentsWindow.xaml</DependentUpon>
@@ -108,7 +108,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResettingPassword\Windows\ForgotPasswordWindow.xaml">
+    <Page Include="ResettingPassword\Windows\ResettingPasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
