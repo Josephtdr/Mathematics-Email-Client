@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Windows\MangerAttachmentsWindow.xaml.cs">
+      <DependentUpon>MangerAttachmentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Windows\ContactsManagerWindows.xaml.cs">
@@ -78,9 +81,13 @@
       <DependentUpon>selectingcontactWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Utils.cs" />
-    <Compile Include="Windows\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    <Compile Include="Windows\ProfilesWindow.xaml.cs">
+      <DependentUpon>ProfilesWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\MangerAttachmentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ContactsManagerWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -113,7 +120,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\SettingsWindow.xaml">
+    <Page Include="Windows\ProfilesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

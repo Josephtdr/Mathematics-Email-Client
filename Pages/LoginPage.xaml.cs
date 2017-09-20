@@ -27,53 +27,26 @@ namespace The_Email_Client
         protected Action ShowEmailPage { get; set; }
         protected Action ShowRegistationPage { get; set; }
         public string Email { get; set; }
-        protected string Password { get; set; }
-        private int passID { get; set; }
+        public string Password { get; set; }
+        public string UserName { get; set; }
         public LoginPage(Action ShowEmailPage, Action ShowRegistationPage)
         {
             this.ShowEmailPage = ShowEmailPage;
             this.ShowRegistationPage = ShowRegistationPage;
             InitializeComponent();
+            
             DataContext = this;
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
-                { if (EmailExists() && PasswordHashing.VerifyHash(Email, Passwordbox.Password)) ShowEmailPage?.Invoke(); }
+                { Password = Passwordbox.Password; UserName = UserNameTextBox.Text;
+                  if (Hashing.VerifyHash(UserName, Email, 0) && Hashing.VerifyHash(UserName, Password, 1))
+                        ShowEmailPage?.Invoke(); }
             };
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-
-            if (EmailExists() && PasswordHashing.VerifyHash(Email, Passwordbox.Password)) ShowEmailPage?.Invoke();
-            
-        }
-
-        private bool EmailExists()
-        {
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand("SELECT * FROM Profiles", cnctDTB);
-                OleDbDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    if (Email == Common.Cleanstr(reader[1])) {
-                        passID = Convert.ToInt16(Common.Cleanstr(reader[5]));
-                        return true; } 
-                }
-            }
-            catch (Exception err)
-            {
-                
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
-            MessageBox.Show("Email does not exist!", "Error!");
-            return false;
+            Password = Passwordbox.Password; UserName = UserNameTextBox.Text;
+            if (Hashing.VerifyHash(UserName, Email, 0) && Hashing.VerifyHash(UserName, Password, 1)) ShowEmailPage?.Invoke();
         }
         
         private void ExitButton_Click(object sender, RoutedEventArgs e)

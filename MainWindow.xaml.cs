@@ -29,7 +29,9 @@ namespace The_Email_Client
         public MainWindow()
         {
             InitializeComponent();
-
+            Common.AttachmentsSource = new List<OpenFileDialog>();
+            Common.Attachments = new List<string>();
+            Common.Profile = new Profiles();
             LoginPage = new LoginPage(ShowEmailPage, ShowRegistrationPage);
             EmailPage = new EmailPage(ShowLoginPage);
             RegistrationPage = new RegistrationPage(ShowLoginPage);
@@ -39,8 +41,8 @@ namespace The_Email_Client
 
         public void ShowEmailPage()
         {
-            Common.Email = LoginPage.Email;
-            EmailPage.GetEmail(Common.Email);
+            //if (Common.Profile.Email == "admin") Common.Profile.Defaults();
+            EmailPage.GetEmail(Common.Profile.Email);
             ShowPage(EmailPage);
         }
 

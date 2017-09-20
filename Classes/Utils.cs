@@ -11,20 +11,22 @@ using System.IO;
 using System.Net;
 namespace The_Email_Client
 {
-    public class Settings
+    public class Profiles
     {
+        public string ID { get; set; }
         public string Email { get; set; }
         public string Port { get; set; }
         public string Server { get; set; }
-        public string PasswordID { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
+        public string UserName { get; set; }
 
-        public Settings Defaults()
+        public Profiles Defaults()
         {
-            Settings Defaults = new Settings()
+            Profiles Defaults = new Profiles()
             {
                 Email = "testofcsharperinoemailerino@gmail.com",
-                PasswordID = "1",
+                Password = "nocopypasterino",
                 Name = "Stool",
                 Port = "587",
                 Server = "smtp.gmail.com"
@@ -32,26 +34,21 @@ namespace The_Email_Client
             return Defaults;
         }
 
-        public Settings UpdateSettingsfromDB(string email)
+        public void UpdateSettingsfromDB(Profiles Profile, string UserName)
         {
-            Settings newsettings = new Settings();
-
+            
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{email}'", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{UserName}'", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    newsettings = new Settings
-                    {
-                        Email = Common.Cleanstr(reader[1]),
-                        PasswordID = Common.Cleanstr(reader[5]),
-                        Name = Common.Cleanstr(reader[2]),
-                        Port = Common.Cleanstr(reader[3]),
-                        Server = Common.Cleanstr(reader[4])
-                    };
+                    Profile.ID = Common.Cleanstr(reader[0]);
+                    Profile.Name = Common.Cleanstr(reader[1]);
+                    Profile.Port = Common.Cleanstr(reader[3]);
+                    Profile.Server = Common.Cleanstr(reader[4]);
                 }
             }
             catch (Exception err)
@@ -62,16 +59,15 @@ namespace The_Email_Client
             {
                 cnctDTB.Close();
             }
-            return newsettings;
         }
 
-        public void UpdateDatabasefromSettings(Settings settings)
+        public void UpdateDatabasefromSettings(Profiles settings)
         {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET Name ='{ settings.Name }', Port ={ Convert.ToInt16(settings.Port)}, Server='{ settings.Server }' Where Email='{ Common.Email }'", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET Name ='{ settings.Name }', Port ={ Convert.ToInt16(settings.Port)}, Server='{ settings.Server }' Where UserName='{ Common.Profile.UserName }'", cnctDTB);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception err)
@@ -85,9 +81,9 @@ namespace The_Email_Client
         }
     }
 
-    public class PasswordHashing
+    public class Hashing
     {
-        public static string HashPassword(string password)
+        public static string HashString(string password)
         {
             //Create the salt value with a cryptographic PRNG
             byte[] salt;
@@ -104,45 +100,49 @@ namespace The_Email_Client
             return savedPasswordHash;
         }
 
-        public static bool VerifyHash(string email, string password)
+        public static bool VerifyHash(string UserName, string value, int passwordorhash)
         {
+            string emailorpassword = "";
+            if (passwordorhash == 1) emailorpassword = "Password";
+            if (passwordorhash == 0) emailorpassword = "Email";
+
             //Fetch the stored value
-            string savedPasswordHash = "";
-            int passID = 0;
+            string savedHash = "";
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{email}';", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT {emailorpassword} FROM Profiles WHERE UserName='{UserName}';", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) { passID = Convert.ToInt16(Common.Cleanstr(reader[5])); }
-                cnctDTB.Close();
-                cnctDTB.Open();
-                cmd.CommandText = $"SELECT Password FROM Passwords WHERE ID={passID};";
-                reader = cmd.ExecuteReader();
-                while (reader.Read()) savedPasswordHash = Common.Cleanstr(reader[0]);
+                while (reader.Read()) savedHash = Common.Cleanstr(reader[0]);
             }
-            catch (Exception err) { MessageBox.Show(err.Message); }
+            catch (Exception err)
+            {
+                Common.Profile = new Profiles();
+                MessageBox.Show(err.Message);
+            }
             finally { cnctDTB.Close(); }
             //Extract the bytes
-            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            byte[] hashBytes = Convert.FromBase64String(savedHash);
             //Get the salt
             byte[] salt = new byte[16];
             Array.Copy(hashBytes, 0, salt, 0, 16);
             //Compute the hash on the password the user entered
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            var pbkdf2 = new Rfc2898DeriveBytes(value, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
             //Compare the results
             for (int i = 0; i < 20; i++)
                 if (hashBytes[i + 16] != hash[i])
                 {
-                    MessageBox.Show("Incorrect Password", "Error!");
+                    MessageBox.Show($"Incorrect {emailorpassword}", "Error!");
                     return false;
                 }
-            Common.TempPassword = password;
+
+            if (passwordorhash == 1) Common.Profile.Password = value;
+            if (passwordorhash == 0) Common.Profile.Email = value;
+            Common.Profile.UserName = UserName;
             return true;
         }
-        
     }
 
     public class Email
@@ -158,6 +158,12 @@ namespace The_Email_Client
         public string Subject { get; set; }
         public string Body { get; set; }
         public List<string> AttachmentNames { get; set; }
+
+        public Email()
+        {
+            AttachmentNames = new List<string>();
+        }
+
         public void Send()
         {
             try
@@ -183,18 +189,16 @@ namespace The_Email_Client
 
                     foreach (string Attachment in AttachmentNames)
                     {
-                        if (Attachment != null)
-                        {
-                            Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
-                            ContentDisposition disposition = attachment.ContentDisposition;
-                            disposition.CreationDate = File.GetCreationTime(Attachment);
-                            disposition.ModificationDate = File.GetLastWriteTime(Attachment);
-                            disposition.ReadDate = File.GetLastAccessTime(Attachment);
-                            disposition.FileName = System.IO.Path.GetFileName(Attachment);
-                            disposition.Size = new FileInfo(Attachment).Length;
-                            disposition.DispositionType = DispositionTypeNames.Attachment;
-                            message.Attachments.Add(attachment);
-                        }
+                        Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
+                        ContentDisposition disposition = attachment.ContentDisposition;
+                        disposition.CreationDate = System.IO.File.GetCreationTime(Attachment);
+                        disposition.ModificationDate = System.IO.File.GetLastWriteTime(Attachment);
+                        disposition.ReadDate = System.IO.File.GetLastAccessTime(Attachment);
+                        disposition.FileName = System.IO.Path.GetFileName(Attachment);
+                        disposition.Size = new FileInfo(Attachment).Length;
+                        disposition.DispositionType = DispositionTypeNames.Attachment;
+                        message.Attachments.Add(attachment);
+                        Console.WriteLine(Attachment);
                     }
 
 
@@ -204,7 +208,7 @@ namespace The_Email_Client
             }
             catch (Exception error)
             {
-                System.Windows.Forms.MessageBox.Show(error.Message);
+                System.Windows.Forms.MessageBox.Show(error.ToString());
             }
         }
     }

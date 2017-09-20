@@ -33,12 +33,11 @@ namespace The_Email_Client
             this.ShowEmailPage = ShowEmailPage;
 
             KeyDown += delegate {
-                string Email = EmailTextBox.Text;
                 if (Keyboard.IsKeyDown(Key.Enter)) {
-                    if (Common.inccorectemailformat(Email) && EmailAlreadyExists(Email)
-                        && PasswordsMatch())
+                    if (Common.inccorectemailformat(EmailTextBox.Text) && EmailAlreadyExists(EmailTextBox.Text)
+                       && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch())
                         RegisterUser();
-                }
+                 }
             };
         }
 
@@ -49,23 +48,21 @@ namespace The_Email_Client
 
         private void SignUpbutton_Click(object sender, RoutedEventArgs e)
         {
-            string Email = EmailTextBox.Text;
-            if (Common.inccorectemailformat(Email) && EmailAlreadyExists(Email)
-                && PasswordsMatch())
+            if (Common.inccorectemailformat(EmailTextBox.Text) && EmailAlreadyExists(EmailTextBox.Text)
+                && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch())
                 RegisterUser();
         }
 
         private bool EmailAlreadyExists(string Email)
         {
-            
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand("SELECT * FROM Profiles", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand("SELECT Email FROM Profiles", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read()) if (Email == Common.Cleanstr(reader[1])) {
+                while (reader.Read()) if (Email == Common.Cleanstr(reader[0])) {
                         MessageBox.Show("Email Already Exists!", "Error!");
                         return false; }             
             }
@@ -81,6 +78,32 @@ namespace The_Email_Client
             return true;
         }
 
+        private bool UserNameAlreadyExists(string UserName)
+        {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            try
+            {
+                cnctDTB.Open();
+                OleDbCommand cmd = new OleDbCommand("SELECT UserName FROM Profiles", cnctDTB);
+                OleDbDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read()) if (UserName == Common.Cleanstr(reader[0]))
+                    {
+                        MessageBox.Show("UserName Already Exists!", "Error!");
+                        return false;
+                    }
+            }
+            catch (Exception err)
+            {
+                System.Windows.MessageBox.Show(err.Message);
+            }
+            finally
+            {
+                cnctDTB.Close();
+            }
+            return true;
+        }
+        
         private bool PasswordsMatch()
         {
             if (Passwordbox.Password == PasswordboxCopy.Password) return true;
@@ -93,24 +116,14 @@ namespace The_Email_Client
        
         private void RegisterUser()
         {
-            int PassID = 0;
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            string hashedPassword = PasswordHashing.HashPassword(Passwordbox.Password);
+            string hashedPassword = Hashing.HashString(Passwordbox.Password);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Passwords ([Password]) VALUES ('{hashedPassword}');", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Profiles ([Name], [Email], [Port], [Server], [Password], [UserName]) VALUES ('{NameTextBox.Text}','{Hashing.HashString(EmailTextBox.Text)}',587,'smtp.gmail.com','{hashedPassword}','{UserNameTextBox.Text}');", cnctDTB);
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = $"SELECT * FROM Passwords WHERE Password='{hashedPassword}';";
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) PassID = Convert.ToInt16(Common.Cleanstr(reader[0]));
-
-                cnctDTB.Close();
-                cnctDTB.Open();
-
-                cmd.CommandText = $"INSERT INTO Profiles ([Email], [Name], [Port], [Server], [Password ID]) VALUES ('{EmailTextBox.Text}','{NameTextBox.Text}',587,'smtp.gmail.com',{PassID});";
-                cmd.ExecuteNonQuery();
                 MessageBox.Show("Successfully registered account.", "Success!");
                 EmailTextBox.Clear(); NameTextBox.Clear();
                 ShowEmailPage?.Invoke();

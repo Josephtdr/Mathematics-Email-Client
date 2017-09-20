@@ -36,20 +36,21 @@ namespace The_Email_Client
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             SelectedContacts = new Contacts[0];
             this.preexistingcontacts = contacts;
-            updatetable();
+            updatetable("","");
         }
 
 
 
 
-        public void updatetable()
+        public void updatetable(string searchemailValue, string searchnameValue)
         {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             
             try
             {
                 cnctDTB.Open();
-                string InsertSql = "SELECT * FROM Adresses";
+                string InsertSql = $"SELECT * FROM Contacts WHERE Profile_ID={Common.Profile.ID} AND Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';"; 
+
                 OleDbCommand cmdInsert = new OleDbCommand(InsertSql, cnctDTB);
                 OleDbDataReader reader = cmdInsert.ExecuteReader();
 
@@ -93,6 +94,11 @@ namespace The_Email_Client
             }
             SelectedContacts = contacts.ToArray();
             Close();
+        }
+
+        private void searchTextBoxes_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            updatetable(searchEmailTextBox.Text, searchNameTextBox.Text);
         }
     }
 }

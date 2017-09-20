@@ -17,15 +17,19 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace The_Email_Client
 {
     internal class Common
     {
-        public static string Email { get; set; }
+        public static Profiles Profile { get; set; }
 
-        public static string TempPassword { get; set; }
+        public static List<string> Attachments { get; set; }
+        public static List<OpenFileDialog> AttachmentsSource { get; set; }
 
+        public static long TotalFileLength { get; set; }
+        
         public static string Cleanstr(object unregexed)//Takes a string from DB and returns it without any formating
         {
             return Regex.Replace(unregexed.ToString(), "<.*?>", String.Empty);
@@ -36,7 +40,7 @@ namespace The_Email_Client
             if (Regex.IsMatch(email, Constants.VALIDEMAILPATTERN, RegexOptions.IgnoreCase)) return true;
             else
             {
-                MessageBox.Show("Invalid Email Format", "Error!");
+                System.Windows.MessageBox.Show("Invalid Email Format", "Error!");
                 return false;
             }
         }
@@ -46,7 +50,7 @@ namespace The_Email_Client
             if (Regex.IsMatch(password, Constants.VALIDPASSWORDPATTERN)) return true;
             else
             {
-                MessageBox.Show("Invalid Password Format. Must Contain at least 1 captial letter, 1 lowercase letters, 1 digit and be a minimum of 8 characters in length.", "Error!");
+                System.Windows.MessageBox.Show("Invalid Password Format. Must Contain at least 1 captial letter, 1 lowercase letters, 1 digit and be a minimum of 8 characters in length.", "Error!");
                 return false;
             }
         }

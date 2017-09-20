@@ -21,10 +21,9 @@ namespace The_Email_Client
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class ProfilesWindow : Window
     {
         protected BindingExpression[] expressions;
-        public Settings SettingsObject { get; set; }
         public List<string> SettingsResetValues { get; set; }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -45,15 +44,14 @@ namespace The_Email_Client
         }
 
 
-        public SettingsWindow(Settings settings)
+        public ProfilesWindow()
         {
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
 
             SettingsResetValues = new List<string>();
-            if (settings != null) {
-                SettingsObject = settings;
-                SettingsResetValues.Add(settings.Name); SettingsResetValues.Add(settings.Port);
-                SettingsResetValues.Add(settings.Server);
+            if (Common.Profile != null) {
+                SettingsResetValues.Add(Common.Profile.Name); SettingsResetValues.Add(Common.Profile.Port);
+                SettingsResetValues.Add(Common.Profile.Server);
             }
             else {
                 MessageBox.Show("Settings could not be found", "Error!");
@@ -61,7 +59,7 @@ namespace The_Email_Client
             }
             InitializeComponent();
 
-            DataContext = SettingsObject;
+            DataContext = Common.Profile;
             BindingExpression EmailBind = UserEmailBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression NameBind = UserNameBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression PortBind = PortBox.GetBindingExpression(TextBox.TextProperty);
@@ -73,7 +71,7 @@ namespace The_Email_Client
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
-            SettingsObject.UpdateDatabasefromSettings(SettingsObject);
+            Common.Profile.UpdateDatabasefromSettings(Common.Profile);
             SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             Title = "Settings Window - Saved";
         }
@@ -82,7 +80,7 @@ namespace The_Email_Client
         {
             Title = "Settings Window - Saved";
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
-            SettingsObject.UpdateDatabasefromSettings(SettingsObject);
+            Common.Profile.UpdateDatabasefromSettings(Common.Profile);
             Close();
         }
         private void TextChanged(object sender, TextChangedEventArgs e)
@@ -92,7 +90,7 @@ namespace The_Email_Client
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{Common.Email}'", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE Email='{Common.Profile.Email}'", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -129,8 +127,6 @@ namespace The_Email_Client
             UserNameBox.Text = SettingsResetValues[0];
             PortBox.Text = SettingsResetValues[1];
             ServerBox.Text = SettingsResetValues[2];
-            //foreach (BindingExpression bind in expressions) bind.UpdateSource();
-            //SettingsObject.UpdateDatabasefromSettings(SettingsObject);
         }
     }
     

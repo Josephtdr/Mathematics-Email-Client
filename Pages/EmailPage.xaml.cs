@@ -21,41 +21,31 @@ namespace The_Email_Client
     public partial class EmailPage : Page
     {
         public List<Contacts> SelectedContacts = new List<Contacts>();
-
-        List<string> Attachments = new List<string>();
-        System.Windows.Controls.Button[] buttons;
-
-        long TotalFileLength = 0;
+        
         protected Action ShowLoginPage { get; set; }
-        public Settings settings { get; set; }
-
-
+       
         public EmailPage(Action ShowLoginPage)
         {
-            settings = new Settings();
             this.ShowLoginPage = ShowLoginPage;
             InitializeComponent();
-            buttons = new System.Windows.Controls.Button[] { SendButton, SettingsButton, AttachmentButton, ClearAttachments_Button };
             MBValueLable.Foreground = Brushes.Green;
         }
 
         public void GetEmail(string email)
         {
-            settings = settings.UpdateSettingsfromDB(email);
+            Common.Profile.UpdateSettingsfromDB(Common.Profile, Common.Profile.UserName);
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            Common.TempPassword = "";
-            settings = new Settings();
+            Common.Profile = new Profiles();
             ShowLoginPage?.Invoke();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingswindow = new SettingsWindow(settings);
+            ProfilesWindow settingswindow = new ProfilesWindow();
             settingswindow.ShowDialog();
-            settings = settingswindow.SettingsObject;
         }
 
         private void UpdateMBValue(long bytes)
@@ -65,57 +55,55 @@ namespace The_Email_Client
             if (MB < 10) MBValueLable.Foreground = Brushes.Green;
             else if (MB < 20) MBValueLable.Foreground = Brushes.Yellow;
             else if (MB <= 25) MBValueLable.Foreground = Brushes.Red;
+            if (bytes != 0) ClearAttachments_Button.IsEnabled = true;
         }
 
         private void AttachmentButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                if (new FileInfo(openFileDialog.FileName).Length > 25 * Math.Pow(1024, 2) || TotalFileLength + new FileInfo(openFileDialog.FileName).Length > 25 * Math.Pow(1024, 2))
-                { System.Windows.Forms.MessageBox.Show("The total size of all included files excedes the limit of 25MB.", "Files too Large"); }
-                else
-                {
-                    TotalFileLength += (new FileInfo(openFileDialog.FileName).Length);
-                    Attachments.Add(openFileDialog.FileName);
-                    ClearAttachments_Button.IsEnabled = true;
-                    UpdateMBValue(TotalFileLength);
-                }
-            }
-
+            MangerAttachmentsWindow MangerAttachmentsWindow = new MangerAttachmentsWindow();
+            MangerAttachmentsWindow.ShowDialog();
+            UpdateMBValue(Common.TotalFileLength);
         }
 
         private void ClearAttachments_Button_Click(object sender, RoutedEventArgs e)
         {
-            Attachments.Clear();
+            Common.Attachments.Clear();
             ClearAttachments_Button.IsEnabled = false;
-            TotalFileLength = 0;
-            UpdateMBValue(TotalFileLength);
+            Common.TotalFileLength = 0;
+            UpdateMBValue(Common.TotalFileLength);
         }
 
+        private void ClearPage()
+        {
+            BCCBox.Clear(); CCBox.Clear(); RecipientsBox.Clear();
+            BodyBox.Document.Blocks.Clear(); SubjectBox.Clear(); 
+            Common.Attachments.Clear();
+            Common.AttachmentsSource.Clear();
+            ClearAttachments_Button.IsEnabled = false;
+            Common.TotalFileLength = 0;
+            UpdateMBValue(Common.TotalFileLength);
+        }
         private void send_button_Click(object sender, RoutedEventArgs e)
         {
             StatusLabel.Content = "Sending...";
-
-            foreach (System.Windows.Controls.Button Button in buttons) Button.IsEnabled = false;
-
+            
             try
             {
                 Email tempemail = new Email()
                 {
-                    Server = settings.Server,
-                    Port = Convert.ToInt16(settings.Port),
-                    UserEmail = settings.Email,
-                    UserPassword = Common.TempPassword,
-                    UserName = settings.Name,
+                    Server = Common.Profile.Server,
+                    Port = Convert.ToInt16(Common.Profile.Port),
+                    UserEmail = Common.Profile.Email,
+                    UserPassword = Common.Profile.Password,
+                    UserName = Common.Profile.Name,
                     Recipients = RecipientsBox.Text.Split(';'),
                     CC = CCBox.Text.Split(';'),
                     BCC = BCCBox.Text.Split(';'),
                     Subject = SubjectBox.Text,
                     Body = new TextRange(BodyBox.Document.ContentStart, BodyBox.Document.ContentEnd).Text,
-                    AttachmentNames = Attachments
+                    AttachmentNames = Common.Attachments
                 };
-
+                //tempemail.Send();
                 new Thread(new ParameterizedThreadStart(delegate { tempemail.Send(); })) { IsBackground = true }.Start();
             }
             catch (Exception error)
@@ -124,12 +112,8 @@ namespace The_Email_Client
             }
             finally
             {
-                StatusLabel.Dispatcher.Invoke(delegate
-                {
-                    StatusLabel.Content = "Sent";
-                    foreach (System.Windows.Controls.Button Button in buttons) Button.IsEnabled = true;
-                    if (Attachments.Count == 0) ClearAttachments_Button.IsEnabled = false;
-                });
+                StatusLabel.Content = "Sent";
+                ClearPage();
             }
         }
 

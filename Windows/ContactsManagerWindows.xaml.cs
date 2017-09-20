@@ -40,16 +40,16 @@ namespace The_Email_Client
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
                 && addcontactButton.IsEnabled) addcontact(); };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
-            updatetable();
+            updatetable("","");
         }
 
-        public void updatetable()
+        public void updatetable(string searchemailValue, string searchnameValue)
         {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try
             {
                 cnctDTB.Open();
-                string InsertSql = "SELECT * FROM Adresses";
+                string InsertSql = $"SELECT * FROM Contacts WHERE Profile_ID={Common.Profile.ID} AND Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
                 OleDbCommand cmdInsert = new OleDbCommand(InsertSql, cnctDTB);
                 OleDbDataReader reader = cmdInsert.ExecuteReader();
 
@@ -74,15 +74,15 @@ namespace The_Email_Client
 
         private void removecontactButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult stoil = MessageBox.Show("Are you sure you want to delete the contact(s).", "Question?", MessageBoxButton.YesNo);
-            if ( stoil == MessageBoxResult.Yes)
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the contact(s).", "Question?", MessageBoxButton.YesNo);
+            if ( result == MessageBoxResult.Yes)
             {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
                     cnctDTB.Open();
                     foreach (Contacts contact in contactsDataGrid.SelectedItems)
                     {
-                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Adresses WHERE Email ='<div>{contact.EmailAddress}</div>';", cnctDTB);
+                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Contacts WHERE Email ='{contact.EmailAddress}' AND Profile_ID={Common.Profile.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -92,9 +92,15 @@ namespace The_Email_Client
                 finally {
                     cnctDTB.Close();
                 }
-                updatetable();
+                searchEmailTextBox.Clear(); searchNameTextBox.Clear();
+                updatetable("","");
             }
         }
+        private void searchTextBoxes_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            updatetable(searchEmailTextBox.Text, searchNameTextBox.Text);
+        }
+
         private void addcontactButton_Click(object sender, RoutedEventArgs e)
         {
             addcontact();
@@ -108,7 +114,7 @@ namespace The_Email_Client
                 try
                 {
                     cnctDTB.Open();
-                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Adresses (PersonName, Email) VALUES ('<div>{ nametextbox.Text }</div>','<div>{ emailtextbox.Text }</div>');", cnctDTB);
+                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Contacts (Name, Email, Profile_ID) VALUES ('{ nametextbox.Text }','{ emailtextbox.Text }',{Common.Profile.ID});", cnctDTB);
                     cmd.ExecuteNonQuery();
                 }
                 catch (Exception err)
@@ -119,9 +125,9 @@ namespace The_Email_Client
                 {
                     cnctDTB.Close();
                 }
-                emailtextbox.Clear();
-                nametextbox.Clear();
-                updatetable();
+                emailtextbox.Clear(); searchNameTextBox.Clear();
+                nametextbox.Clear(); searchEmailTextBox.Clear(); 
+                updatetable("","");
             }
         }
 
