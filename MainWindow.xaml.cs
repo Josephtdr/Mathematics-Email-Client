@@ -25,7 +25,6 @@ namespace The_Email_Client
         protected EmailPage EmailPage { get; set; }
         protected LoginPage LoginPage { get; set; }
         protected RegistrationPage RegistrationPage { get; set; }
-        protected Page PreviousPage { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -41,8 +40,8 @@ namespace The_Email_Client
 
         public void ShowEmailPage()
         {
-            //if (Common.Profile.Email == "admin") Common.Profile.Defaults();
-            EmailPage.GetEmail(Common.Profile.Email);
+            //if (Common.Profile.UserName == "admin") Common.Profile.Defaults();
+            Common.Profile.UpdateSettingsfromDB(Common.Profile, Common.Profile.UserName);
             ShowPage(EmailPage);
         }
 
@@ -58,7 +57,6 @@ namespace The_Email_Client
 
         protected void ShowPage(Page page)
         {
-            PreviousPage = (Page)PageFrame.Content;
             PageFrame.Content = page;
         }
     }

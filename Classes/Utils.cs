@@ -104,7 +104,7 @@ namespace The_Email_Client
             return savedPasswordHash;
         }
 
-        public static bool VerifyHash(string UserName, string value, int passwordorhash)
+        public static bool VerifyHash(string UserName, string stringtoverify, int passwordorhash)
         {
             string emailorpassword = "";
             if (passwordorhash == 1) emailorpassword = "Password";
@@ -132,7 +132,7 @@ namespace The_Email_Client
             byte[] salt = new byte[16];
             Array.Copy(hashBytes, 0, salt, 0, 16);
             //Compute the hash on the password the user entered
-            var pbkdf2 = new Rfc2898DeriveBytes(value, salt, 10000);
+            var pbkdf2 = new Rfc2898DeriveBytes(stringtoverify, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
             //Compare the results
             for (int i = 0; i < 20; i++)
@@ -142,8 +142,8 @@ namespace The_Email_Client
                     return false;
                 }
 
-            if (passwordorhash == 1) Common.Profile.Password = value;
-            if (passwordorhash == 0) Common.Profile.Email = value;
+            if (passwordorhash == 1) Common.Profile.Password = stringtoverify;
+            if (passwordorhash == 0) Common.Profile.Email = stringtoverify;
             Common.Profile.UserName = UserName;
             return true;
         }
@@ -188,32 +188,28 @@ namespace The_Email_Client
                 {
 
                     if (Recipients != null) foreach (string recipient in Recipients) message.To.Add(new MailAddress(recipient));
-                    if (CC[0] != "") foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
-                    if (BCC[0] != "") foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
+                    if (CC != null) if(CC[0] != "") foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
+                    if (BCC != null) if(BCC[0] != "") foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
 
-                    foreach (string Attachment in AttachmentNames)
-                    {
-                        Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
-                        ContentDisposition disposition = attachment.ContentDisposition;
-                        disposition.CreationDate = System.IO.File.GetCreationTime(Attachment);
-                        disposition.ModificationDate = System.IO.File.GetLastWriteTime(Attachment);
-                        disposition.ReadDate = System.IO.File.GetLastAccessTime(Attachment);
-                        disposition.FileName = System.IO.Path.GetFileName(Attachment);
-                        disposition.Size = new FileInfo(Attachment).Length;
-                        disposition.DispositionType = DispositionTypeNames.Attachment;
-                        message.Attachments.Add(attachment);
-                        Console.WriteLine(Attachment);
-                    }
-
-
+                    if(AttachmentNames != null)
+                        foreach (string Attachment in AttachmentNames)
+                        {
+                            Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
+                            ContentDisposition disposition = attachment.ContentDisposition;
+                            disposition.CreationDate = System.IO.File.GetCreationTime(Attachment);
+                            disposition.ModificationDate = System.IO.File.GetLastWriteTime(Attachment);
+                            disposition.ReadDate = System.IO.File.GetLastAccessTime(Attachment);
+                            disposition.FileName = System.IO.Path.GetFileName(Attachment);
+                            disposition.Size = new FileInfo(Attachment).Length;
+                            disposition.DispositionType = DispositionTypeNames.Attachment;
+                            message.Attachments.Add(attachment);
+                            Console.WriteLine(Attachment);
+                        }
+                    
                     smtp.Send(message);
-
-                }
+                 }
             }
-            catch (Exception error)
-            {
-                System.Windows.Forms.MessageBox.Show(error.ToString());
-            }
+            catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.ToString()); }
         }
     }
     

@@ -30,11 +30,7 @@ namespace The_Email_Client
             InitializeComponent();
             MBValueLable.Foreground = Brushes.Green;
         }
-
-        public void GetEmail(string email)
-        {
-            Common.Profile.UpdateSettingsfromDB(Common.Profile, Common.Profile.UserName);
-        }
+        
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {

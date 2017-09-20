@@ -79,3 +79,11 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Win
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ResetPasswordPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\EnterResetCodePage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Windows\ForgotPasswordWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ResetPasswordPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\EnterResetCodePage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Windows\ForgotPasswordWindow.baml

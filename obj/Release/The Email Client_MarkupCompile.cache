@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\obj\Release\
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Release\
 The_Email_Client
 none
 false
 TRACE
-C:\Users\joseph.dowling\Documents\computing\Coding stuff\EMail Shutff\The Email Client\App.xaml
-11151548125
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\App.xaml
+101377023652
 
-5-2017746502
+1762943192
 15767094614
-MainWindow.xaml;
+Pages\ForgottonPasswordPage.xaml;Windows\ForgotPasswordWindow.xaml;Windows\MangerAttachmentsWindow.xaml;Windows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\selectingcontactWindow.xaml;Windows\ProfilesWindow.xaml;
 
 False
 

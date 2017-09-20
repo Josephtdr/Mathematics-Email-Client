@@ -58,5 +58,11 @@ namespace The_Email_Client
         {
             ShowRegistationPage?.Invoke();
         }
+
+        private void ForgottenPassword_Click(object sender, RoutedEventArgs e)
+        {
+            ForgotPasswordWindow forgotPasswordWindow = new ForgotPasswordWindow();
+            forgotPasswordWindow.ShowDialog();
+        }
     }
 }

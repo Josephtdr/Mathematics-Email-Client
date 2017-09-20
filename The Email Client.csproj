@@ -60,6 +60,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ResettingPassword\Pages\ResetPasswordPage.xaml.cs">
+      <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResettingPassword\Pages\EnterResetCodePage.xaml.cs">
+      <DependentUpon>EnterResetCodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResettingPassword\Pages\ForgottonPasswordPage.xaml.cs">
+      <DependentUpon>ForgottonPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResettingPassword\Windows\ForgotPasswordWindow.xaml.cs">
+      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MangerAttachmentsWindow.xaml.cs">
       <DependentUpon>MangerAttachmentsWindow.xaml</DependentUpon>
     </Compile>
@@ -84,6 +96,22 @@
     <Compile Include="Windows\ProfilesWindow.xaml.cs">
       <DependentUpon>ProfilesWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ResettingPassword\Pages\ResetPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResettingPassword\Pages\EnterResetCodePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResettingPassword\Pages\ForgottonPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResettingPassword\Windows\ForgotPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\MangerAttachmentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +185,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="emailicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ResettingPassword\Classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
