@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         
         
-    Title="Settings Window" Height="213.357" Width="338.667"  ResizeMode="NoResize">
+    Title="Settings Window" Height="175.584" Width="338.667"  ResizeMode="NoResize">
 
     <Grid Margin="0,1,0,-1" Background="#FFD9D0FF">
         <Grid.ColumnDefinitions>
@@ -28,9 +28,9 @@
         <TextBox x:Name="ServerBox" Height="23" Margin="0,58,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Server, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
         <TextBox x:Name="PortBox" Height="23" Margin="0,82,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Port, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
 
-        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="69" Background="#FFF0F0F0" Click="ResetButton_Click" Margin="0,0,192,31" IsEnabled="False"/>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Height="26"  VerticalAlignment="Bottom" Width="43" Click="SaveButton_Click" Background="#FFF0F0F0" IsEnabled="False" Margin="0,0,113,31" />
-        <Button x:Name="SaveExitButton" Content="Save &amp; Exit" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="69" Click="SaveExitButton_Click" Background="#FFF0F0F0" Margin="0,0,10,31" IsEnabled="False" />
+        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="88" Background="#FFF0F0F0" Click="ResetButton_Click" Margin="0,0,173,0" IsEnabled="False"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Height="26"  VerticalAlignment="Bottom" Width="74" Click="SaveButton_Click" Background="#FFF0F0F0" IsEnabled="False" Margin="0,0,99,0" />
+        <Button x:Name="SaveExitButton" Content="Save &amp; Exit" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="89" Click="SaveExitButton_Click" Background="#FFF0F0F0" Margin="0,0,10,0" IsEnabled="False" />
 
 
     </Grid>

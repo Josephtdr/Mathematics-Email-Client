@@ -42,13 +42,11 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pag
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\SettingsWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ContactsManagerWindows.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\EmailPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\SettingsWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe.config
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.exe
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.pdb
@@ -77,3 +75,7 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\Profiles
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\ProfilesWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.baml

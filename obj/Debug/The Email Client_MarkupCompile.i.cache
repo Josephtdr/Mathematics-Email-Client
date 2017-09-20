@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\
 The_Email_Client
 none
 false
 DEBUG;TRACE
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\App.xaml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\App.xaml
 82051805408
 
-19-265301727
+19-1206404941
 15767094614
 Windows\MangerAttachmentsWindow.xaml;Windows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\selectingcontactWindow.xaml;Windows\ProfilesWindow.xaml;
 

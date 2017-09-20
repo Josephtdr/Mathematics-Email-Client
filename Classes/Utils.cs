@@ -9,6 +9,10 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.IO;
 using System.Net;
+using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 namespace The_Email_Client
 {
     public class Profiles
@@ -212,4 +216,5 @@ namespace The_Email_Client
             }
         }
     }
+    
 }

@@ -33,10 +33,10 @@ namespace The_Email_Client
         }
         private void updateTable()
         {
-            contactsDataGrid.Items.Clear();
+            fileDataGrid.Items.Clear();
             foreach (OpenFileDialog attachment in Common.AttachmentsSource)
             {
-                contactsDataGrid.Items.Add(new File
+                fileDataGrid.Items.Add(new File
                 {
                     FileName = attachment.FileName,
                     FileLength = new FileInfo(attachment.FileName).Length
@@ -75,8 +75,21 @@ namespace The_Email_Client
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
+            List<OpenFileDialog> FilesforDeletion = new List<OpenFileDialog>();
+            foreach (File file in fileDataGrid.SelectedItems)
+            {
+                foreach (OpenFileDialog File in Common.AttachmentsSource)
+                    if (file.FileName == File.FileName)
+                        FilesforDeletion.Add(File);  
+                Common.TotalFileLength -= (new FileInfo(file.FileName).Length);
+                Common.Attachments.Remove(file.FileName);
+            }
+            foreach(OpenFileDialog File in FilesforDeletion)
+                Common.AttachmentsSource.Remove(File);
+            
+            UpdateMBValue(Common.TotalFileLength);
+            updateTable();
+         }
 
         private void RemoveAllButton_Click(object sender, RoutedEventArgs e)
         {
