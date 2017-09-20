@@ -61,7 +61,7 @@ namespace The_Email_Client
 
         private void ForgottenPassword_Click(object sender, RoutedEventArgs e)
         {
-            ForgotPasswordWindow forgotPasswordWindow = new ForgotPasswordWindow();
+            ResettingPasswordWindow forgotPasswordWindow = new ResettingPasswordWindow();
             forgotPasswordWindow.ShowDialog();
         }
     }

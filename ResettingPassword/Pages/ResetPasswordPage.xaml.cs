@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,26 @@ namespace The_Email_Client
         {
             InitializeComponent();
             this.Close = Close;
+        }
+
+        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(PasswordBox.Password == PasswordConfirmationBox.Password)
+            {
+                bool finished = false;
+                OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+                try
+                {
+                    cnctDTB.Open();
+                    OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET [Password] ='{ Hashing.HashString(PasswordBox.Password) }' Where UserName='{ ForgottonPasswordPage.UserName }';", cnctDTB);
+                    cmd.ExecuteNonQuery();
+                    finished = true;
+                }
+                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                finally { cnctDTB.Close(); }
+                if(finished) Close();
+            }
+            else MessageBox.Show("Passwords Do not Match", "Error!");
         }
     }
 }

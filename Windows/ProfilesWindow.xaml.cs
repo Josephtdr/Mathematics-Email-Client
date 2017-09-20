@@ -51,7 +51,7 @@ namespace The_Email_Client
             SettingsResetValues = new List<string>();
             if (Common.Profile != null) {
                 SettingsResetValues.Add(Common.Profile.Name); SettingsResetValues.Add(Common.Profile.Port);
-                SettingsResetValues.Add(Common.Profile.Server);
+                SettingsResetValues.Add(Common.Profile.Server); SettingsResetValues.Add(Common.Profile.UserName);
             }
             else {
                 MessageBox.Show("Settings could not be found", "Error!");
@@ -61,10 +61,11 @@ namespace The_Email_Client
 
             DataContext = Common.Profile;
             BindingExpression EmailBind = UserEmailBox.GetBindingExpression(TextBox.TextProperty);
+            BindingExpression UserNameBind = UserUserNameBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression NameBind = UserNameBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression PortBind = PortBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression ServerBind = ServerBox.GetBindingExpression(TextBox.TextProperty);
-            expressions = new BindingExpression[] { EmailBind, NameBind, PortBind, ServerBind};
+            expressions = new BindingExpression[] { EmailBind, UserNameBind, NameBind, PortBind, ServerBind};
         }
 
 
@@ -118,7 +119,9 @@ namespace The_Email_Client
                 SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             }
             if (UserNameBox.Text != SettingsResetValues[0] || PortBox.Text != SettingsResetValues[1]
-               || ServerBox.Text != SettingsResetValues[2]) ResetButton.IsEnabled = true;
+               || ServerBox.Text != SettingsResetValues[2] || UserUserNameBox.Text != SettingsResetValues[3])
+                ResetButton.IsEnabled = true;
+
             else ResetButton.IsEnabled = false;
         }
 
@@ -127,6 +130,13 @@ namespace The_Email_Client
             UserNameBox.Text = SettingsResetValues[0];
             PortBox.Text = SettingsResetValues[1];
             ServerBox.Text = SettingsResetValues[2];
+            UserUserNameBox.Text = SettingsResetValues[3];
+        }
+
+        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResettingPasswordWindow ForgotPasswordWindow = new ResettingPasswordWindow();
+            ForgotPasswordWindow.ShowDialog();
         }
     }
     

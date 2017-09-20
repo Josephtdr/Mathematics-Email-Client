@@ -23,6 +23,7 @@ namespace The_Email_Client
     public partial class ForgottonPasswordPage : Page
     {
         public static int ResetCode { get; set; }
+        public static string UserName { get; set; }
         protected Action ShowenterResetCodePage { get; set; }
         public ForgottonPasswordPage(Action ShowenterResetCodePage)
         {
@@ -34,6 +35,7 @@ namespace The_Email_Client
         {
             if (Hashing.VerifyHash(UserNameTextBox.Text,EmailTextBox.Text,0))
             {
+                UserName = UserNameTextBox.Text;
                 Random rnd = new Random();
                 ResetCode = rnd.Next(10000000, 99999999);
                 string[] emails = new string[1]; emails[0] = EmailTextBox.Text;
