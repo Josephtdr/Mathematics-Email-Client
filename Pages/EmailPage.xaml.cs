@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace The_Email_Client
 {
@@ -64,6 +65,7 @@ namespace The_Email_Client
         private void ClearAttachments_Button_Click(object sender, RoutedEventArgs e)
         {
             Common.Attachments.Clear();
+            Common.AttachmentsSource.Clear();
             ClearAttachments_Button.IsEnabled = false;
             Common.TotalFileLength = 0;
             UpdateMBValue(Common.TotalFileLength);
@@ -78,10 +80,13 @@ namespace The_Email_Client
             ClearAttachments_Button.IsEnabled = false;
             Common.TotalFileLength = 0;
             UpdateMBValue(Common.TotalFileLength);
+            StatusLabel.Content = "Sent";
+            LoadingGif.Visibility = Visibility.Hidden;
         }
         private void send_button_Click(object sender, RoutedEventArgs e)
         {
             StatusLabel.Content = "Sending...";
+            LoadingGif.Visibility = Visibility.Visible;
             List<string> Attachments = Common.Attachments;
             Email tempemail = new Email()
             {
@@ -97,33 +102,24 @@ namespace The_Email_Client
                 Body = new TextRange(BodyBox.Document.ContentStart, BodyBox.Document.ContentEnd).Text,
                 AttachmentNames = Common.Attachments
             };
+            new Thread(new ParameterizedThreadStart(SendEmail)) { IsBackground = true }.Start(tempemail);   
+        }
+
+        private void SendEmail(object email)
+        {
             try
-            { 
-                //tempemail.Send();
-                new Thread(new ParameterizedThreadStart(delegate { tempemail.Send(); })) { IsBackground = true }.Start();
-            }
-            catch (Exception error)
             {
-                System.Windows.Forms.MessageBox.Show(error.Message);
+                ((Email)email).Send();
+                Dispatcher.Invoke(() => ClearPage());
             }
-            finally
-            {
-                StatusLabel.Content = "Sent";
-            }
-            ClearPage();
+            catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
         }
 
         private void addemailstotextboxes(Contacts[] contacts, System.Windows.Controls.TextBox textbox)
         {
             foreach (Contacts contact in contacts)
-            {
-
-                if (textbox.Text == null || textbox.Text == "") { textbox.Text += (contact.EmailAddress); }
-                else
-                {
-                    textbox.Text += (";" + contact.EmailAddress);
-                }
-            }
+                if (textbox.Text == null || textbox.Text == "") textbox.Text += (contact.EmailAddress);
+                else textbox.Text += (";" + contact.EmailAddress);
         }
 
         private void addemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)
@@ -159,5 +155,10 @@ namespace The_Email_Client
             contactsmanagerwindow.ShowDialog();
         }
 
+        private void DraftsButton_Click(object sender, RoutedEventArgs e)
+        {
+            DraftsWindow DraftsWindow = new DraftsWindow();
+            DraftsWindow.ShowDialog();
+        }
     }
 }

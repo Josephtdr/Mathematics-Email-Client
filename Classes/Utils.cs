@@ -84,15 +84,15 @@ namespace The_Email_Client
         }
     }
 
-    public class Hashing
+    public class Encryption
     {
-        public static string HashString(string password)
+        public static string HashString(string stringtohash)
         {
             //Create the salt value with a cryptographic PRNG
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
             //Create the Rfc2898DeriveBytes and get the hash value
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            var pbkdf2 = new Rfc2898DeriveBytes(stringtohash, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
             //Combine the salt and password bytes for later use
             byte[] hashBytes = new byte[36];
@@ -101,6 +101,49 @@ namespace The_Email_Client
             //Turn the combined salt+hash into a string for storage
             string savedPasswordHash = Convert.ToBase64String(hashBytes);
             return savedPasswordHash;
+        }
+
+        public static byte[] BinaryEncryption(string stringtoencrypt, string Password)
+        {
+            Random randamanz = new Random(Password.GetHashCode());
+
+            byte[] data = new byte[64];
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = i < stringtoencrypt.Length ? (byte)stringtoencrypt[i] : (byte)0x00;
+                data[i] ^= i < Password.Length ? (byte)Password[i] : (byte)randamanz.Next(0x00, 0xFF);
+            }
+
+            for (int i = 0; i < Password.Length; i++)
+            {
+                data[i % data.Length] ^= (byte)Password[i];
+            }
+
+            return data;
+        }
+
+        public static string DecryptString(byte[] data, string Password)
+        {
+            Random random = new Random(Password.GetHashCode());
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] ^= i < Password.Length ? (byte)Password[i] : (byte)random.Next(0x00,0xFF);
+            }
+            for (int i = 0; i < Password.Length; i++)
+            {
+                data[i % data.Length] ^= (byte)Password[i];
+            }
+
+            string result = "";
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] != 0x00) result += (char)data[i];
+            }
+
+            return result;
         }
 
         public static bool VerifyHash(string UserName, string stringtoverify, int passwordorhash)

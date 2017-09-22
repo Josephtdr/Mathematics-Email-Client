@@ -54,12 +54,19 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Windows\EmailPageWindows\DraftsWindow.xaml.cs">
+      <DependentUpon>DraftsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResettingPassword\Pages\ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
     </Compile>
@@ -72,12 +79,12 @@
     <Compile Include="ResettingPassword\Windows\ResettingPasswordWindow.xaml.cs">
       <DependentUpon>ResettingPasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MangerAttachmentsWindow.xaml.cs">
+    <Compile Include="Windows\EmailPageWindows\MangerAttachmentsWindow.xaml.cs">
       <DependentUpon>MangerAttachmentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\Constants.cs" />
-    <Compile Include="Windows\ContactsManagerWindows.xaml.cs">
+    <Compile Include="Windows\EmailPageWindows\ContactsManagerWindows.xaml.cs">
       <DependentUpon>ContactsManagerWindows.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EmailPage.xaml.cs">
@@ -89,13 +96,17 @@
     <Compile Include="Pages\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\selectingcontactWindow.xaml.cs">
+    <Compile Include="Windows\EmailPageWindows\selectingcontactWindow.xaml.cs">
       <DependentUpon>selectingcontactWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Utils.cs" />
-    <Compile Include="Windows\ProfilesWindow.xaml.cs">
+    <Compile Include="Windows\EmailPageWindows\ProfilesWindow.xaml.cs">
       <DependentUpon>ProfilesWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\EmailPageWindows\DraftsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ResettingPassword\Pages\ResetPasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,11 +123,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MangerAttachmentsWindow.xaml">
+    <Page Include="Windows\EmailPageWindows\MangerAttachmentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ContactsManagerWindows.xaml">
+    <Page Include="Windows\EmailPageWindows\ContactsManagerWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,11 +155,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\selectingcontactWindow.xaml">
+    <Page Include="Windows\EmailPageWindows\selectingcontactWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ProfilesWindow.xaml">
+    <Page Include="Windows\EmailPageWindows\ProfilesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +182,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -188,6 +200,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ResettingPassword\Classes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pages\sendingemail.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

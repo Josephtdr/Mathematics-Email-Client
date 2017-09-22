@@ -37,7 +37,7 @@ namespace The_Email_Client
 
         private void SendResetEmail()
         {
-            if (Hashing.VerifyHash(UserNameTextBox.Text, EmailTextBox.Text, 0))
+            if (Encryption.VerifyHash(UserNameTextBox.Text, EmailTextBox.Text, 0))
             {
                 UserName = UserNameTextBox.Text;
                 Random rnd = new Random();

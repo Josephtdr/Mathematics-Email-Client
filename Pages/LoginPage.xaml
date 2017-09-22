@@ -33,5 +33,6 @@
         <Label x:Name="Titlelabel" Content="Log In" HorizontalAlignment="Center" Height="27" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center" Width="44"/>
         <Label x:Name="UserNamelabel" Content="UserName" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Width="65" Margin="0,0,0,0"/>
         <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center"><Hyperlink Click="ForgottenPassword_Click">Forgotten Your Password?</Hyperlink></TextBlock>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" Click="Button_Click"/>
     </Grid>
 </Page>

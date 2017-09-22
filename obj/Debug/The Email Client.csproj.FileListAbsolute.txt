@@ -47,34 +47,6 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pag
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe.config
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.exe
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.pdb
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.pdb
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.csprojResolveAssemblyReference.cache
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\ContactsManagerWindows.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\EmailPage.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\LoginPage.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\RegistrationPage.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\selectingcontactWindow.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\App.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client_MarkupCompile.cache
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client_MarkupCompile.lref
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\ContactsManagerWindows.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\EmailPage.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\LoginPage.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\RegistrationPage.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\selectingcontactWindow.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.g.resources
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The_Email_Client.Properties.Resources.resources
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.csproj.GenerateResource.Cache
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\ProfilesWindow.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\ProfilesWindow.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.baml
@@ -87,3 +59,43 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Res
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Windows\ResettingPasswordWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Windows\ResettingPasswordWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe.config
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.pdb
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfAnimatedGif.dll
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfAnimatedGif.xml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\DraftsWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Pages\ResetPasswordPage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Pages\EnterResetCodePage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Windows\ResettingPasswordWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\MangerAttachmentsWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\ContactsManagerWindows.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\EmailPage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\LoginPage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\RegistrationPage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\selectingcontactWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\ProfilesWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\App.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client_MarkupCompile.cache
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client_MarkupCompile.lref
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\DraftsWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Pages\ResetPasswordPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Pages\EnterResetCodePage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\ResettingPassword\Windows\ResettingPasswordWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\MangerAttachmentsWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\ContactsManagerWindows.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\EmailPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\LoginPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Pages\RegistrationPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\selectingcontactWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Windows\EmailPageWindows\ProfilesWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.g.resources
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The_Email_Client.Properties.Resources.resources
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.csproj.GenerateResource.Cache
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.exe
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.pdb
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.csprojResolveAssemblyReference.cache

@@ -30,6 +30,7 @@ namespace The_Email_Client
         {
             InitializeComponent();
             DataContext = this;
+            UpdateMBValue(Common.TotalFileLength);
         }
         private void updateTable()
         {

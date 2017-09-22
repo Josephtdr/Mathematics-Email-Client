@@ -43,33 +43,33 @@ namespace The_Email_Client
         
         private void SignUpbutton_Click(object sender, RoutedEventArgs e)
         {
-            if (Common.inccorectemailformat(EmailTextBox.Text) && EmailAlreadyExists(EmailTextBox.Text)
+            if (Common.inccorectemailformat(EmailTextBox.Text)
                 && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch())
                 RegisterUser();
         }
 
         private bool EmailAlreadyExists(string Email)
         {
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand("SELECT Email FROM Profiles", cnctDTB);
-                OleDbDataReader reader = cmd.ExecuteReader();
+        //    OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+        //    try
+        //    {
+        //        cnctDTB.Open();
+        //        OleDbCommand cmd = new OleDbCommand("SELECT Email FROM Profiles", cnctDTB);
+        //        OleDbDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read()) if (Email == Common.Cleanstr(reader[0])) {
-                        MessageBox.Show("Email Already Exists!", "Error!");
-                        return false; }             
-            }
-            catch (Exception err)
-            {
+        //        while (reader.Read()) if (Email == Common.Cleanstr(reader[0])) {
+        //                MessageBox.Show("Email Already Exists!", "Error!");
+        //                return false; }             
+        //    }
+        //    catch (Exception err)
+        //    {
 
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
+        //        System.Windows.MessageBox.Show(err.Message);
+        //    }
+        //    finally
+        //    {
+        //        cnctDTB.Close();
+        //    }
             return true;
         }
 
@@ -111,12 +111,15 @@ namespace The_Email_Client
        
         private void RegisterUser()
         {
+            string email = EmailTextBox.Text; 
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            string hashedPassword = Hashing.HashString(Passwordbox.Password);
+            string hashedPassword = Encryption.HashString(Passwordbox.Password;);
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Profiles ([Name], [Email], [Port], [Server], [Password], [UserName]) VALUES ('{NameTextBox.Text}','{Hashing.HashString(EmailTextBox.Text)}',587,'smtp.gmail.com','{hashedPassword}','{UserNameTextBox.Text}');", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Profiles ([Name], [Email], [Port], [Server], [Password], [UserName]) VALUES " + 
+                    $"('{Encryption.BinaryEncryption(NameTextBox.Text, Password)}','{Encryption.HashString(EmailTextBox.Text)}"+
+                    $"',587,'smtp.gmail.com','{hashedPassword}','{UserNameTextBox.Text}');", cnctDTB);
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Successfully registered account.", "Success!");

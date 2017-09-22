@@ -40,7 +40,7 @@ namespace The_Email_Client
                 try
                 {
                     cnctDTB.Open();
-                    OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET [Password] ='{ Hashing.HashString(PasswordBox.Password) }' Where UserName='{ ForgottonPasswordPage.UserName }';", cnctDTB);
+                    OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET [Password] ='{ Encryption.HashString(PasswordBox.Password) }' Where UserName='{ ForgottonPasswordPage.UserName }';", cnctDTB);
                     cmd.ExecuteNonQuery();
                     finished = true;
                 }

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\
 The_Email_Client
 none
 false
 DEBUG;TRACE
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\App.xaml
-12-1530394731
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\App.xaml
+131656764184
 
-23435113814
-15767094614
-ResettingPassword\Pages\ResetPasswordPage.xaml;ResettingPassword\Pages\EnterResetCodePage.xaml;ResettingPassword\Pages\ForgottonPasswordPage.xaml;ResettingPassword\Windows\ResettingPasswordWindow.xaml;Windows\MangerAttachmentsWindow.xaml;Windows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\selectingcontactWindow.xaml;Windows\ProfilesWindow.xaml;
+24-147293059
+161557602243
+Windows\EmailPageWindows\DraftsWindow.xaml;ResettingPassword\Pages\ResetPasswordPage.xaml;ResettingPassword\Pages\EnterResetCodePage.xaml;ResettingPassword\Pages\ForgottonPasswordPage.xaml;ResettingPassword\Windows\ResettingPasswordWindow.xaml;Windows\EmailPageWindows\MangerAttachmentsWindow.xaml;Windows\EmailPageWindows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\EmailPageWindows\selectingcontactWindow.xaml;Windows\EmailPageWindows\ProfilesWindow.xaml;
 
-True
+False
 

@@ -38,7 +38,7 @@ namespace The_Email_Client
             DataContext = this;
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
                 { Password = Passwordbox.Password; UserName = UserNameTextBox.Text;
-                  if (Hashing.VerifyHash(UserName, Email, 0) && Hashing.VerifyHash(UserName, Password, 1))
+                  if (Encryption.VerifyHash(UserName, Email, 0) && Encryption.VerifyHash(UserName, Password, 1))
                         ShowEmailPage?.Invoke(); }
             };
         }
@@ -46,7 +46,7 @@ namespace The_Email_Client
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             Password = Passwordbox.Password; UserName = UserNameTextBox.Text;
-            if (Hashing.VerifyHash(UserName, Email, 0) && Hashing.VerifyHash(UserName, Password, 1)) ShowEmailPage?.Invoke();
+            if (Encryption.VerifyHash(UserName, Email, 0) && Encryption.VerifyHash(UserName, Password, 1)) ShowEmailPage?.Invoke();
         }
         
         private void Registrationbutton_Click(object sender, RoutedEventArgs e)
@@ -58,6 +58,13 @@ namespace The_Email_Client
         {
             ResettingPasswordWindow forgotPasswordWindow = new ResettingPasswordWindow();
             forgotPasswordWindow.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UserNameTextBox.Text = "Stool"; UserName = "Stool";
+            EmailTextBox.Text = "testofcsharperinoemailerino@gmail.com"; Email = "testofcsharperinoemailerino@gmail.com";
+            Passwordbox.Password = "nocopypasterino";
         }
     }
 }

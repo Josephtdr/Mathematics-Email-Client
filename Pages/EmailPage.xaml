@@ -3,12 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      gif:ImageBehavior.AnimateInDesignMode="True"
       xmlns:local="clr-namespace:The_Email_Client"
       mc:Ignorable="d"
       MinWidth="900" MinHeight="350"
       Title="Gmail Only Email Sender">
 
-    <Grid Margin="0,0,0,0" Background="#FFD9D0FF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid Margin="0,0,0,0" Background="#FFD9D0FF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="514" Width="926">
 
         <TextBox x:Name="RecipientsBox" Height="23" Margin="81,10,137,0" VerticalAlignment="Top" VerticalContentAlignment="Center" />
         <TextBox x:Name="CCBox" Height="23" Margin="81,38,137,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" />
@@ -22,7 +24,6 @@
             </RichTextBox.Resources>
         </RichTextBox>
 
-        <Label Content="Subject:" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="0.654,-2"/>
         <Label x:Name="StatusLabel" Content="Ready" HorizontalAlignment="Right" Margin="0,0,99,6" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="77"/>
         <Label x:Name="MBValueLable" Content="0" HorizontalAlignment="Left" Height="26" Margin="232,0,0,6" VerticalAlignment="Bottom" Width="48" FontFamily="Cambria Math" FontSize="18"/>
         <Label x:Name="OutOfLable" Content="/  25MB" HorizontalAlignment="Left" Height="26" Margin="256,0,0,6" VerticalAlignment="Bottom" Width="73" FontSize="18" FontFamily="Cambria Math"/>
@@ -34,8 +35,12 @@
         <Button x:Name="SendButton" Content="Send" HorizontalAlignment="Right" Height="44" Margin="0,73,19,0" VerticalAlignment="Top" Width="101" Click="send_button_Click" RenderTransformOrigin="0.264,-1" Background="#FFF0F0F0"/>
         <Button x:Name="addemailTObutton" Content="To..." HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="26" Background="#FFF0F0F0" RenderTransformOrigin="1.577,0.522" Click="addemailTO_CC_BCCbuttons_Click"/>
         <Button x:Name="addemailCCbutton" Content="Cc..." HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" VerticalAlignment="Top" Width="33" Background="#FFF0F0F0" Click="addemailTO_CC_BCCbuttons_Click"/>
-        <Button x:Name="addemailBCCbutton" Content="BCc..." HorizontalAlignment="Left" Height="23" Margin="10,66,0,0" VerticalAlignment="Top" Width="38" Background="#FFF0F0F0" RenderTransformOrigin="0.538,2.87" Click="addemailTO_CC_BCCbuttons_Click"/>
+        <Button x:Name="addemailBCCbutton" Content="BCc..." HorizontalAlignment="Left" Height="23" Margin="10,66,0,0" VerticalAlignment="Top" Width="38" Background="#FFF0F0F0" Click="addemailTO_CC_BCCbuttons_Click"/>
+        <Button x:Name="DraftsButton" Content="Subject:" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Height="23" Background="#FFF0F0F0" Click="DraftsButton_Click"/>
         <Button x:Name="LogoutButton" Content="Log Out" HorizontalAlignment="Right" Margin="0,0,19,6" VerticalAlignment="Bottom" Width="75" Click="LogoutButton_Click" Height="24"/>
 
+        <Image x:Name="LoadingGif" gif:ImageBehavior.AnimatedSource="sendingemail.gif" Margin="302,202,302,63" HorizontalAlignment="Center" VerticalAlignment="Center" 
+               gif:ImageBehavior.RepeatBehavior="Forever" Visibility="Hidden"/>
+        
     </Grid>
 </Page>
