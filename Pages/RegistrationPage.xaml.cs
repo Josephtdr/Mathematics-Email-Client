@@ -111,14 +111,13 @@ namespace The_Email_Client
        
         private void RegisterUser()
         {
-            string email = EmailTextBox.Text; 
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            string hashedPassword = Encryption.HashString(Passwordbox.Password;);
+            string hashedPassword = Encryption.HashString(Passwordbox.Password);
             try
             {
                 cnctDTB.Open();
                 OleDbCommand cmd = new OleDbCommand($"INSERT INTO Profiles ([Name], [Email], [Port], [Server], [Password], [UserName]) VALUES " + 
-                    $"('{Encryption.BinaryEncryption(NameTextBox.Text, Password)}','{Encryption.HashString(EmailTextBox.Text)}"+
+                    $"('{NameTextBox.Text}','{Encryption.HashString(EmailTextBox.Text)}"+
                     $"',587,'smtp.gmail.com','{hashedPassword}','{UserNameTextBox.Text}');", cnctDTB);
                 cmd.ExecuteNonQuery();
 
