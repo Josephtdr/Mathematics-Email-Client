@@ -4,12 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:The_Email_Client"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="DifferentiationPage">
+      mc:Ignorable="d"
+      Title="DifferentiationPage" Height="372" Width="382">
 
-    <Grid Loaded="Grid_Loaded">
+    <Grid Loaded="Grid_Loaded" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF"  Width="426" Height="371" Margin="-22,20,-22,-19">
         <Grid.RowDefinitions>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -20,20 +20,20 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="OrderBox" Grid.Column="1" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Textbox_PreviewTextInput"/>
-        <TextBox x:Name="DifficultyBox" Grid.Column="1" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" PreviewTextInput="Textbox_PreviewTextInput"/>
+        <TextBox x:Name="OrderBox" Grid.Column="1" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" PreviewTextInput="Textbox_PreviewTextInput" Margin="5,10,5,34"/>
+        <TextBox x:Name="DifficultyBox" Grid.Column="1" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" PreviewTextInput="Textbox_PreviewTextInput" Margin="5,34,5,10"/>
         <TextBox x:Name="AnswerBox" Grid.Column="1" HorizontalAlignment="Center" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <Label x:Name="EquationLabel" Content="Placeholder" Grid.Column="0" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Margin="39,10,39,39"/>
-        <Label x:Name="DifferentiationLabel" Content="Placeholder" Grid.Column="0" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Margin="39,39,39,10"/>
-        <Label Content="Order" HorizontalAlignment="Center" Margin="25,10,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
-        <Label Content="Difficulty" HorizontalAlignment="Center" Margin="25,41,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+        <Label x:Name="EquationLabel" Content="f(x)" Grid.Column="0" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Margin="39,10,39,39"/>
+        <Label x:Name="DifferentiationLabel" Content="f'(x)" Grid.Column="0" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Margin="39,39,39,10"/>
+        <Label Content="Order" HorizontalAlignment="Center" Margin="64,10,46,31" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <Label Content="Difficulty" HorizontalAlignment="Center" Margin="51,34,42,7" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
         <Label Content="Answer" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Row="2" Grid.Column="0"/>
 
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Generate Random&#x0a;       Equation" Grid.Column="1" HorizontalAlignment="Center" Height="55" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="130" Click="GenerateRandomEquationButton_Click"/>
         <Button Content="Back" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="18" Margin="0,0,0,0" VerticalAlignment="Center" Width="59" Click="BackButton_Click"/>
         <Button Content="Submit" Grid.Column="1" HorizontalAlignment="Center" Margin="10,38,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="SubmitButton_Click"/>
 
-        <WebBrowser x:Name="WebBrowser" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="100" LoadCompleted="WebBrowser_LoadCompleted"/>
+        <WebBrowser x:Name="WebBrowser" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="100" LoadCompleted="WebBrowser_LoadCompleted"/>
     </Grid>
 </Page>

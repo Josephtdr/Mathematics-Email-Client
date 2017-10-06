@@ -37,28 +37,6 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.csproj.CoreCompileInputs.cache
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.exe
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.pdb
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ContactsManagerWindows.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\EmailPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ContactsManagerWindows.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\EmailPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\LoginPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Pages\RegistrationPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\selectingcontactWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\MangerAttachmentsWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Windows\ProfilesWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ResetPasswordPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\EnterResetCodePage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ResetPasswordPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\EnterResetCodePage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Pages\ForgottonPasswordPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Windows\ResettingPasswordWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\ResettingPassword\Windows\ResettingPasswordWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe.config
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.exe
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\The Email Client.pdb
@@ -107,3 +85,37 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Win
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\AdditionPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\IntegrationPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ForgottonPasswordPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Windows\ResettingPasswordWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\MangerAttachmentsWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ContactsManagerWindows.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Pages\EmailPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\LoginPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\RegistrationPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfAnimatedGif.dll
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfAnimatedGif.xml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\AdditionPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\IntegrationPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ForgottonPasswordPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Windows\ResettingPasswordWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\MangerAttachmentsWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ContactsManagerWindows.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Pages\EmailPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\LoginPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\RegistrationPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml

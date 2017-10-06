@@ -22,7 +22,7 @@ namespace The_Email_Client
     public partial class DifferentiationPage : Page
     {
         protected Action ShowHomePage { get; set; }
-        protected Equation Equation { get; set; }
+        protected Equation Dif { get; set; }
         public DifferentiationPage(Action ShowHomePage)
         {
             InitializeComponent();
@@ -48,16 +48,16 @@ namespace The_Email_Client
         {
             if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(DifficultyBox.Text))
             {
-                Equation = new Equation(); Equation.GenerateEquation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(DifficultyBox.Text));
-                EquationLabel.Content = Equation.ReturnEquationString();
-                DifferentiationLabel.Content = Equation.ReturnDifString();
+                Dif = new Diferentiation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(DifficultyBox.Text)); 
+                EquationLabel.Content = Dif;
+                DifferentiationLabel.Content = Dif.SolvedEquationToString();
             }
             else MessageBox.Show("Please Enter an order and difficulty rating", "Error!");
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Equation.VerifyAnswer(AnswerBox.Text)) MessageBox.Show("Correct btw.", "Well Done!");
+            if (Dif.VerifyAnswer(AnswerBox.Text)) MessageBox.Show("Correct btw.", "Well Done!");
             else MessageBox.Show("incorrect btw.", "Not well Done!");
         }
 

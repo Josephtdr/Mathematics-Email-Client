@@ -21,7 +21,7 @@ using System.Windows.Forms;
 
 namespace The_Email_Client
 {
-    internal class Common
+    internal static class Common
     {
         public static Profiles Profile { get; set; }
 
@@ -40,7 +40,7 @@ namespace The_Email_Client
                 .Where(c => !Char.IsWhiteSpace(c))
                 .ToArray());
         }
-        public static bool inccorectemailformat(string email)
+        public static bool Inccorectemailformat(string email)
         {
             if (Regex.IsMatch(email, Constants.VALIDEMAILPATTERN, RegexOptions.IgnoreCase)) return true;
             else
@@ -50,7 +50,7 @@ namespace The_Email_Client
             }
         }
 
-        public static bool inccorectpasswordformat(string password)
+        public static bool Inccorectpasswordformat(string password)
         {
             if (Regex.IsMatch(password, Constants.VALIDPASSWORDPATTERN)) return true;
             else

@@ -136,7 +136,7 @@ namespace The_Email_Client
 
         private bool addcontacterrorchecking(string email)
         {
-            if (preexistingemail(email) && Common.inccorectemailformat(email)) return true;
+            if (preexistingemail(email) && Common.Inccorectemailformat(email)) return true;
             else return false;
         }
 

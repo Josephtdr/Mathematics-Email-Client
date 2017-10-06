@@ -43,7 +43,7 @@ namespace The_Email_Client
         
         private void SignUpbutton_Click(object sender, RoutedEventArgs e)
         {
-            if (Common.inccorectemailformat(EmailTextBox.Text)
+            if (Common.Inccorectemailformat(EmailTextBox.Text)
                 && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch()
                 && NonNullFields()) RegisterUser();
         }
