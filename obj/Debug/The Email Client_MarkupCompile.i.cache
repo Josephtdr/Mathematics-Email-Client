@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\App.xaml
-131656764184
+171831976750
 
-24-147293059
+291963205582
 161557602243
-Windows\EmailPageWindows\DraftsWindow.xaml;ResettingPassword\Pages\ResetPasswordPage.xaml;ResettingPassword\Pages\EnterResetCodePage.xaml;ResettingPassword\Pages\ForgottonPasswordPage.xaml;ResettingPassword\Windows\ResettingPasswordWindow.xaml;Windows\EmailPageWindows\MangerAttachmentsWindow.xaml;Windows\EmailPageWindows\ContactsManagerWindows.xaml;Pages\EmailPage.xaml;Pages\LoginPage.xaml;MainWindow.xaml;Pages\RegistrationPage.xaml;Windows\EmailPageWindows\selectingcontactWindow.xaml;Windows\EmailPageWindows\ProfilesWindow.xaml;
-
-False
+Math Client\Pages\AdditionPage.xaml;Math Client\Pages\IntegrationPage.xaml;Math Client\Pages\DifferentiationPage.xaml;General\Pages\HomePage.xaml;General\ResettingPassword\Pages\ResetPasswordPage.xaml;General\ResettingPassword\Pages\EnterResetCodePage.xaml;General\ResettingPassword\Pages\ForgottonPasswordPage.xaml;General\ResettingPassword\Windows\ResettingPasswordWindow.xaml;Email Client\Windows\MangerAttachmentsWindow.xaml;Email Client\Windows\ContactsManagerWindows.xaml;Email Client\Pages\EmailPage.xaml;General\Pages\LoginPage.xaml;MainWindow.xaml;General\Pages\RegistrationPage.xaml;Email Client\Windows\selectingcontactWindow.xaml;Email Client\Windows\ProfilesWindow.xaml;Math Client\Pages\MathSelectionPage.xaml;
+martin.png
+True
 

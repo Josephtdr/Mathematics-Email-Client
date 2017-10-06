@@ -61,6 +61,8 @@ namespace The_Email_Client {
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
         public static void Main() {
+            SplashScreen splashScreen = new SplashScreen("martin.png");
+            splashScreen.Show(true);
             The_Email_Client.App app = new The_Email_Client.App();
             app.InitializeComponent();
             app.Run();

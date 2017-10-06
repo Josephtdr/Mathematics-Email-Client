@@ -7,7 +7,6 @@
         gif:ImageBehavior.AnimateInDesignMode="True"
         xmlns:local="clr-namespace:The_Email_Client"
         mc:Ignorable="d"
-        MinWidth="900" MinHeight="450"
         WindowStartupLocation="CenterScreen"
         Title="Gmail Only Email Sender">
 

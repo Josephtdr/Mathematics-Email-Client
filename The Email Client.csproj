@@ -64,78 +64,99 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Windows\EmailPageWindows\DraftsWindow.xaml.cs">
-      <DependentUpon>DraftsWindow.xaml</DependentUpon>
+    <Compile Include="Math Client\Pages\AdditionPage.xaml.cs">
+      <DependentUpon>AdditionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResettingPassword\Pages\ResetPasswordPage.xaml.cs">
+    <Compile Include="Math Client\Pages\IntegrationPage.xaml.cs">
+      <DependentUpon>IntegrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Math Client\Pages\DifferentiationPage.xaml.cs">
+      <DependentUpon>DifferentiationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="General\Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="General\ResettingPassword\Pages\ResetPasswordPage.xaml.cs">
       <DependentUpon>ResetPasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResettingPassword\Pages\EnterResetCodePage.xaml.cs">
+    <Compile Include="General\ResettingPassword\Pages\EnterResetCodePage.xaml.cs">
       <DependentUpon>EnterResetCodePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResettingPassword\Pages\ForgottonPasswordPage.xaml.cs">
+    <Compile Include="General\ResettingPassword\Pages\ForgottonPasswordPage.xaml.cs">
       <DependentUpon>ForgottonPasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResettingPassword\Windows\ResettingPasswordWindow.xaml.cs">
+    <Compile Include="General\ResettingPassword\Windows\ResettingPasswordWindow.xaml.cs">
       <DependentUpon>ResettingPasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\EmailPageWindows\MangerAttachmentsWindow.xaml.cs">
+    <Compile Include="Email Client\Windows\MangerAttachmentsWindow.xaml.cs">
       <DependentUpon>MangerAttachmentsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Common.cs" />
-    <Compile Include="Classes\Constants.cs" />
-    <Compile Include="Windows\EmailPageWindows\ContactsManagerWindows.xaml.cs">
+    <Compile Include="General\Classes\Common.cs" />
+    <Compile Include="General\Classes\Constants.cs" />
+    <Compile Include="Email Client\Windows\ContactsManagerWindows.xaml.cs">
       <DependentUpon>ContactsManagerWindows.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\EmailPage.xaml.cs">
+    <Compile Include="Email Client\Pages\EmailPage.xaml.cs">
       <DependentUpon>EmailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\LoginPage.xaml.cs">
+    <Compile Include="General\Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RegistrationPage.xaml.cs">
+    <Compile Include="General\Pages\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\EmailPageWindows\selectingcontactWindow.xaml.cs">
+    <Compile Include="Email Client\Windows\selectingcontactWindow.xaml.cs">
       <DependentUpon>selectingcontactWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Utils.cs" />
-    <Compile Include="Windows\EmailPageWindows\ProfilesWindow.xaml.cs">
+    <Compile Include="General\Classes\Utils.cs" />
+    <Compile Include="Email Client\Windows\ProfilesWindow.xaml.cs">
       <DependentUpon>ProfilesWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Windows\EmailPageWindows\DraftsWindow.xaml">
+    <Page Include="Math Client\Pages\AdditionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResettingPassword\Pages\ResetPasswordPage.xaml">
+    <Page Include="Math Client\Pages\IntegrationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResettingPassword\Pages\EnterResetCodePage.xaml">
+    <Page Include="Math Client\Pages\DifferentiationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResettingPassword\Pages\ForgottonPasswordPage.xaml">
+    <Page Include="General\Pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ResettingPassword\Windows\ResettingPasswordWindow.xaml">
+    <Page Include="General\ResettingPassword\Pages\ResetPasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\EmailPageWindows\MangerAttachmentsWindow.xaml">
+    <Page Include="General\ResettingPassword\Pages\EnterResetCodePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\EmailPageWindows\ContactsManagerWindows.xaml">
+    <Page Include="General\ResettingPassword\Pages\ForgottonPasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\EmailPage.xaml">
+    <Page Include="General\ResettingPassword\Windows\ResettingPasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\LoginPage.xaml">
+    <Page Include="Email Client\Windows\MangerAttachmentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Email Client\Windows\ContactsManagerWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Email Client\Pages\EmailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="General\Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,20 +172,28 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\RegistrationPage.xaml">
+    <Page Include="General\Pages\RegistrationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\EmailPageWindows\selectingcontactWindow.xaml">
+    <Page Include="Email Client\Windows\selectingcontactWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\EmailPageWindows\ProfilesWindow.xaml">
+    <Page Include="Email Client\Windows\ProfilesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Math Client\Pages\MathSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Math Client\Pages\MathSelectionPage.xaml.cs">
+      <DependentUpon>MathSelectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Math Client\Classes\Math.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -199,12 +228,15 @@
     <Resource Include="emailicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ResettingPassword\Classes\" />
+    <Folder Include="Math Client\Windows\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pages\sendingemail.gif">
+    <Resource Include="Email Client\Pages\sendingemail.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="martin.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
