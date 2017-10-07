@@ -86,7 +86,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Win
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\AdditionPage.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\IntegrationPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.g.cs
@@ -104,7 +103,6 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Mat
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfAnimatedGif.dll
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfAnimatedGif.xml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\AdditionPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\IntegrationPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.baml

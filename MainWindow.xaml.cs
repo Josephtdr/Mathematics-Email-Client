@@ -24,7 +24,6 @@ namespace The_Email_Client
         protected LoginPage LoginPage { get; set; }
         protected RegistrationPage RegistrationPage { get; set; }
         protected HomePage HomePage { get; set; }
-        protected IntegrationPage IntegrationPage { get; set; }
         protected DifferentiationPage DifferentiationPage { get; set; }
         protected AdditionPage AdditionPage { get; set; }
         protected MathSelectionPage MathSelectionPage { get; set; }
@@ -36,13 +35,12 @@ namespace The_Email_Client
             Common.Attachments = new List<string>();
             Common.Profile = new Profiles();
             HomePage = new HomePage(ShowMathSelectionPage, ShowEmailPage, ShowLoginPage);
-            IntegrationPage = new IntegrationPage(ShowPreviousPage);
             DifferentiationPage = new DifferentiationPage(ShowPreviousPage);
             AdditionPage = new AdditionPage(ShowPreviousPage);
             LoginPage = new LoginPage(LogintoHomePage, ShowRegistrationPage);
             EmailPage = new EmailPage(ShowPreviousPage);
             RegistrationPage = new RegistrationPage(ShowLoginPage);
-            MathSelectionPage = new MathSelectionPage(ShowDifferentiationPage, ShowIntegrationPage, ShowAdditionPage, ShowHomePage);
+            MathSelectionPage = new MathSelectionPage(ShowDifferentiationPage, ShowAdditionPage, ShowHomePage);
             ShowLoginPage();
         }
 
@@ -62,10 +60,6 @@ namespace The_Email_Client
         {
             Common.Profile.GetInfofromDB(Common.Profile, Common.Profile.UserName);
             ShowPage(HomePage);
-        }
-        public void ShowIntegrationPage()
-        {
-            ShowPage(IntegrationPage);
         }
         public void ShowDifferentiationPage()
         {

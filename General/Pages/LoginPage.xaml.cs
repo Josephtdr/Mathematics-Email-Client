@@ -68,8 +68,14 @@ namespace The_Email_Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Password = "admin"; UserName = "admin"; Email = "admin";
+            Password = "nocopypasterino"; UserName = "Stool"; Email = "testofcsharperinoemailerino@gmail.com";
+            if (Encryption.VerifyPasswordorEmail(UserName, Password, true) &&
+            Encryption.VerifyPasswordorEmail(UserName, Email, false))
+            {
+                UserNameTextBox.Clear(); EmailTextBox.Clear();
                 ShowHomePage?.Invoke();
+            }
+
         }
     }
 }

@@ -21,13 +21,11 @@ namespace The_Email_Client
     public partial class MathSelectionPage : Page
     {
         protected Action ShowDifferentiationPage { get; set; }
-        protected Action ShowIntegrationPage { get; set; }
         protected Action ShowAdditionPage { get; set; }
         protected Action ShowPreviousPage { get; set; }
-        public MathSelectionPage(Action ShowDifferentiationPage, Action ShowIntegrationPage, Action ShowAdditionPage, Action ShowPreviousPage)
+        public MathSelectionPage(Action ShowDifferentiationPage,Action ShowAdditionPage, Action ShowPreviousPage)
         {
             this.ShowAdditionPage = ShowAdditionPage;
-            this.ShowIntegrationPage = ShowIntegrationPage;
             this.ShowDifferentiationPage = ShowDifferentiationPage;
             this.ShowPreviousPage = ShowPreviousPage;
             InitializeComponent();
@@ -42,9 +40,6 @@ namespace The_Email_Client
             {
                 case "Differentiation":
                     ShowDifferentiationPage();
-                    break;
-                case "Integration":
-                    ShowIntegrationPage();
                     break;
                 case "Addition":
                     ShowAdditionPage();

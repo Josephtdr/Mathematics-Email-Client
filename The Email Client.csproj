@@ -67,9 +67,6 @@
     <Compile Include="Math Client\Pages\AdditionPage.xaml.cs">
       <DependentUpon>AdditionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Math Client\Pages\IntegrationPage.xaml.cs">
-      <DependentUpon>IntegrationPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Math Client\Pages\DifferentiationPage.xaml.cs">
       <DependentUpon>DifferentiationPage.xaml</DependentUpon>
     </Compile>
@@ -113,10 +110,6 @@
       <DependentUpon>ProfilesWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Math Client\Pages\AdditionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Math Client\Pages\IntegrationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -236,7 +229,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="martin.PNG" />
+    <Resource Include="martin.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="MartinsMathematics.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
