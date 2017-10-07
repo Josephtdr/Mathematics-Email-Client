@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       Title="DifferentiationPage" Height="372" Width="382">
 
-    <Grid Loaded="Grid_Loaded" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF"  Width="426" Height="371" Margin="-22,20,-22,-19">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF"  Width="426" Height="371" Margin="-22,20,-22,-19">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -33,7 +33,5 @@
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Generate Random&#x0a;       Equation" Grid.Column="1" HorizontalAlignment="Center" Height="55" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="130" Click="GenerateRandomEquationButton_Click"/>
         <Button Content="Back" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Height="18" Margin="0,0,0,0" VerticalAlignment="Center" Width="59" Click="BackButton_Click"/>
         <Button Content="Submit" Grid.Column="1" HorizontalAlignment="Center" Margin="10,38,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="SubmitButton_Click"/>
-
-        <WebBrowser x:Name="WebBrowser" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Width="100" LoadCompleted="WebBrowser_LoadCompleted"/>
     </Grid>
 </Page>

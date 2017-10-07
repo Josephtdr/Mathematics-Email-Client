@@ -8,6 +8,7 @@
         xmlns:local="clr-namespace:The_Email_Client"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
         Title="Gmail Only Email Sender">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFD9D0FF">

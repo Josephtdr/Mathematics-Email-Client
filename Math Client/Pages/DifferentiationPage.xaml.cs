@@ -29,16 +29,6 @@ namespace The_Email_Client
             this.ShowHomePage = ShowHomePage;
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            WebBrowser.Navigate("https://www.wolframalpha.com/input/?i=derivative");
-        }
-
-        private void WebBrowser_LoadCompleted(object sender, NavigationEventArgs e)
-        {
-            
-        }
-
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             ShowHomePage();
@@ -52,7 +42,7 @@ namespace The_Email_Client
                 EquationLabel.Content = Dif;
                 DifferentiationLabel.Content = Dif.SolvedEquationToString();
             }
-            else MessageBox.Show("Please Enter an order and difficulty rating", "Error!");
+            else MessageBox.Show("Please Enter an order and difficulty value.", "Error!");
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -63,12 +53,8 @@ namespace The_Email_Client
 
         private void Textbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsTextAllowed(e.Text);
+            e.Handled = !Common.IsTextAllowed(e.Text);
         }
-        private static bool IsTextAllowed(string text)
-        {
-            Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-            return !regex.IsMatch(text);
-        }
+        
     }
 }

@@ -65,6 +65,11 @@ namespace The_Email_Client
             ResettingPasswordWindow forgotPasswordWindow = new ResettingPasswordWindow();
             forgotPasswordWindow.ShowDialog();
         }
-        
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Password = "admin"; UserName = "admin"; Email = "admin";
+                ShowHomePage?.Invoke();
+        }
     }
 }

@@ -8,7 +8,7 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="RegistrationPage">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF" Margin="0,69,38,60" Width="262" Height="171">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF" Width="263" Height="201">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -19,26 +19,26 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="111*"/>
+            <ColumnDefinition Width="179*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="UserNameTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
-        <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
-        <TextBox x:Name="EmailTextBox" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
+        <TextBox x:Name="UserNameTextBox" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="150" />
+        <TextBox x:Name="NameTextBox" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="150"/>
+        <TextBox x:Name="EmailTextBox" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="150"/>
 
-        <PasswordBox x:Name="Passwordbox" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
-        <PasswordBox x:Name="PasswordboxCopy" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="0,5" Height="18" VerticalAlignment="Center" Width="131"/>
-        
-        <Button Content="Back" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="62" Click="BackButton_Click" />
-        <Button Content="Sign Up" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Height="20" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="62" Click="SignUpbutton_Click" />
-        
-        <Label x:Name="Passwordlabel" Content="Password" HorizontalAlignment="Center" Height="28" Margin="0,0,0,0" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Width="65"/>
-        <Label x:Name="Passwordlabelcopy" Content="Retype Password" HorizontalAlignment="Center" Height="28" Margin="0,0,0,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Width="102"/>
-        <Label x:Name="Titlelabel" Content="Register" HorizontalAlignment="Center" Height="34" Margin="92,0,118,0" Grid.Row="0" VerticalAlignment="Top" Width="52" Grid.ColumnSpan="2" />
-        <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Center" Height="28" Margin="0,0,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Width="42" />
-        <Label x:Name="Emaillabel" Content="Email" HorizontalAlignment="Center" Height="28" Margin="0,0,0,0" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Width="42" />
-        <Label x:Name="UserNamelabel" Content="UserName" HorizontalAlignment="Center" Height="28" Margin="28,0,33,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Width="70" Grid.RowSpan="2" />
+        <PasswordBox x:Name="Passwordbox" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="150"/>
+        <PasswordBox x:Name="PasswordboxCopy" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="150"/>
+
+        <Button Content="Back" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="62" Click="BackButton_Click" />
+        <Button Content="Sign Up" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="62" Click="SignUpbutton_Click" />
+
+        <Label x:Name="Passwordlabel" Content="Password" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" />
+        <Label x:Name="Passwordlabelcopy" Content="Retype Password" HorizontalAlignment="Center" Height="28" Margin="6,0,3,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top"/>
+        <Label x:Name="Titlelabel" Content="Register" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+        <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" />
+        <Label x:Name="Emaillabel" Content="Email" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" />
+        <Label x:Name="UserNamelabel" Content="UserName" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" />
 
     </Grid>
 </Page>

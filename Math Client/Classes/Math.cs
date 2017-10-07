@@ -7,6 +7,22 @@ using System.Threading.Tasks;
 
 namespace The_Email_Client
 {
+    public class Fraction
+    {
+        public int Numerator { get; set; }
+        public int Denominator { get; set; }
+        public int Value { get {
+                return Numerator / Denominator;
+            }
+        }
+
+        public override string ToString()
+        {
+            bool WholeNumber = ((Value % 1) == 0);
+            return  (Numerator/ Denominator > 0 ? $"({Numerator}/{Denominator})" : $"({Numerator}/{Denominator})");
+        }
+    }
+
     public class Term
     {
         public int Coefficient { get; set; }
@@ -15,13 +31,23 @@ namespace The_Email_Client
                 return Power == 0 ? "" : Power == 1 ? "x" : $"x^{Power}";
             }
         }
-        
+
         public override string ToString()
         {
             string coeff = (Coefficient > 0 ? $"+{Coefficient}" : $"{Coefficient}");
             return (Coefficient == 0 ? "" : $"{coeff}{X}");
         }
-        
+
+        //Overriding Operators as so they can be checked in Bools.
+        #region 
+        public override int GetHashCode()
+        {
+            return Coefficient.GetHashCode() ^ Power.GetHashCode() ^ X.GetHashCode();
+        }
+        public static bool operator !=(Term left, Term right) { return (left.GetHashCode() != right.GetHashCode()); }
+
+        public static bool operator ==(Term left, Term right) { return( left.GetHashCode() == right.GetHashCode()); }
+        #endregion   
     }
 
     public abstract class Equation
@@ -86,10 +112,8 @@ namespace The_Email_Client
         public override string SolvedEquationToString()
         {
             string DifString = "";
-            foreach (Term term in DifComponents)
-            {
+            foreach (Term term in DifComponents) 
                 DifString += $"{term} ";
-            }
             return DifString;
         }
 
@@ -109,7 +133,7 @@ namespace The_Email_Client
             }
 
             for (int i = 0; i < DifComponents.Count; i++) {
-                if (DifComponents[i].ToString() != Answer[i].ToString())
+                if (DifComponents[i] != Answer[i])
                     return false;
             }
 

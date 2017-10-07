@@ -109,7 +109,7 @@ namespace The_Email_Client
                 SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             }
             if (UserNameBox.Text != SettingsResetValues[0] || PortBox.Text != SettingsResetValues[1]
-               || ServerBox.Text != SettingsResetValues[2])
+               || ServerBox.Text != SettingsResetValues[2] || UserUserNameBox.Text != SettingsResetValues[3])
                 ResetButton.IsEnabled = true;
 
             else ResetButton.IsEnabled = false;
