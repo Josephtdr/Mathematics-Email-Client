@@ -20,8 +20,6 @@ namespace The_Email_Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         protected EmailPage EmailPage { get; set; }
         protected LoginPage LoginPage { get; set; }
         protected RegistrationPage RegistrationPage { get; set; }
@@ -30,6 +28,7 @@ namespace The_Email_Client
         protected DifferentiationPage DifferentiationPage { get; set; }
         protected AdditionPage AdditionPage { get; set; }
         protected MathSelectionPage MathSelectionPage { get; set; }
+        protected Page PreviousPage { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -80,22 +79,23 @@ namespace The_Email_Client
         {
             ShowPage(RegistrationPage);
         }
-
         public void ShowLoginPage()
         {
             ShowPage(LoginPage);
         }
-
         public void ShowPreviousPage()
         {
             ShowPage(PreviousPage);
         }
-
-        protected Page PreviousPage { get; set; }
         protected void ShowPage(Page page)
         {
             PreviousPage = (Page)PageFrame.Content;
             PageFrame.Content = page;
+        }
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            this.Left = (SystemParameters.WorkArea.Width - Width) / 2 + SystemParameters.WorkArea.Left;
+            this.Top = (SystemParameters.WorkArea.Height - Height) / 2 + SystemParameters.WorkArea.Top;
         }
     }
 }

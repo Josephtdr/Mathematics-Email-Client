@@ -23,6 +23,7 @@ namespace The_Email_Client
     {
         protected Action ShowHomePage { get; set; }
         protected Equation Dif { get; set; }
+        protected int UsingFractions { get; set; }
         public DifferentiationPage(Action ShowHomePage)
         {
             InitializeComponent();
@@ -38,9 +39,9 @@ namespace The_Email_Client
         {
             if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(DifficultyBox.Text))
             {
-                Dif = new Diferentiation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(DifficultyBox.Text)); 
-                EquationLabel.Content = Dif;
-                DifferentiationLabel.Content = Dif.SolvedEquationToString();
+                Dif = new Diferentiation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(DifficultyBox.Text), UsingFractions); 
+                EquationTextBox.Text = Dif.ToString();
+                DifferentiationTextBox.Text = Dif.SolvedEquationToString();
             }
             else MessageBox.Show("Please Enter an order and difficulty value.", "Error!");
         }
@@ -55,6 +56,22 @@ namespace The_Email_Client
         {
             e.Handled = !Common.IsTextAllowed(e.Text);
         }
-        
+
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            switch (rb.Name)
+            {
+                case "no":
+                    UsingFractions = 0;
+                    break;
+                case "half":
+                    UsingFractions = 1;
+                    break;
+                case "full":
+                    UsingFractions = 2;
+                    break;
+            }
+        }
     }
 }
