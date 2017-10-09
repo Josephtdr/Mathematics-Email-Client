@@ -58,6 +58,10 @@
       <HintPath>packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WpfMath, Version=0.3.1.40510, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WpfMath.0.4.0\lib\net40\WpfMath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -108,6 +112,9 @@
     <Compile Include="General\Classes\Utils.cs" />
     <Compile Include="Email Client\Windows\ProfilesWindow.xaml.cs">
       <DependentUpon>ProfilesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="testWindow.xaml.cs">
+      <DependentUpon>testWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Math Client\Pages\AdditionPage.xaml">
       <SubType>Designer</SubType>
@@ -182,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Math Client\Windows\MathmaticsCorrectIncorrectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="testWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

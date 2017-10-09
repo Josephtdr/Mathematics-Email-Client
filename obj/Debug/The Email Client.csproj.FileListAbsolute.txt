@@ -117,3 +117,8 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Ema
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfMath.dll
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfMath.pdb
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfMath.xml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\testWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\testWindow.baml
