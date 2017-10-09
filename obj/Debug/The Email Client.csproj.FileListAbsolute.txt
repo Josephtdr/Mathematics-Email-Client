@@ -54,7 +54,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.csprojResolveAssemblyReference.cache
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\AdditionPage.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\IntegrationPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\HomePage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.g.cs
@@ -69,7 +68,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\Re
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\AdditionPage.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\IntegrationPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\HomePage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.baml
@@ -117,3 +115,5 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Gen
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.baml

@@ -53,7 +53,7 @@ namespace The_Email_Client
 
         public override string ToString()
         {
-            string coefficient = ((Coefficient.Value == 1 || Coefficient.Value == -1) ? "" : $"{Coefficient}");
+            string coefficient = (Power.Numerator != 0 ? (Coefficient.Value == 1 || Coefficient.Value == -1) ? "" : $"{Coefficient}" : $"{Coefficient}");
             string posetivity = (Coefficient.Value > 0 ? $"+{coefficient}" : $"-{coefficient}");
             return (Coefficient.Numerator == 0 ? "" : $"{posetivity}{X}");
         }
@@ -65,6 +65,7 @@ namespace The_Email_Client
         public List<Term> Components { get; set; }
         public List<Term> Answer { get; set; }
         public List<Term> SolvedComponents { get; set; }
+        public abstract float CalculateAnswer(float x1, float? x2 = null);
 
         public Equation(int Order, int Magnitude, int UsingFractions)
         {
@@ -129,7 +130,6 @@ namespace The_Email_Client
 
             return ParsedList;
         }
-
         public override string ToString()
         {
             string Equationstring = "";
@@ -157,6 +157,13 @@ namespace The_Email_Client
             }
 
             return true;
+        }
+        public float F(float x)
+        {
+            float Fofx = 0;
+            foreach(Term term in SolvedComponents)
+                Fofx += ((float)(term.Coefficient.Value*(Math.Pow(x,term.Power.Value))));
+            return Fofx;
         }
     }
 
@@ -186,6 +193,10 @@ namespace The_Email_Client
                 }
             }
         }
+        public override float CalculateAnswer(float x1, float? x2 = null)
+        {
+            return F(x1);
+        }
     }
 
     public class Integration : Equation
@@ -212,6 +223,10 @@ namespace The_Email_Client
                     });
             }
             
+        }
+        public override float CalculateAnswer(float x1, float? x2 = null)
+        {
+            return F(x1) - F((float)x2);
         }
     }
 }

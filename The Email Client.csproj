@@ -181,12 +181,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Math Client\Windows\MathmaticsCorrectIncorrectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Math Client\Pages\MathSelectionPage.xaml.cs">
       <DependentUpon>MathSelectionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Math Client\Classes\Math.cs" />
+    <Compile Include="Math Client\Windows\MathmaticsCorrectIncorrectWindow.xaml.cs">
+      <DependentUpon>MathmaticsCorrectIncorrectWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -220,9 +227,7 @@
   <ItemGroup>
     <Resource Include="emailicon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Math Client\Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Email Client\Pages\sendingemail.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -233,6 +238,16 @@
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="MartinsMathematics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Math Client\Windows\MartinsMathematicscorrect.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Math Client\Windows\MartinsMathematicsincorrect.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

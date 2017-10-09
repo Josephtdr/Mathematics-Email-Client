@@ -23,8 +23,10 @@ namespace The_Email_Client
     {
         protected Action ShowHomePage { get; set; }
         protected Equation Equ { get; set; }
-        protected int UsingFractions { get; set; }
-        protected string TypeofFunction { get; set; }
+        private int UsingFractions { get; set; }
+        private string TypeofFunction { get; set; }
+        private float[] x { get; set; }
+
         public DifferentiationPage(Action ShowHomePage)
         {
             InitializeComponent();
@@ -51,24 +53,43 @@ namespace The_Email_Client
                 }
                 EquationTextBlock.Text = Equ.ToString();
                 DifferentiationTextBlock.Text = Equ.SolvedEquationToString();
+                AnswerBox.Clear(); FanswerBox.Clear();
+                FanswerBox.Visibility = Visibility.Hidden; FsubmitButton.Visibility = Visibility.Hidden;
+                FtextBlock.Visibility = Visibility.Hidden;
             }
             else MessageBox.Show("Please Enter an order and difficulty value.", "Error!");
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Equ.VerifyAnswer(AnswerBox.Text)) MessageBox.Show("Correct btw.", "Well Done!");
-            else MessageBox.Show("incorrect btw.", "Not well Done!");
+            MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
+            if (Equ.VerifyAnswer(AnswerBox.Text))
+            {
+                Random rnd = new Random();
+                MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
+                MathmaticsCorrectIncorrectWindow.ShowDialog();
+                FanswerBox.Visibility = Visibility.Visible; FsubmitButton.Visibility = Visibility.Visible;
+                FtextBlock.Visibility = Visibility.Visible;
+                switch (TypeofFunction)
+                {
+                    case "diferentiation":
+                        x = new float[] { (rnd.Next(-10, 10)) }; 
+                        FtextBlock.Text = $"Find the gradient of the curve f(x) at the point x={x[0]}.";
+                        break;
+                    case "integration":
+                        float x1 = (rnd.Next(-10, 10)); float x2 = (rnd.Next(-10, 10));
+                        x1 = x1 == x2 ? x1 + 1 : x1;
+                        x = new float[] { x1 , x2 };
+                        FtextBlock.Text = $"Find the are bound by the curve between x={x[0]} and x={x[1]}. This Doesnt work btw lul.";
+                        break;
+                }
+            }
+            else {
+                MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
+                MathmaticsCorrectIncorrectWindow.ShowDialog();
+            }
         }
-
-        private void NumberTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            //e.Handled = !Common.IsTextAllowed(e.Text);
-            Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
-            e.Handled = regex.IsMatch(e.Text);
-            
-        }
-
+        
         private void HandleCheck(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
@@ -88,7 +109,7 @@ namespace The_Email_Client
 
         private void ShowRevealButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (Reveal_AnswerButton.Content)
+            switch ((string)Reveal_AnswerButton.Content)
             {
                 case "Show Answer":
                     Reveal_AnswerButton.Content = "Hide Answer";
@@ -149,6 +170,47 @@ namespace The_Email_Client
                     break;
             }
             
+        }
+
+        private void FsubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
+            switch (TypeofFunction) {
+                case "diferentiation":
+                    if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(x[0]))) {
+                        MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
+                        MathmaticsCorrectIncorrectWindow.ShowDialog();
+                    }
+                    else {
+                        MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
+                        MathmaticsCorrectIncorrectWindow.ShowDialog();
+                    }
+                    break;
+                case "integration":
+                    if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(x[0], x[1]))) {
+                        MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
+                        MathmaticsCorrectIncorrectWindow.ShowDialog();
+                    }
+                    else {
+                        MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
+                        MathmaticsCorrectIncorrectWindow.ShowDialog();
+                    }
+                    break;
+            }
+        }
+
+        private void AnswerBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9-/+/^/x]+"); //regex that matches disallowed text
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        
+        private void NumberTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //e.Handled = !Common.IsTextAllowed(e.Text);
+            Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
+            e.Handled = regex.IsMatch(e.Text);
+
         }
     }
 }
