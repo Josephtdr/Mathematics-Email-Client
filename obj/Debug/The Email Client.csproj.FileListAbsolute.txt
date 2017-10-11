@@ -122,3 +122,10 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfMath.pdb
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfMath.xml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\testWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\testWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfMath.dll
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfMath.pdb
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfMath.xml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\testWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\testWindow.baml
