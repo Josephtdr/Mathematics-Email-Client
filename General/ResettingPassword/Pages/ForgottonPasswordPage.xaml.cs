@@ -49,9 +49,9 @@ namespace The_Email_Client
                     {
                         Server = "smtp.gmail.com",
                         Port = 587,
-                        UserEmail = "testofcsharperinoemailerino@gmail.com",
-                        UserPassword = "nocopypasterino",
-                        UserName = "Email Client Reset Password",
+                        UserEmail = "MartinsMathematicsClient@gmail.com",
+                        UserPassword = "capitalutcreading",
+                        UserName = "MartinsMathematics Client Password Reset",
                         Recipients = emails,
                         CC = null,
                         BCC = null,
