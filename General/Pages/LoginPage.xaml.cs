@@ -29,8 +29,7 @@ namespace The_Email_Client
         public string Email { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
-        public LoginPage(Action ShowHomePage, Action ShowRegistationPage)
-        {
+        public LoginPage(Action ShowHomePage, Action ShowRegistationPage) {
             this.ShowHomePage = ShowHomePage;
             this.ShowRegistationPage = ShowRegistationPage;
             InitializeComponent();
@@ -46,8 +45,7 @@ namespace The_Email_Client
             };
         }
 
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void SubmitButton_Click(object sender, RoutedEventArgs e) {
             Password = Passwordbox.Password; UserName = UserNameTextBox.Text;
             if (Encryption.VerifyPasswordorEmail(UserName, Password, true) &&
             Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
@@ -55,27 +53,23 @@ namespace The_Email_Client
                 ShowHomePage?.Invoke(); }
         }
         
-        private void Registrationbutton_Click(object sender, RoutedEventArgs e)
-        {
+        private void Registrationbutton_Click(object sender, RoutedEventArgs e) {
             ShowRegistationPage?.Invoke();
         }
 
-        private void ForgottenPassword_Click(object sender, RoutedEventArgs e)
-        {
+        private void ForgottenPassword_Click(object sender, RoutedEventArgs e) {
             ResettingPasswordWindow forgotPasswordWindow = new ResettingPasswordWindow();
             forgotPasswordWindow.ShowDialog();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Password = "nocopypasterino"; UserName = "Stool"; Email = "testofcsharperinoemailerino@gmail.com";
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            Password = "capitalutcreading"; UserName = "Martin"; Email = "martinsmathematicsclient@gmail.com";
             if (Encryption.VerifyPasswordorEmail(UserName, Password, true) &&
             Encryption.VerifyPasswordorEmail(UserName, Email, false))
             {
                 UserNameTextBox.Clear(); EmailTextBox.Clear();
                 ShowHomePage?.Invoke();
             }
-
         }
     }
 }
