@@ -40,7 +40,7 @@ namespace The_Email_Client
                 fileDataGrid.Items.Add(new File
                 {
                     FileName = attachment.FileName,
-                    FileLength = new FileInfo(attachment.FileName).Length
+                    FileLength = (long)(Convert.ToInt32(new FileInfo(attachment.FileName).Length) / (Math.Pow(1024, 1))) + 1
                 });
             }
         }

@@ -21,13 +21,13 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="0,30,0,72" HorizontalAlignment="Center">
             <Button x:Name="cmdUp" Content="^"  Click="Cmd_Click" Width="19" />
-            <TextBox x:Name="OrderBox" Text="0" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
+            <TextBox x:Name="OrderBox" Text="0" DataObject.Pasting="TextBoxPasting" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
             <Button x:Name="cmdDown" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0,89,0,13" HorizontalAlignment="Center">
             <Button x:Name="cmdUp2" Content="^"  Click="Cmd_Click" Width="19" />
-            <TextBox x:Name="MagnitudeBox" Text="0" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
+            <TextBox x:Name="MagnitudeBox" Text="0" DataObject.Pasting="TextBoxPasting" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
             <Button x:Name="cmdDown2" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
@@ -65,6 +65,8 @@
         <TextBlock x:Name="FtextBlock" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="Hidden"/>
         <Button x:Name="FsubmitButton" Visibility="Hidden" Content="Submit" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Width="74" Margin="0,0,0,10" Click="FsubmitButton_Click"/>
         <TextBox x:Name="FanswerBox" HorizontalAlignment="Center" Height="24" Margin="0,30,0,0" Grid.Row="2" TextWrapping="Wrap" Visibility="Hidden" VerticalAlignment="Center" Width="91"/>
+        <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Center" Click="PdfButton_Click"/>
+        <Button x:Name="EndPdfButton" Content="Cancel PDF" Grid.Column="2" HorizontalAlignment="Right" Height="28" Margin="0,0,10,0" Grid.Row="2" VerticalAlignment="Center"/>
 
     </Grid>
 </Page>

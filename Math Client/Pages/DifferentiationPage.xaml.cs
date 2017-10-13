@@ -62,7 +62,7 @@ namespace The_Email_Client
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(AnswerBox.Text)) { 
+            if (!string.IsNullOrWhiteSpace(AnswerBox.Text)) { 
                 MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
                 if (Equ.VerifyAnswer(AnswerBox.Text)) {
                     Random rnd = new Random();
@@ -173,7 +173,7 @@ namespace The_Email_Client
 
         private void FsubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(FanswerBox.Text)) {
+            if (!string.IsNullOrWhiteSpace(FanswerBox.Text)) {
                 MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
                 switch (TypeofFunction) {
                     case "diferentiation":
@@ -200,18 +200,37 @@ namespace The_Email_Client
             }
         }
 
-        private void AnswerBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        private void AnswerBox_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             Regex regex = new Regex("[^0-9-/+/^/x]+"); //regex that matches disallowed text
             e.Handled = regex.IsMatch(e.Text);
         }
         
-        private void NumberTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            //e.Handled = !Common.IsTextAllowed(e.Text);
+        private void NumberTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
             e.Handled = regex.IsMatch(e.Text);
+        }
+        private void TextBoxPasting(object sender, DataObjectPastingEventArgs e) {
+            Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
+            if (e.DataObject.GetDataPresent(typeof(String))) {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if(regex.IsMatch(text)) {
+                    e.CancelCommand();
+                }
+            }
+            else {
+                e.CancelCommand();
+            }
+        }
 
+        private void PdfButton_Click(object sender, RoutedEventArgs e) {
+            switch ((string)PdfButton.Content) {
+                case "Start PDF":
+                    PdfButton.Content = "Create PDF";
+                    break;
+                case "Create PDF":
+                    PdfButton.Content = "Start PDF";
+                    break;
+            }
         }
     }
 }
