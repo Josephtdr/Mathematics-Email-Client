@@ -158,11 +158,10 @@ namespace The_Email_Client
 
             return true;
         }
-        public float F(float x)
-        {
+        public float F(float x) {
             float Fofx = 0;
-            foreach(Term term in SolvedComponents)
-                Fofx += ((float)(term.Coefficient.Value*(Math.Pow(x,term.Power.Value))));
+            foreach (Term term in SolvedComponents)
+                Fofx += ((float)(term.Coefficient.Value * (Math.Pow(x, term.Power.Value))));
             return Fofx;
         }
     }

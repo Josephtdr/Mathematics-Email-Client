@@ -41,11 +41,8 @@ namespace The_Email_Client
             EmailPage = new EmailPage(ShowPreviousPage);
             RegistrationPage = new RegistrationPage(ShowLoginPage);
             MathSelectionPage = new MathSelectionPage(ShowDifferentiationPage, ShowAdditionPage, ShowHomePage);
-
-
-            testWindow testwindow = new testWindow();
-            testwindow.ShowDialog();
-
+            //testWindow testwindow = new testWindow();
+            //testwindow.ShowDialog();
             ShowLoginPage();
 
         }

@@ -25,7 +25,7 @@ namespace The_Email_Client
         protected Equation Equ { get; set; }
         private int UsingFractions { get; set; }
         private string TypeofFunction { get; set; }
-        private float[] x { get; set; }
+        private float[] X { get; set; }
 
         public DifferentiationPage(Action ShowHomePage)
         {
@@ -40,10 +40,8 @@ namespace The_Email_Client
 
         private void GenerateRandomEquationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(MagnitudeBox.Text))
-            {
-                switch (TypeofFunction)
-                {
+            if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(MagnitudeBox.Text)) {
+                switch (TypeofFunction) {
                     case "diferentiation":
                         Equ = new Diferentiation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions);
                         break;
@@ -73,14 +71,14 @@ namespace The_Email_Client
                     switch (TypeofFunction)
                     {
                         case "diferentiation":
-                            x = new float[] { (rnd.Next(-10, 10)) }; 
-                            FtextBlock.Text = $"Find the gradient of the curve f(x) at the point x={x[0]}.";
+                            X = new float[] { (rnd.Next(-10, 10)) }; 
+                            FtextBlock.Text = $"Find the gradient of the curve f(x) at the point x={X[0]}.";
                             break;
                         case "integration":
                             float x1 = (rnd.Next(-10, 10)); float x2 = (rnd.Next(-10, 10));
                             x1 = x1 == x2 ? x1 + 1 : x1;
-                            x = new float[] { x1 , x2 };
-                            FtextBlock.Text = $"Find the are bound by the curve between x={x[0]} and x={x[1]}. This Doesnt work btw lul.";
+                            X = new float[] { x1 , x2 };
+                            FtextBlock.Text = $"Find the are bound by the curve between x={X[0]} and x={X[1]}. This Doesnt work btw lul.";
                             break;
                     }
                 }
@@ -177,7 +175,7 @@ namespace The_Email_Client
                 MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
                 switch (TypeofFunction) {
                     case "diferentiation":
-                        if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(x[0]))) {
+                        if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(X[0]))) {
                             MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
                             MathmaticsCorrectIncorrectWindow.ShowDialog();
                         }
@@ -187,7 +185,7 @@ namespace The_Email_Client
                         }
                         break;
                     case "integration":
-                        if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(x[0], x[1]))) {
+                        if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(X[0], X[1]))) {
                             MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
                             MathmaticsCorrectIncorrectWindow.ShowDialog();
                         }
