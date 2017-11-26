@@ -37,22 +37,31 @@ namespace The_Email_Client
             DataContext = this;
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
                 { Password = Passwordbox.Password; UserName = UserNameTextBox.Text; Email = EmailTextBox.Text;
-                    if (Encryption.VerifyPasswordorEmail(UserName, Password, true) &&
-                    Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
+                    if (Encryption.VerifyPasswordorEmail(UserName, Password, true) && String.IsNullOrWhiteSpace(Email)) {
+                        UserNameTextBox.Clear(); 
+                        ShowHomePage?.Invoke();
+                    }
+                    else if (Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
                         UserNameTextBox.Clear(); EmailTextBox.Clear();
-                        ShowHomePage?.Invoke(); }
+                        ShowHomePage?.Invoke();
+                    }
                 }
+                
             };
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
-            Password = Passwordbox.Password; UserName = UserNameTextBox.Text;
-            if (Encryption.VerifyPasswordorEmail(UserName, Password, true) &&
-            Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
+            Password = Passwordbox.Password; UserName = UserNameTextBox.Text; Email = EmailTextBox.Text;
+            if (Encryption.VerifyPasswordorEmail(UserName, Password, true) && String.IsNullOrWhiteSpace(Email)) {
+                UserNameTextBox.Clear();
+                ShowHomePage?.Invoke();
+            }
+            else if (Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
                 UserNameTextBox.Clear(); EmailTextBox.Clear();
-                ShowHomePage?.Invoke(); }
+                ShowHomePage?.Invoke();
+            }
         }
-        
+
         private void Registrationbutton_Click(object sender, RoutedEventArgs e) {
             ShowRegistationPage?.Invoke();
         }

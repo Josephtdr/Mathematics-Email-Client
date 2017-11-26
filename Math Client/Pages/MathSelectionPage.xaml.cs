@@ -21,13 +21,13 @@ namespace The_Email_Client
     public partial class MathSelectionPage : Page
     {
         protected Action ShowDifferentiationPage { get; set; }
-        protected Action ShowAdditionPage { get; set; }
+        protected Action ShowIndiciesPage { get; set; }
         protected Action ShowPreviousPage { get; set; }
-        public MathSelectionPage(Action ShowDifferentiationPage,Action ShowAdditionPage, Action ShowPreviousPage)
+        public MathSelectionPage(Action ShowDifferentiationPage,Action ShowPreviousPage, Action ShowIndiciesPage)
         {
-            this.ShowAdditionPage = ShowAdditionPage;
             this.ShowDifferentiationPage = ShowDifferentiationPage;
             this.ShowPreviousPage = ShowPreviousPage;
+            this.ShowIndiciesPage = ShowIndiciesPage;
             InitializeComponent();
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -41,8 +41,8 @@ namespace The_Email_Client
                 case "Differentiation":
                     ShowDifferentiationPage();
                     break;
-                case "Addition":
-                    ShowAdditionPage();
+                case "Indicies":
+                    ShowIndiciesPage();
                     break;
             }
         }

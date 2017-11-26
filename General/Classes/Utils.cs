@@ -146,7 +146,7 @@ namespace The_Email_Client
                 }
             if (Password) Common.Profile.Password = stringtoverify;
             else Common.Profile.Email = stringtoverify;
-                Common.Profile.UserName = UserName;
+            Common.Profile.UserName = UserName;
             return true;
         }
     }

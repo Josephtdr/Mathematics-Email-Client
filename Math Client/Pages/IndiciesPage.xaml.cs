@@ -13,18 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for AdditionPage.xaml
+    /// Interaction logic for IndiciesPage.xaml
     /// </summary>
-    public partial class AdditionPage : Page
-    {
-        protected Action ShowHomePage { get; set; }
-        public AdditionPage(Action ShowHomePage)
-        {
+    public partial class IndiciesPage : Page {
+        protected Action ShowPreviousPage { get; set; }
+        public IndiciesPage(Action ShowPreviousPage) {
+            this.ShowPreviousPage = ShowPreviousPage;
             InitializeComponent();
-            this.ShowHomePage = ShowHomePage;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e) {
+            ShowPreviousPage();
         }
     }
 }

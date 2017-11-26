@@ -36,6 +36,10 @@ namespace The_Email_Client
             switch ((string)(((System.Windows.Controls.Button)sender).Content))
             {
                 case "Email":
+                    if (String.IsNullOrWhiteSpace(Common.Profile.Email) || !Common.Inccorectemailformat(Common.Profile.Email)) {
+                        Common.Profile.Email = "martinsmathematicsclient@gmail.com";
+                        Common.Profile.Password = "capitalutcreading";
+                    }
                     ShowEmailPage();
                     break;
                 case "Maths!":

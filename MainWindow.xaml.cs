@@ -25,7 +25,7 @@ namespace The_Email_Client
         protected RegistrationPage RegistrationPage { get; set; }
         protected HomePage HomePage { get; set; }
         protected DifferentiationPage DifferentiationPage { get; set; }
-        protected AdditionPage AdditionPage { get; set; }
+        protected IndiciesPage IndiciesPage { get; set; }
         protected MathSelectionPage MathSelectionPage { get; set; }
         protected Page PreviousPage { get; set; }
         public MainWindow()
@@ -36,23 +36,21 @@ namespace The_Email_Client
             Common.Profile = new Profiles();
             HomePage = new HomePage(ShowMathSelectionPage, ShowEmailPage, ShowLoginPage);
             DifferentiationPage = new DifferentiationPage(ShowPreviousPage);
-            AdditionPage = new AdditionPage(ShowPreviousPage);
+            IndiciesPage = new IndiciesPage(ShowPreviousPage);
             LoginPage = new LoginPage(LogintoHomePage, ShowRegistrationPage);
             EmailPage = new EmailPage(ShowPreviousPage);
             RegistrationPage = new RegistrationPage(ShowLoginPage);
-            MathSelectionPage = new MathSelectionPage(ShowDifferentiationPage, ShowAdditionPage, ShowHomePage);
-            //testWindow testwindow = new testWindow();
-            //testwindow.ShowDialog();
+            MathSelectionPage = new MathSelectionPage(ShowDifferentiationPage, ShowHomePage, ShowIndiciesPage);
             ShowLoginPage();
 
         }
-
-        public void ShowEmailPage()
-        {
+        public void ShowIndiciesPage() {
+            ShowPage(IndiciesPage);
+        }
+        public void ShowEmailPage() {
             ShowPage(EmailPage);
         }
-        public void ShowMathSelectionPage()
-        {
+        public void ShowMathSelectionPage() {
             ShowPage(MathSelectionPage);
         }
         public void ShowHomePage()
@@ -67,10 +65,6 @@ namespace The_Email_Client
         public void ShowDifferentiationPage()
         {
             ShowPage(DifferentiationPage);
-        }
-        public void ShowAdditionPage()
-        {
-            ShowPage(AdditionPage);
         }
         public void ShowRegistrationPage()
         {

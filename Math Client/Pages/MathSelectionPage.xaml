@@ -19,7 +19,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Button x:Name="DifferentiationButton" Content="Differentiation" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="0" Click="MathButton_Click"/>
-        <Button x:Name="AdditiionButton" Content="Additiion" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="2" Click="MathButton_Click"/>
+        <Button x:Name="IndiciesButton" Content="Indicies" HorizontalAlignment="Center" Margin="42,0,38,0" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="2" Click="MathButton_Click"/>
         <Button Content="Back" HorizontalAlignment="Center" Height="18" Margin="-24,30,170,31" VerticalAlignment="Center" Width="58" Click="BackButton_Click"/>
 
     </Grid>

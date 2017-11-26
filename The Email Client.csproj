@@ -68,8 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Math Client\Pages\AdditionPage.xaml.cs">
-      <DependentUpon>AdditionPage.xaml</DependentUpon>
+    <Compile Include="Math Client\Pages\IndiciesPage.xaml.cs">
+      <DependentUpon>IndiciesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Math Client\Pages\DifferentiationPage.xaml.cs">
       <DependentUpon>DifferentiationPage.xaml</DependentUpon>
@@ -116,7 +116,7 @@
     <Compile Include="testWindow.xaml.cs">
       <DependentUpon>testWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Math Client\Pages\AdditionPage.xaml">
+    <Page Include="Math Client\Pages\IndiciesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
