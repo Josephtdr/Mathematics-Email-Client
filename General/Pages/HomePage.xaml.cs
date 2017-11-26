@@ -37,8 +37,8 @@ namespace The_Email_Client
             {
                 case "Email":
                     if (String.IsNullOrWhiteSpace(Common.Profile.Email) || !Common.Inccorectemailformat(Common.Profile.Email)) {
-                        Common.Profile.Email = "martinsmathematicsclient@gmail.com";
-                        Common.Profile.Password = "capitalutcreading";
+                        Common.Profile.Email = Constants.DEFAULTEMAIL;
+                        Common.Profile.Password = Constants.DEFAULTPASSWORD;
                     }
                     ShowEmailPage();
                     break;

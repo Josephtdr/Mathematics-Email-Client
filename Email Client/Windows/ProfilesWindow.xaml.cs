@@ -48,7 +48,7 @@ namespace The_Email_Client
         public ProfilesWindow()
         {
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
-
+            
             SettingsResetValues = new List<string>();
             EditableSettings = new List<string>();
             if (Common.Profile != null) {
@@ -70,6 +70,9 @@ namespace The_Email_Client
             BindingExpression PortBind = PortBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression ServerBind = ServerBox.GetBindingExpression(TextBox.TextProperty);
             expressions = new BindingExpression[] { EmailBind, UserNameBind, NameBind, PortBind, ServerBind};
+
+            if (Common.Profile.Email == Constants.DEFAULTEMAIL)
+                ResetPasswordButton.IsEnabled = false;
         }
 
 

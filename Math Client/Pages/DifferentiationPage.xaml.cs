@@ -30,6 +30,7 @@ namespace The_Email_Client
         public DifferentiationPage(Action ShowHomePage)
         {
             InitializeComponent();
+            RecordingColour.Background = Brushes.Red;
             this.ShowHomePage = ShowHomePage;
         }
 
@@ -53,7 +54,7 @@ namespace The_Email_Client
                 DifferentiationTextBlock.Text = Equ.SolvedEquationToString();
                 AnswerBox.Clear(); FanswerBox.Clear();
                 FanswerBox.Visibility = Visibility.Hidden; FsubmitButton.Visibility = Visibility.Hidden;
-                FtextBlock.Visibility = Visibility.Hidden;
+                FtextBlock.Visibility = Visibility.Hidden; RecordingColour.Background = Brushes.Green;
             }
             else MessageBox.Show("Please Enter an order and difficulty value.", "Error!");
         }
@@ -211,24 +212,29 @@ namespace The_Email_Client
             Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
             if (e.DataObject.GetDataPresent(typeof(String))) {
                 String text = (String)e.DataObject.GetData(typeof(String));
-                if(regex.IsMatch(text)) {
+                if(regex.IsMatch(text)) 
                     e.CancelCommand();
-                }
             }
-            else {
+            else 
                 e.CancelCommand();
-            }
         }
-
+         
         private void PdfButton_Click(object sender, RoutedEventArgs e) {
             switch ((string)PdfButton.Content) {
                 case "Start PDF":
                     PdfButton.Content = "Create PDF";
+                    RecordingColour.Background = Brushes.LightGreen;
                     break;
                 case "Create PDF":
                     PdfButton.Content = "Start PDF";
+                    RecordingColour.Background = Brushes.Red;
                     break;
             }
+        }
+
+        private void EndPdfButton_Click(object sender, RoutedEventArgs e) {
+            RecordingColour.Background = Brushes.Red;
+            PdfButton.Content = "Start PDF";
         }
     }
 }

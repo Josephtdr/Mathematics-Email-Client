@@ -70,12 +70,12 @@ namespace The_Email_Client
             try
             {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET Name ='{ settings.Name }' WHERE UserName='{ Common.Profile.UserName }'", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET Name ='{ settings.Name }', UserName ='{ settings.UserName }' WHERE ID ={ settings.ID }", cnctDTB);
                 cmd.ExecuteNonQuery();
                 cnctDTB.Close();
 
                 cnctDTB.Open();
-                cmd = new OleDbCommand($"UPDATE Settings Set Port={settings.Port}, Server='{settings.Server}' WHERE Profile_ID={settings.ID} ;", cnctDTB);
+                cmd = new OleDbCommand($"UPDATE Settings SET Port={settings.Port}, Server='{settings.Server}' WHERE Profile_ID={settings.ID} ;", cnctDTB);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception err)
@@ -129,6 +129,11 @@ namespace The_Email_Client
                 MessageBox.Show(err.Message);
             }
             finally { cnctDTB.Close(); }
+            if (string.IsNullOrEmpty(savedHash)) {
+                if(Password)
+                    MessageBox.Show($"Username {UserName} does not exist.");
+                return false;
+            }
             //Extract the bytes
             byte[] hashBytes = Convert.FromBase64String(savedHash);
             //Get the salt

@@ -24,6 +24,18 @@
 
         <TextBox x:Name="UserNameTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding UserName}"  HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="160"/>
         <TextBox x:Name="EmailTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Email}"  HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="160"/>
+        <TextBlock IsHitTestVisible="False" Text="Optional" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="13,0,0,0" Foreground="DarkGray" Grid.Column="1" Grid.Row="2">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=EmailTextBox}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
         <PasswordBox x:Name="Passwordbox" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Height="18" VerticalAlignment="Center" Width="160" />
 

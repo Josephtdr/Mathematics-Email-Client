@@ -57,7 +57,7 @@ namespace The_Email_Client
                         BCC = null,
                         Subject = "Reset Password Request",
                         Body = "Somebody has Requested a Password Reset for this email.\nIf this was not you please ignore this email.\n" +
-                        $"If this was you your email reset code is as follows: {ResetCode}.\nPlease copy this code down this code, " +
+                        $"If this was you, your email reset code is as follows: {ResetCode}.\nPlease copy this code down, " +
                         "return to the email client and follow the on screen instructions.",
                         AttachmentNames = null
                     };

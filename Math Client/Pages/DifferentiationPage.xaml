@@ -53,20 +53,21 @@
         </StackPanel>
 
         <TextBlock x:Name="EquationTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Bunches of x's" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Height="114" Width="151" TextAlignment="Center"/>
-        <TextBlock x:Name="DifferentiationTextBlock" Visibility="Hidden" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Dif Equation (=0 trust me)" VerticalAlignment="Center" Width="150" Height="114" Grid.Column="2" TextAlignment="Center"/>
+        <TextBlock x:Name="DifferentiationTextBlock" Visibility="Hidden" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Dif Equation (=0 trust me)" VerticalAlignment="Center" Width="150" Height="95" Grid.Column="2" TextAlignment="Center" Margin="2,5,2,24"/>
 
         <Label Content="Order" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Margin="0,4,0,0" Height="26" Width="42"/>
         <Label Content="Magnitude" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Margin="0,0,0,40" />
         <Label Content="Answer" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Row="2" Margin="110,0,1,0" Height="26" Width="0"/>
 
-        <Button x:Name="Reveal_AnswerButton" Content="Show Answer" Grid.Column="2" HorizontalAlignment="Center" Height="25" Grid.Row="2" VerticalAlignment="Top" Width="82" Click="ShowRevealButton_Click"/>
+        <Button x:Name="Reveal_AnswerButton" Content="Show Answer" Grid.Column="2" HorizontalAlignment="Center" Height="25" Grid.Row="1" VerticalAlignment="Bottom" Width="82" Click="ShowRevealButton_Click"/>
 
 
         <TextBlock x:Name="FtextBlock" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="Hidden"/>
         <Button x:Name="FsubmitButton" Visibility="Hidden" Content="Submit" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Width="74" Margin="0,0,0,10" Click="FsubmitButton_Click"/>
         <TextBox x:Name="FanswerBox" HorizontalAlignment="Center" Height="24" Margin="0,30,0,0" Grid.Row="2" TextWrapping="Wrap" Visibility="Hidden" VerticalAlignment="Center" Width="91"/>
         <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Center" Click="PdfButton_Click"/>
-        <Button x:Name="EndPdfButton" Content="Cancel PDF" Grid.Column="2" HorizontalAlignment="Right" Height="28" Margin="0,0,10,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <Button x:Name="EndPdfButton" Content="Cancel PDF" Grid.Column="2" HorizontalAlignment="Right" Height="28" Margin="0,0,10,0" Grid.Row="2" VerticalAlignment="Center" Click="EndPdfButton_Click"/>
+        <Button x:Name="RecordingColour" Grid.Column="2" HorizontalAlignment="Center" Height="19" Margin="0,10,10,0" Grid.Row="2" VerticalAlignment="Top" Width="22" Background="#FF14F51E"/>
 
     </Grid>
 </Page>

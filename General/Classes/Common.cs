@@ -45,7 +45,7 @@ namespace The_Email_Client
             if (Regex.IsMatch(email, Constants.VALIDEMAILPATTERN, RegexOptions.IgnoreCase)) return true;
             else
             {
-                System.Windows.MessageBox.Show("Invalid Email Format", "Error!");
+                System.Windows.MessageBox.Show("Email is of an invalid type", "Error!");
                 return false;
             }
         }
