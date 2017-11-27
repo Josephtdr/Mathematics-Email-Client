@@ -129,3 +129,9 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Page
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\IndiciesPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\IndiciesPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\IndiciesPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\PdfSharp.Charting.dll
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\PdfSharp.dll
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\PdfSharp.xml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\PdfSharp.Charting.xml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\de\PdfSharp.resources.dll
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\de\PdfSharp.Charting.resources.dll

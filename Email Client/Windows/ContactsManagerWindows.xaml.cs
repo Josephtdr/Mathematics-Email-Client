@@ -19,7 +19,12 @@ using System.Text.RegularExpressions;
 namespace The_Email_Client
 {
     /// <summary>
-    /// Interaction logic for ContactsManagerWindows.xaml
+    /// Interaction 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// ic for ContactsManagerWindows.xaml
     /// </summary>
     /// 
     

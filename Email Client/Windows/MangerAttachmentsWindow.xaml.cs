@@ -16,7 +16,11 @@ using System.Windows.Controls;
 namespace The_Email_Client
 {
     /// <summary>
-    /// Interaction logic for MangerAttachmentsWindow.xaml
+    /// Interaction 
+    /// 
+    /// 
+    /// 
+    /// ic for MangerAttachmentsWindow.xaml
     /// </summary>
     public class File
     {

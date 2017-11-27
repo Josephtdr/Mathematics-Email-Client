@@ -19,7 +19,13 @@ using System.ComponentModel;
 namespace The_Email_Client
 {
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// 
+    /// ic for SettingsWindow.xaml
     /// </summary>
     public partial class ProfilesWindow : Window
     {
