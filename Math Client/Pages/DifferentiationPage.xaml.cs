@@ -45,6 +45,18 @@ namespace The_Email_Client
         }
 
         private void GenerateRandomEquationButton_Click(object sender, RoutedEventArgs e) {
+            Equation Equ = CreateRandomEquation();
+            if (Equ != null) {
+                EquationTextBlock.Text = Equ.ToString();
+                DifferentiationTextBlock.Text = Equ.SolvedEquationToString();
+                AnswerBox.Clear(); FanswerBox.Clear();
+                FanswerBox.Visibility = Visibility.Hidden; FsubmitButton.Visibility = Visibility.Hidden;
+                FtextBlock.Visibility = Visibility.Hidden;
+                QuestionsforPDF.Add(Equ);
+            }
+        }
+
+        private Equation CreateRandomEquation() {
             if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(MagnitudeBox.Text)) {
                 switch (TypeofFunction) {
                     case "diferentiation":
@@ -54,14 +66,12 @@ namespace The_Email_Client
                         Equ = new Integration(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions);
                         break;
                 }
-                EquationTextBlock.Text = Equ.ToString();
-                DifferentiationTextBlock.Text = Equ.SolvedEquationToString();
-                AnswerBox.Clear(); FanswerBox.Clear();
-                FanswerBox.Visibility = Visibility.Hidden; FsubmitButton.Visibility = Visibility.Hidden;
-                FtextBlock.Visibility = Visibility.Hidden;
-                QuestionsforPDF.Add(Equ);
+                return Equ;
             }
-            else MessageBox.Show("Please Enter an order and difficulty value.", "Error!");
+            else {
+                MessageBox.Show("Please Enter an order and difficulty value.", "Error!");
+                return null;
+            }
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
@@ -141,11 +151,17 @@ namespace The_Email_Client
                 case "cmdUp2":
                     MagnitudeBox.Text = Convert.ToString(Convert.ToInt16(MagnitudeBox.Text) + 1);
                     break;
+                case "cmdUp3":
+                    PDFBox.Text = Convert.ToString(Convert.ToInt16(PDFBox.Text) + 1);
+                    break;
                 case "cmdDown":
                     OrderBox.Text = Convert.ToString(Convert.ToInt16(OrderBox.Text) - 1);
                     break;
                 case "cmdDown2":
                     MagnitudeBox.Text = Convert.ToString(Convert.ToInt16(MagnitudeBox.Text) - 1);
+                    break;
+                case "cmdDown3":
+                    PDFBox.Text = Convert.ToString(Convert.ToInt16(PDFBox.Text) - 1);
                     break;
             }
         }
@@ -219,46 +235,7 @@ namespace The_Email_Client
                     RecordingColour.Background = Brushes.LightGreen;
                     break;
                 case "Create PDF":
-                    
-
-
-
-                    PdfDocument document = new PdfDocument();
-                    PdfPage page;
-                    XGraphics gfx;
-                    XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
-                    int numpages = QuestionsforPDF.Count / 14;
-                    for (int i = 0; i < numpages + 1 ; i++) {
-                        page = document.AddPage();
-                        gfx = XGraphics.FromPdfPage(page);
-                        if (i == 0) gfx.DrawString("Questions:",font,XBrushes.Black,new XRect(0,10,page.Width,page.Height), XStringFormat.TopCenter);
-                        for (int j = 0; j < 14; j++) {
-                            if(j + (14 * i) < QuestionsforPDF.Count)
-                                gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(QuestionsforPDF[j + (14 * i)].ToString(), "[^0-9-/+/^/x ]+", "") }",
-                                    font, XBrushes.Black, new XRect(10, 10 + ((j+2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
-                            }   
-                    }
-
-                    for (int i = 0; i < numpages + 1; i++) {
-                        page = document.AddPage();
-                        gfx = XGraphics.FromPdfPage(page);
-                        if (i == 0) gfx.DrawString("Answers:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
-                        for (int j = 0; j < 14; j++) {
-                            if (j + (14 * i) < QuestionsforPDF.Count)
-                                gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(QuestionsforPDF[j + (14 * i)].SolvedEquationToString(), "[^0-9-/+/^/x ]+", "") }",
-                                    font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
-                        }
-                    }
-
-                    string datetime = DateTime.Now.ToString().Replace('/','-').Replace(':','.');
-                    string filename = $"{datetime}.pdf";
-                    document.Save(filename);
-                    Process.Start(filename);
-
-
-
-
-
+                    CreatePDFfromList(QuestionsforPDF);
                     QuestionsforPDF = new List<Equation>(); //clears list of current questions
                     PdfButton.Content = "Start PDF";
                     RecordingColour.Background = Brushes.Red;
@@ -266,9 +243,52 @@ namespace The_Email_Client
             }
         }
 
+        private void CreatePDFfromList(List<Equation> EquList) {
+            PdfDocument document = new PdfDocument();
+            PdfPage page;
+            XGraphics gfx;
+            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+            int numpages = EquList.Count / 14;
+            for (int i = 0; i < numpages + 1; i++) {
+                page = document.AddPage();
+                gfx = XGraphics.FromPdfPage(page);
+                if (i == 0) gfx.DrawString("Questions:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
+                for (int j = 0; j < 14; j++) {
+                    if (j + (14 * i) < EquList.Count)
+                        gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(EquList[j + (14 * i)].ToString(), "[^0-9-/+/^/x ]+", "") }",
+                            font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
+                }
+            }
+
+            for (int i = 0; i < numpages + 1; i++) {
+                page = document.AddPage();
+                gfx = XGraphics.FromPdfPage(page);
+                if (i == 0) gfx.DrawString("Answers:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
+                for (int j = 0; j < 14; j++) {
+                    if (j + (14 * i) < EquList.Count)
+                        gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(EquList[j + (14 * i)].SolvedEquationToString(), "[^0-9-/+/^/x ]+", "") }",
+                            font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
+                }
+            }
+
+            string datetime = DateTime.Now.ToString().Replace('/', '-').Replace(':', '.');
+            string filename = $"{datetime}.pdf";
+            document.Save(filename);
+            Process.Start(filename);
+        }
+
         private void EndPdfButton_Click(object sender, RoutedEventArgs e) {
             RecordingColour.Background = Brushes.Red;
             PdfButton.Content = "Start PDF";
+            QuestionsforPDF = new List<Equation>();
+        }
+
+        private void CreateRanPDFButton_Click(object sender, RoutedEventArgs e) {
+            List<Equation> EquList = new List<Equation>();
+            for (int i = 0; i < Convert.ToInt16(PDFBox.Text); i++) {
+                EquList.Add(CreateRandomEquation());
+            }
+            CreatePDFfromList(EquList);
         }
     }
 }

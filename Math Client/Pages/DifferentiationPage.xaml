@@ -31,7 +31,15 @@
             <Button x:Name="cmdDown2" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
-        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Generate Random&#x0a;    String of X's" Grid.Column="2" HorizontalAlignment="Center" Height="66" VerticalAlignment="Center" Width="134" Click="GenerateRandomEquationButton_Click"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Margin="94,32,10,70" HorizontalAlignment="Center">
+            <Button x:Name="cmdUp3" Content="^"  Click="Cmd_Click" Width="19" />
+            <TextBox x:Name="PDFBox" Text="0" DataObject.Pasting="TextBoxPasting" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
+            <Button x:Name="cmdDown3" Content="˅"  Click="Cmd_Click" Width="19" />
+        </StackPanel>
+        
+        <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="  Generate&#x0a;  Random&#x0a;String of X's" Grid.Column="2" HorizontalAlignment="Center" Height="66" VerticalAlignment="Center" Width="73" Click="GenerateRandomEquationButton_Click" Margin="10,29,71,29"/>
+        <Button x:Name="CreateRanPDFButton" Content="Random&#x0a;PDF" Grid.Column="2" HorizontalAlignment="Left" Height="36" Margin="94,59,0,0" VerticalAlignment="Top" Width="50" Click="CreateRanPDFButton_Click"/>
 
         <TextBox x:Name="AnswerBox" Grid.Column="1" HorizontalAlignment="Center" Height="88" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" PreviewTextInput="AnswerBox_PreviewTextInput"/>
 
@@ -58,6 +66,7 @@
         <Label Content="Order" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Margin="0,4,0,0" Height="26" Width="42"/>
         <Label Content="Magnitude" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Margin="0,0,0,40" />
         <Label Content="Answer" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Row="2" Margin="110,0,1,0" Height="26" Width="0"/>
+        <Label Content="Questions" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="88,6,3,0"/>
 
         <Button x:Name="Reveal_AnswerButton" Content="Show Answer" Grid.Column="2" HorizontalAlignment="Center" Height="25" Grid.Row="1" VerticalAlignment="Bottom" Width="82" Click="ShowRevealButton_Click"/>
 

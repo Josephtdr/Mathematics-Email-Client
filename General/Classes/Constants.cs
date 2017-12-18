@@ -1,4 +1,7 @@
-﻿namespace The_Email_Client
+﻿
+using System;
+
+namespace The_Email_Client
 {
     internal class Constants
     {
@@ -7,5 +10,6 @@
         public const string VALIDPASSWORDPATTERN = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
         public const string DEFAULTEMAIL = "martinsmathematicsclient@gmail.com";
         public const string DEFAULTPASSWORD = "capitalutcreading";
+        public static Random Rnd { get; } = new Random();
     }
 }

@@ -135,3 +135,9 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\Pdf
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\PdfSharp.Charting.xml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\de\PdfSharp.resources.dll
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\de\PdfSharp.Charting.resources.dll
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\PdfSharp.Charting.dll
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\PdfSharp.dll
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\PdfSharp.xml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\PdfSharp.Charting.xml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\de\PdfSharp.resources.dll
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\de\PdfSharp.Charting.resources.dll

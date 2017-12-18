@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -80,20 +81,24 @@ namespace The_Email_Client
         }
     }
 
-    public abstract class Equation
-    {
+    public abstract class Equation {
+        public static RNGCryptoServiceProvider Rng = new RNGCryptoServiceProvider();
         public List<Term> Components { get; set; }
         public List<Term> Answer { get; set; }
         public List<Term> SolvedComponents { get; set; }
         public abstract float CalculateAnswer(float x1, float? x2 = null);
-
+        public static int Next(int start, int end) {
+            byte[] randomBytes = new byte[4];
+            Rng.GetBytes(randomBytes);
+            int randomNumber = (int)BitConverter.ToDouble(randomBytes, 0);
+            return rng;
+        }
         public Equation(int Order, int Magnitude, int UsingFractions) {
             Components = new List<Term>();
-            Random rnd = new Random();
             for (int i = Order; i > -1; --i)
             {
-                int Coe_numerator = rnd.Next(-((Magnitude + 1) * 3), (Magnitude + 1) * 3);
-                int Coe_denominator = UsingFractions==0 ? rnd.Next(-1, 2) : rnd.Next(-Magnitude, Magnitude+1);
+                int Coe_numerator = Rng.Next(-((Magnitude + 1) * 3), (Magnitude + 1) * 3);
+                int Coe_denominator = UsingFractions==0 ? Next(-1, 2) : Next(-Magnitude, Magnitude+1);
                 Coe_denominator = (Coe_denominator != 0 ? Coe_denominator : 1);
                 Fraction Coefficient = new Fraction {
                     Numerator = Coe_numerator,
@@ -102,7 +107,7 @@ namespace The_Email_Client
                 Coefficient.GCD();
 
                 int Pow_numerator = i;
-                int Pow_denominator = UsingFractions != 2 ? 1 : rnd.Next(-Magnitude, Magnitude+1);
+                int Pow_denominator = UsingFractions != 2 ? 1 : Constants.Rnd.Next(-Magnitude, Magnitude+1);
                 Pow_denominator = (Pow_denominator != 0 ? Pow_denominator : 1);
                 Fraction Power = new Fraction {
                     Numerator = Pow_numerator,
