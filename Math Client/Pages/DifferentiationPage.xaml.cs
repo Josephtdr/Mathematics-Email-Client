@@ -49,10 +49,8 @@ namespace The_Email_Client
             if (Equ != null) {
                 EquationTextBlock.Text = Equ.ToString();
                 DifferentiationTextBlock.Text = Equ.SolvedEquationToString();
-                AnswerBox.Clear(); FanswerBox.Clear();
-                FanswerBox.Visibility = Visibility.Hidden; FsubmitButton.Visibility = Visibility.Hidden;
-                FtextBlock.Visibility = Visibility.Hidden;
-                QuestionsforPDF.Add(Equ);
+                AnswerBox.Clear();
+                if((string)PdfButton.Content == "Create PDF") QuestionsforPDF.Add(Equ);
             }
         }
 
@@ -81,20 +79,6 @@ namespace The_Email_Client
                     Random rnd = new Random();
                     MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
                     MathmaticsCorrectIncorrectWindow.ShowDialog();
-                    FanswerBox.Visibility = Visibility.Visible; FsubmitButton.Visibility = Visibility.Visible;
-                    FtextBlock.Visibility = Visibility.Visible;
-                    switch (TypeofFunction) {
-                        case "diferentiation":
-                            X = new float[] { (rnd.Next(-10, 10)) }; 
-                            FtextBlock.Text = $"Find the gradient of the curve f(x) at the point x={X[0]}.";
-                            break;
-                        case "integration":
-                            float x1 = (rnd.Next(-10, 10)); float x2 = (rnd.Next(-10, 10));
-                            x1 = x1 == x2 ? x1 + 1 : x1;
-                            X = new float[] { x1 , x2 };
-                            FtextBlock.Text = $"Find the are bound by the curve between x={X[0]} and x={X[1]}. [Placeholder Question]";
-                            break;
-                    }
                 }
                 else {
                     MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
@@ -103,7 +87,7 @@ namespace The_Email_Client
             }
         }
         
-        private void HandleCheck(object sender, RoutedEventArgs e) {
+        private void FractionsUseHandleCheck(object sender, RoutedEventArgs e) {
             RadioButton rb = sender as RadioButton;
             switch (rb.Name) {
                 case "no":
@@ -152,7 +136,7 @@ namespace The_Email_Client
                     MagnitudeBox.Text = Convert.ToString(Convert.ToInt16(MagnitudeBox.Text) + 1);
                     break;
                 case "cmdUp3":
-                    PDFBox.Text = Convert.ToString(Convert.ToInt16(PDFBox.Text) + 1);
+                    NumofQuestionsBox.Text = Convert.ToString(Convert.ToInt16(NumofQuestionsBox.Text) + 1);
                     break;
                 case "cmdDown":
                     OrderBox.Text = Convert.ToString(Convert.ToInt16(OrderBox.Text) - 1);
@@ -161,7 +145,7 @@ namespace The_Email_Client
                     MagnitudeBox.Text = Convert.ToString(Convert.ToInt16(MagnitudeBox.Text) - 1);
                     break;
                 case "cmdDown3":
-                    PDFBox.Text = Convert.ToString(Convert.ToInt16(PDFBox.Text) - 1);
+                    NumofQuestionsBox.Text = Convert.ToString(Convert.ToInt16(NumofQuestionsBox.Text) - 1);
                     break;
             }
         }
@@ -179,33 +163,7 @@ namespace The_Email_Client
             }
         }
 
-        private void FsubmitButton_Click(object sender, RoutedEventArgs e) {
-            if (!string.IsNullOrWhiteSpace(FanswerBox.Text)) {
-                MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
-                switch (TypeofFunction) {
-                    case "diferentiation":
-                        if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(X[0]))) {
-                            MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
-                            MathmaticsCorrectIncorrectWindow.ShowDialog();
-                        }
-                        else {
-                            MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
-                            MathmaticsCorrectIncorrectWindow.ShowDialog();
-                        }
-                        break;
-                    case "integration":
-                        if (Convert.ToInt16(FanswerBox.Text) == Convert.ToInt16(Equ.CalculateAnswer(X[0], X[1]))) {
-                            MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
-                            MathmaticsCorrectIncorrectWindow.ShowDialog();
-                        }
-                        else {
-                            MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
-                            MathmaticsCorrectIncorrectWindow.ShowDialog();
-                        }
-                        break;
-                }
-            }
-        }
+        
         //Prevents user from typing anything bar numbers, x and operators +,-,^,/ in text boxes this check is applied to.
         private void AnswerBox_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             Regex regex = new Regex("[^0-9-/+/^/x]+"); //regex that matches disallowed text
@@ -231,24 +189,25 @@ namespace The_Email_Client
         private void PdfButton_Click(object sender, RoutedEventArgs e) {
             switch ((string)PdfButton.Content) {
                 case "Start PDF":
-                    PdfButton.Content = "Create PDF";
-                    RecordingColour.Background = Brushes.LightGreen;
+                    PdfButton.Content = "Create PDF"; //Indicates user can now create a pdf with saved questions
+                    RecordingColour.Background = Brushes.LightGreen; //Indicates pdf saving is on
                     break;
                 case "Create PDF":
                     CreatePDFfromList(QuestionsforPDF);
                     QuestionsforPDF = new List<Equation>(); //clears list of current questions
-                    PdfButton.Content = "Start PDF";
-                    RecordingColour.Background = Brushes.Red;
+                    PdfButton.Content = "Start PDF"; //Indicated user can start another Pdf now
+                    RecordingColour.Background = Brushes.Red; //Indicates pdf saving is off
                     break;
             }
         }
-
+        //Function to create a PDF from a list of Equations
         private void CreatePDFfromList(List<Equation> EquList) {
             PdfDocument document = new PdfDocument();
             PdfPage page;
             XGraphics gfx;
-            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
-            int numpages = EquList.Count / 14;
+            XFont font = new XFont("Verdana", 20, XFontStyle.Bold); //sets chosen font and style
+            int numpages = EquList.Count / 14; //Workout the number of pages which will be required for the number of given questions
+            //Creates Question Pages
             for (int i = 0; i < numpages + 1; i++) {
                 page = document.AddPage();
                 gfx = XGraphics.FromPdfPage(page);
@@ -259,7 +218,7 @@ namespace The_Email_Client
                             font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
                 }
             }
-
+            //Creates Answer Pages
             for (int i = 0; i < numpages + 1; i++) {
                 page = document.AddPage();
                 gfx = XGraphics.FromPdfPage(page);
@@ -278,17 +237,20 @@ namespace The_Email_Client
         }
 
         private void EndPdfButton_Click(object sender, RoutedEventArgs e) {
-            RecordingColour.Background = Brushes.Red;
-            PdfButton.Content = "Start PDF";
-            QuestionsforPDF = new List<Equation>();
+            RecordingColour.Background = Brushes.Red; //Indicated pdf saving is off
+            PdfButton.Content = "Start PDF"; //Indicates user can start a new pdf
+            QuestionsforPDF = new List<Equation>(); //Clears list of current equations
         }
 
+        //Creates a random pdf from the users perameters
         private void CreateRanPDFButton_Click(object sender, RoutedEventArgs e) {
-            List<Equation> EquList = new List<Equation>();
-            for (int i = 0; i < Convert.ToInt16(PDFBox.Text); i++) {
-                EquList.Add(CreateRandomEquation());
+            if (Convert.ToInt16(NumofQuestionsBox.Text) > 0) { //Makes sure the user has requested at least 1 question
+                List<Equation> EquList = new List<Equation>();
+                for (int i = 0; i < Convert.ToInt16(NumofQuestionsBox.Text); i++) {
+                    EquList.Add(CreateRandomEquation()); //Adds a random equation to the list 
+                }
+                CreatePDFfromList(EquList); //creates pdf
             }
-            CreatePDFfromList(EquList);
         }
     }
 }

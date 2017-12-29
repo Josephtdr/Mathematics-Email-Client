@@ -10,15 +10,14 @@ namespace The_Email_Client
 {
     public class Fraction
     {
-        public int Numerator { get; set; }
-        public int Denominator { get; set; }
-        public float Value { get {
+        public int Numerator { get; set; }//Variable for the numerator (top half) of the fraction
+        public int Denominator { get; set; }//Variable for the denominator (bottom half) of the fraction
+        public float Value { get { //Returns the decimal value of the fraction
                 return (float)Numerator / (float)Denominator;
             }
         }
-
-        public override string ToString()
-        {
+        //Overrides the ToString command such that it displays a fraction correctly when called.
+        public override string ToString() {
             Console.WriteLine(Value);
             bool WholeNumber = (Value == Math.Floor(Value));
             string str = ((WholeNumber ? $"{ Math.Floor(Value) }" : $"{Numerator}/{Denominator}")
@@ -26,15 +25,13 @@ namespace The_Email_Client
 
             return str;
         }
-        
-        public void GCD()
-        {
+        //Function to convert fraction to simplest form
+        public void GCD() {
             int Remainder;
             int a = Numerator;
             int b = Denominator;
 
-            while (b != 0)
-            {
+            while (b != 0) {
                 Remainder = a % b;
                 a = b;
                 b = Remainder;
@@ -52,11 +49,10 @@ namespace The_Email_Client
         }
     }
 
-    public class Term
-    {
-        public Fraction Coefficient { get; set; }
-        public Fraction Power { get; set; }
-        public string X { get {
+    public class Term {
+        public Fraction Coefficient { get; set; } //Variable for the coefficient of each term
+        public Fraction Power { get; set; } //Variable for the coefficient of each term
+        public string X { get { //When Term.X is called, will output a string depending on the power value
                 return Power.Value == 0 ? "" : Power.Value == 1? "x" : Power.Value < 0 ? $"x^-{Power}" : $"x^{Power}";
             }
         }
@@ -81,30 +77,26 @@ namespace The_Email_Client
         }
     }
 
-    public abstract class Equation {
-        public static RNGCryptoServiceProvider Rng = new RNGCryptoServiceProvider();
-        public List<Term> Components { get; set; }
-        public List<Term> Answer { get; set; }
-        public List<Term> SolvedComponents { get; set; }
+    public abstract class Equation {//class for each equation
+        public static Random Rng = new Random(); //creates an instance of the random class
+        public List<Term> Components { get; set; } //stores the equation
+        public List<Term> Answer { get; set; } //stores the users answer to said equation
+        public List<Term> SolvedComponents { get; set; }//stores the answer to said equation
         public abstract float CalculateAnswer(float x1, float? x2 = null);
-        public static int Next(int start, int end) {
-            byte[] randomBytes = new byte[4];
-            Rng.GetBytes(randomBytes);
-            int randomNumber = (int)BitConverter.ToDouble(randomBytes, 0);
-            return rng;
-        }
+        
         public Equation(int Order, int Magnitude, int UsingFractions) {
             Components = new List<Term>();
             for (int i = Order; i > -1; --i)
             {
+                //Generates random values for the Coefficient of the Value.
                 int Coe_numerator = Rng.Next(-((Magnitude + 1) * 3), (Magnitude + 1) * 3);
-                int Coe_denominator = UsingFractions==0 ? Next(-1, 2) : Next(-Magnitude, Magnitude+1);
-                Coe_denominator = (Coe_denominator != 0 ? Coe_denominator : 1);
-                Fraction Coefficient = new Fraction {
+                int Coe_denominator = UsingFractions==0 ? Rng.Next(-1, 2) : Rng.Next(-Magnitude, Magnitude+1);
+                Coe_denominator = (Coe_denominator != 0 ? Coe_denominator : 1); //Makes sure the variable is not 0
+                Fraction Coefficient = new Fraction { //Creates a new Fraction with the generated values
                     Numerator = Coe_numerator,
                     Denominator = Coe_denominator
                 };
-                Coefficient.GCD();
+                Coefficient.GCD(); //Coverts the fraction to its simplest form
 
                 int Pow_numerator = i;
                 int Pow_denominator = UsingFractions != 2 ? 1 : Constants.Rnd.Next(-Magnitude, Magnitude+1);
@@ -170,11 +162,12 @@ namespace The_Email_Client
         }
         public bool VerifyAnswer(string answer)
         {
+            //BubbleSort sorts the terms in order of power as so the answers ordering is not punished.
             Answer = BubbleSort(ParseString(answer));
-            
+            List<Term> AnswerCheck = BubbleSort(SolvedComponents);
             for (int i = 0; i < SolvedComponents.Count; i++)
             {
-                if (SolvedComponents[i].ToString() != Answer[i].ToString())
+                if (Answer[i].ToString() == null || SolvedComponents[i].ToString() != Answer[i].ToString())
                     return false;
             }
 
