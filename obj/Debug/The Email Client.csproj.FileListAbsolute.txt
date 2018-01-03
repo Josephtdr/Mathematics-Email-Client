@@ -139,3 +139,5 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\de\PdfSharp.reso
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\de\PdfSharp.Charting.resources.dll
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.baml
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ClassManagerWindow.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ClassManagerWindow.baml

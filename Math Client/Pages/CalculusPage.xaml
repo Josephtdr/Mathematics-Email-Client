@@ -23,6 +23,8 @@
         <ToolBar Grid.ColumnSpan="3" VerticalAlignment="Top">
             <Button Content="Home"  Click="HomeButton_Click"/>
             <Separator/>
+            <Button Content="Profile" Click="ProfileButton_Click"/>
+            <Separator/>
             <TextBlock Text="Page: " VerticalAlignment="Center"/>
             <ComboBox Name="PageSelectionComboBox" SelectionChanged="PageSelectionComboBox_SelectionChanged" >
                 <ComboBoxItem IsSelected="True">Differentiation</ComboBoxItem>
@@ -31,7 +33,9 @@
                 <ComboBoxItem>Email</ComboBoxItem>
             </ComboBox>
             <Separator/>
-            <Button Content="Profile" Click="ProfileButton_Click"/>
+            <TextBlock Text="Class: " VerticalAlignment="Center"/>
+            <ComboBox IsEditable="True" Name="ClassesCombobox" ItemsSource="{Binding}" DisplayMemberPath="Name" SelectedValuePath="ID" Margin="0" Width="63" />
+            <Button Content="Classes" Click="ClassButton_Click"/>
         </ToolBar>
 
 
@@ -47,14 +51,16 @@
             <Button x:Name="cmdDown2" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Margin="0,48,0,54" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Margin="77,49,15,53" HorizontalAlignment="Center">
             <Button x:Name="cmdUp3" Content="^"  Click="Cmd_Click" Width="19" />
             <TextBox x:Name="NumofQuestionsBox" Text="0" DataObject.Pasting="TextBoxPasting" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
             <Button x:Name="cmdDown3" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="   New&#x0a;Question" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GenerateRandomEquationButton_Click"/>
-        <Button x:Name="CreateRanPDFButton" Content="Random&#x0a;PDF" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFButton_Click"/>
+        <Button x:Name="CreateRanPDFButton" Content=" Create &#x0a;" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFButton_Click" Margin="76,0,16,8"/>
+        <Button x:Name="CreateRanPDFEmailButton" Content=" Create&#x0a;+ Email" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFEmailButton_Click" Margin="22,0,70,8"/>
+        <Separator Grid.Column="2" VerticalAlignment="Bottom"/>
 
         <TextBox x:Name="AnswerBox" Grid.Column="1" HorizontalAlignment="Center" Height="88" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" PreviewTextInput="AnswerBox_PreviewTextInput"/>
 
@@ -68,31 +74,36 @@
         </StackPanel>
 
         <TextBlock x:Name="EquationTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Height="104" Width="142" TextAlignment="Center"/>
-        
-        
-        <TextBlock x:Name="DifferentiationTextBlock" Visibility="Hidden" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Dif Equation (=0 trust me)" VerticalAlignment="Top" Width="142" Height="95" TextAlignment="Center" Margin="0,0,0,0"/>
+
+
+        <TextBlock x:Name="FprimeTextBlock" Visibility="Hidden" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Dif Equation (=0 trust me)" VerticalAlignment="Top" Width="142" Height="95" TextAlignment="Center" Margin="0,0,0,0"/>
 
         <Label Content="Num of terms" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Margin="0,24,0,0"  />
         <Label Content="Magnitude" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Margin="0,0,0,26" />
         <Label Content="Answer" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Row="2" Margin="110,0,1,0" Height="26" Width="0"/>
-        <Label Content="Questions" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,24,0,0" />
-
+        <Label Content="Questions:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,46,59,0" />
+        <Label Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="32,24,32,0" >
+            <TextBlock TextDecorations="Underline">Random PDF</TextBlock>
+        </Label>
         <Button x:Name="Reveal_AnswerButton" Content="Show Answer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Click="ShowRevealButton_Click"/>
 
-        <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="10,10,0,85" Grid.Row="2" VerticalAlignment="Top" Click="PdfButton_Click"/>
-        <Button x:Name="EndPdfButton" Content="Cancel PDF" Grid.Column="2" HorizontalAlignment="Right" Height="28" Margin="0,10,10,0" Grid.Row="2" VerticalAlignment="Top" Click="EndPdfButton_Click"/>
-        <Separator HorizontalAlignment="Left" Height="100" Margin="112,26,-32,0" VerticalAlignment="Top" Width="346" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2">
+        <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="46,86,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PdfButton_Click"/>
+        <Button x:Name="CreatePDFButton" Content="Create PDF" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="28" Margin="5,24,74,0" Click="CreatePDFButton_Click"  />
+        <Button x:Name="CreateEmailPDFButton" Content="  Create + &#x0a; Email PDF " Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Margin="73,20,6,0" Click="CreateEmailPDFButton_Click"  />
+        <Button x:Name="EndPdfButton" Content="Cancel PDF" Grid.Column="2" HorizontalAlignment="Center" Height="28" Margin="40,74,40,0" Grid.Row="2" VerticalAlignment="Top" Click="EndPdfButton_Click"/>
+
+        <Separator HorizontalAlignment="Left" Height="12" Margin="111,70,-31,0" VerticalAlignment="Top" Width="346" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Grid.Row="1">
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform AngleY="-0.374"/>
-                    <RotateTransform Angle="90.158"/>
+                    <RotateTransform Angle="90.333"/>
                     <TranslateTransform Y="-0.327"/>
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
         <Label Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top">
-        <TextBlock TextDecorations="Underline">Question</TextBlock>
+            <TextBlock TextDecorations="Underline">Question</TextBlock>
         </Label>
     </Grid>
 </Page>

@@ -28,66 +28,50 @@ namespace The_Email_Client
     /// </summary>
     /// 
     
-    public class Contacts
-    {
+    public class Contacts {
         public string Name { get; set; }
         public string EmailAddress { get; set; }
     }
 
-    public partial class ContactsManagerWindows : Window
-    {
+    public partial class ContactsManagerWindows : Window {
         List<string> emaillist = new List<string>();
         
 
-        public ContactsManagerWindows()
-        {
+        public ContactsManagerWindows() {
             InitializeComponent();
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
-                && addcontactButton.IsEnabled) addcontact(); };
+                && addcontactButton.IsEnabled) Addcontact(); };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
-            updatetable("","");
+            Updatetable("","");
         }
 
-        public void updatetable(string searchemailValue, string searchnameValue)
-        {
+        public void Updatetable(string searchemailValue, string searchnameValue) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
+            try {
                 cnctDTB.Open();
                 string InsertSql = $"SELECT * FROM Contacts WHERE Profile_ID={Common.Profile.ID}"+
                     $" AND Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
-                OleDbCommand cmdInsert = new OleDbCommand(InsertSql, cnctDTB);
-                OleDbDataReader reader = cmdInsert.ExecuteReader();
+                OleDbCommand cmd = new OleDbCommand(InsertSql, cnctDTB);
+                OleDbDataReader reader = cmd.ExecuteReader();
 
                 contactsDataGrid.Items.Clear();
                 emaillist.Clear();
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr(reader[0]), EmailAddress = Common.Cleanstr(reader[1]) });
                     emaillist.Add(Common.Cleanstr(reader[1]));
                 }
             }
-            catch (Exception err)
-            {
-                
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
         }
 
-        private void removecontactButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void RemovecontactButton_Click(object sender, RoutedEventArgs e) {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the contact(s).", "Question?", MessageBoxButton.YesNo);
-            if ( result == MessageBoxResult.Yes)
-            {
+            if ( result == MessageBoxResult.Yes) {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
                     cnctDTB.Open();
-                    foreach (Contacts contact in contactsDataGrid.SelectedItems)
-                    {
+                    foreach (Contacts contact in contactsDataGrid.SelectedItems) {
                         OleDbCommand cmd = new OleDbCommand($"DELETE FROM Contacts WHERE Email ='{contact.EmailAddress}'"+
                             $" AND Profile_ID={Common.Profile.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
@@ -100,22 +84,19 @@ namespace The_Email_Client
                     cnctDTB.Close();
                 }
                 searchEmailTextBox.Clear(); searchNameTextBox.Clear();
-                updatetable("","");
+                Updatetable("","");
             }
         }
-        private void searchTextBoxes_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            updatetable(searchEmailTextBox.Text, searchNameTextBox.Text);
+        private void SearchTextBoxes_TextChanged(object sender, TextChangedEventArgs e) {
+            Updatetable(searchEmailTextBox.Text, searchNameTextBox.Text);
         }
 
-        private void addcontactButton_Click(object sender, RoutedEventArgs e)
-        {
-            addcontact();
+        private void AddcontactButton_Click(object sender, RoutedEventArgs e) {
+            Addcontact();
         }
 
-        private void addcontact()
-        {
-            if (addcontacterrorchecking(emailtextbox.Text.ToString()))
+        private void Addcontact() {
+            if (Addcontacterrorchecking(emailtextbox.Text.ToString()))
             {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try
@@ -135,18 +116,16 @@ namespace The_Email_Client
                 }
                 emailtextbox.Clear(); searchNameTextBox.Clear();
                 nametextbox.Clear(); searchEmailTextBox.Clear(); 
-                updatetable("","");
+                Updatetable("","");
             }
         }
 
-        private bool addcontacterrorchecking(string email)
-        {
-            if (preexistingemail(email) && Common.Inccorectemailformat(email)) return true;
+        private bool Addcontacterrorchecking(string email) {
+            if (Preexistingemail(email) && Common.Inccorectemailformat(email)) return true;
             else return false;
         }
 
-        private bool preexistingemail(string email)
-        {
+        private bool Preexistingemail(string email) {
             foreach (string preemail in emaillist)
             {
                 if (email == preemail) {
@@ -157,14 +136,12 @@ namespace The_Email_Client
             return true;
         }
 
-        private void contactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (contactsDataGrid.SelectedItems.Count == 0) removecontactButton.IsEnabled = false;
             else removecontactButton.IsEnabled = true;
         }
 
-        private void addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        private void Addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
             if (emailtextbox.Text == "" || nametextbox.Text == "") addcontactButton.IsEnabled = false;
             else addcontactButton.IsEnabled = true;
         }

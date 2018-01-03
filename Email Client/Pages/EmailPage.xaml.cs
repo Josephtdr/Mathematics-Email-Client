@@ -139,10 +139,11 @@ namespace The_Email_Client
                     break;
             }
         }
-
-        private void contactsmanagerbutton_Click(object sender, RoutedEventArgs e) {
-            ContactsManagerWindows contactsmanagerwindow = new ContactsManagerWindows();
-            contactsmanagerwindow.ShowDialog();
+        //opens a new instance of the ClassManagerWindow
+        private void classmanagerbutton_Click(object sender, RoutedEventArgs e) {
+            ClassManagerWindow classmanagerwindow = new ClassManagerWindow();
+            classmanagerwindow.ShowDialog();
+            //CalculusPage.UpdateClassCombobox();
         }
         
     }

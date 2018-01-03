@@ -74,6 +74,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Email Client\Windows\ClassManagerWindow.xaml.cs">
+      <DependentUpon>ClassManagerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Math Client\Pages\IndiciesPage.xaml.cs">
       <DependentUpon>IndiciesPage.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
     <Compile Include="testWindow.xaml.cs">
       <DependentUpon>testWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Email Client\Windows\ClassManagerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Math Client\Pages\IndiciesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
