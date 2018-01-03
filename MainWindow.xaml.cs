@@ -24,9 +24,8 @@ namespace The_Email_Client
         protected LoginPage LoginPage { get; set; }
         protected RegistrationPage RegistrationPage { get; set; }
         protected HomePage HomePage { get; set; }
-        protected DifferentiationPage DifferentiationPage { get; set; }
+        protected CalculusPage CalculusPage { get; set; }
         protected IndiciesPage IndiciesPage { get; set; }
-        protected MathSelectionPage MathSelectionPage { get; set; }
         protected Page PreviousPage { get; set; }
         public MainWindow()
         {
@@ -34,13 +33,12 @@ namespace The_Email_Client
             Common.AttachmentsSource = new List<OpenFileDialog>();
             Common.Attachments = new List<string>();
             Common.Profile = new Profiles();
-            HomePage = new HomePage(ShowMathSelectionPage, ShowEmailPage, ShowLoginPage);
-            DifferentiationPage = new DifferentiationPage(ShowPreviousPage);
-            IndiciesPage = new IndiciesPage(ShowPreviousPage);
+            HomePage = new HomePage(ShowEmailPage, ShowLoginPage, ShowCalculusPage, ShowIndiciesPage);
+            CalculusPage = new CalculusPage(ShowHomePage, ShowIndiciesPage, ShowEmailPage);
+            IndiciesPage = new IndiciesPage(ShowHomePage, ShowCalculusPage, ShowEmailPage);
             LoginPage = new LoginPage(LogintoHomePage, ShowRegistrationPage);
-            EmailPage = new EmailPage(ShowPreviousPage);
+            EmailPage = new EmailPage(ShowPreviousPage, ShowHomePage);
             RegistrationPage = new RegistrationPage(ShowLoginPage);
-            MathSelectionPage = new MathSelectionPage(ShowDifferentiationPage, ShowHomePage, ShowIndiciesPage);
             ShowLoginPage();
 
         }
@@ -50,9 +48,6 @@ namespace The_Email_Client
         public void ShowEmailPage() {
             ShowPage(EmailPage);
         }
-        public void ShowMathSelectionPage() {
-            ShowPage(MathSelectionPage);
-        }
         public void ShowHomePage()
         {
             ShowPage(HomePage);
@@ -60,11 +55,15 @@ namespace The_Email_Client
         public void LogintoHomePage()
         {
             Common.Profile.GetInfofromDB(Common.Profile, Common.Profile.UserName);
+            if (String.IsNullOrWhiteSpace(Common.Profile.Email) || !Common.Inccorectemailformat(Common.Profile.Email)) {
+                Common.Profile.Email = Constants.DEFAULTEMAIL;
+                Common.Profile.Password = Constants.DEFAULTPASSWORD;
+            }
             ShowPage(HomePage);
         }
-        public void ShowDifferentiationPage()
+        public void ShowCalculusPage()
         {
-            ShowPage(DifferentiationPage);
+            ShowPage(CalculusPage);
         }
         public void ShowRegistrationPage()
         {

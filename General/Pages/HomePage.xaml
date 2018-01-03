@@ -16,10 +16,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
         </Grid.ColumnDefinitions>
-        <Button x:Name="EmailButton" Content="Email" HorizontalAlignment="Center" VerticalAlignment="Center" Width="126" Height="83" Grid.Column="1" Click="Button_Click"/>
-        <Button x:Name="MathButton" Content="Maths!" HorizontalAlignment="Center" VerticalAlignment="Center" Width="126" Height="83" Grid.Column="0" Click="Button_Click"/>
-        <Button Content="Log Out" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Click="LogOutButton_Click" Grid.ColumnSpan="2" Height="20" Grid.Row="1"/>
+        <Button x:Name="EmailButton" Content="Email" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="3" Click="Button_Click"/>
+        <Button x:Name="DifferentiationButton" Content="Calculus" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="1" Click=" Button_Click"/>
+        <Button x:Name="IndiciesButton" Content="Indicies" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="125" Height="79" Grid.Column="2" Click="Button_Click"/>
+        <Button Content="Log Out" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Click="LogOutButton_Click" Grid.ColumnSpan="4" Height="20" Grid.Row="1"/>
 
 
 

@@ -18,7 +18,20 @@
             <ColumnDefinition Width="93*"/>
             <ColumnDefinition Width="28*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Click="BackButton_Click"/>
-        <Label x:Name="label" Content="Laws of Indicies" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+
+        <ToolBar Grid.ColumnSpan="3" VerticalAlignment="Top">
+            <Button Content="Home"  Click="HomeButton_Click"/>
+            <Separator/>
+            <TextBlock Text="Page: " VerticalAlignment="Center"/>
+            <ComboBox Name="PageSelectionComboBox" SelectionChanged="PageSelectionComboBox_SelectionChanged" >
+                <ComboBoxItem >Calculus</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Indicies</ComboBoxItem>
+                <ComboBoxItem>Email</ComboBoxItem>
+            </ComboBox>
+            <Separator/>
+            <Button Content="Settings" Click="SettingsButton_Click"/>
+        </ToolBar>
+
+        <Label x:Name="label" Content="Laws of Indicies" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"/>
     </Grid>
 </Page>

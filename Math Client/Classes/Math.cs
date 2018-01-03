@@ -81,7 +81,7 @@ namespace The_Email_Client
         public static Random Rng = new Random(); //creates an instance of the random class
         public List<Term> Components { get; set; } //stores the equation
         public List<Term> Answer { get; set; } //stores the users answer to said equation
-        public List<Term> SolvedComponents { get; set; }//stores the answer to said equation
+        public List<Term> FprimeComponents { get; set; }//stores the answer to said equation
         public abstract float CalculateAnswer(float x1, float? x2 = null);
         
         public Equation(int Order, int Magnitude, int UsingFractions) {
@@ -154,34 +154,30 @@ namespace The_Email_Client
             }
             return Equationstring;
         }
-        public string SolvedEquationToString() {
+        public string FprimeEquationToString() {
             string tempString = "";
-            foreach (Term term in SolvedComponents)
+            foreach (Term term in FprimeComponents)
                 tempString += $"{term} ";
             return tempString;
         }
-        public bool VerifyAnswer(string answer)
-        {
+        public bool VerifyAnswer(string answer) {
             //BubbleSort sorts the terms in order of power as so the answers ordering is not punished.
             Answer = BubbleSort(ParseString(answer));
-            List<Term> AnswerCheck = BubbleSort(SolvedComponents);
-            for (int i = 0; i < SolvedComponents.Count; i++)
-            {
-                if (Answer[i].ToString() == null || SolvedComponents[i].ToString() != Answer[i].ToString())
+            List<Term> AnswerCheck = BubbleSort(FprimeComponents);
+            for (int i = 0; i < FprimeComponents.Count; i++) {
+                if (Answer[i].ToString() == null || FprimeComponents[i].ToString() != Answer[i].ToString())
                     return false;
             }
-
             return true;
         }
-        public float F(float x) {
+        public float Fprime(float x) {
             float Fofx = 0;
-            foreach (Term term in SolvedComponents)
+            foreach (Term term in FprimeComponents)
                 Fofx += ((float)(term.Coefficient.Value * (Math.Pow(x, term.Power.Value))));
             return Fofx;
-        }
+        }//Calculates the gradient of the function F at the given point x
 
         public static List<Term> BubbleSort(List<Term> array) {
-            
             Term temp = new Term();
 
             for (int write = 0; write < array.Count; write++) {
@@ -216,7 +212,7 @@ namespace The_Email_Client
     {
         public Diferentiation(int Order, int Magnitude, int UsingFractions)  : base(Order, Magnitude, UsingFractions)
         {
-            SolvedComponents = new List<Term>();
+            FprimeComponents = new List<Term>();
             
             foreach (Term term in Components)
             {
@@ -230,7 +226,7 @@ namespace The_Email_Client
                     Coefficient.GCD();
 
 
-                    SolvedComponents.Add(new Term {
+                    FprimeComponents.Add(new Term {
                         Coefficient = Coefficient,
                         Power = new Fraction {
                             Numerator = term.Power.Numerator- term.Power.Denominator,
@@ -242,7 +238,7 @@ namespace The_Email_Client
         }
         public override float CalculateAnswer(float x1, float? x2 = null)
         {
-            return F(x1);
+            return Fprime(x1);
         }
     }
 
@@ -250,7 +246,7 @@ namespace The_Email_Client
     {
         public Integration(int Order, int Magnitude, int UsingFractions)  : base(Order, Magnitude, UsingFractions)
         {
-            SolvedComponents = new List<Term>();
+            FprimeComponents = new List<Term>();
             foreach (Term term in Components)
             {
                     int Coe_numerator = term.Coefficient.Numerator * term.Power.Denominator; int Coe_denominator = term.Coefficient.Denominator * (term.Power.Numerator + term.Power.Denominator);
@@ -260,7 +256,7 @@ namespace The_Email_Client
                     };
                     Coefficient.GCD();
 
-                    SolvedComponents.Add(new Term {
+                    FprimeComponents.Add(new Term {
                         Coefficient = Coefficient,
                         Power = new Fraction
                         {
@@ -273,7 +269,7 @@ namespace The_Email_Client
         }
         public override float CalculateAnswer(float x1, float? x2 = null)
         {
-            return F(x1) - F((float)x2);
+            return Fprime(x1) - Fprime((float)x2);
         }
     }
 }

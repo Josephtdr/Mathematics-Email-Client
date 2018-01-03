@@ -22,25 +22,28 @@ using PdfSharp;
 namespace The_Email_Client
 {
     /// <summary>
-    /// Interaction logic for DifferentiationPage.xaml
+    /// Interaction logic for CalculusPage.xaml
     /// </summary>
-    public partial class DifferentiationPage : Page
+    public partial class CalculusPage : Page
     {
         protected Action ShowHomePage { get; set; }
+        protected Action ShowIndiciesPage { get; set; }
+        protected Action ShowEmailPage { get; set; }
         protected Equation Equ { get; set; }
         private int UsingFractions { get; set; }
         private string TypeofFunction { get; set; }
         private float[] X { get; set; }
         private List<Equation> QuestionsforPDF { get; set; }
 
-        public DifferentiationPage(Action ShowHomePage) {
+        public CalculusPage(Action ShowHomePage, Action ShowIndiciesPage, Action ShowEmailPage) {
             InitializeComponent();
-            RecordingColour.Background = Brushes.Red;
             QuestionsforPDF = new List<Equation>();
             this.ShowHomePage = ShowHomePage;
+            this.ShowEmailPage = ShowEmailPage;
+            this.ShowIndiciesPage = ShowIndiciesPage;
         }
         
-        private void BackButton_Click(object sender, RoutedEventArgs e) {
+        private void HomeButton_Click(object sender, RoutedEventArgs e) {
             ShowHomePage();
         }
 
@@ -48,7 +51,7 @@ namespace The_Email_Client
             Equation Equ = CreateRandomEquation();
             if (Equ != null) {
                 EquationTextBlock.Text = Equ.ToString();
-                DifferentiationTextBlock.Text = Equ.SolvedEquationToString();
+                DifferentiationTextBlock.Text = Equ.FprimeEquationToString();
                 AnswerBox.Clear();
                 if((string)PdfButton.Content == "Create PDF") QuestionsforPDF.Add(Equ);
             }
@@ -115,18 +118,6 @@ namespace The_Email_Client
             }
         }
 
-        private void TypeHandleChecked(object sender, RoutedEventArgs e) {
-            RadioButton rb = sender as RadioButton;
-            switch (rb.Name) {
-                case "diferentiation":
-                    TypeofFunction = "diferentiation";
-                    break;
-                case "integration":
-                    TypeofFunction = "integration";
-                    break;
-            }
-        }
-
         private void Cmd_Click(object sender, RoutedEventArgs e) {
             switch (((Button)sender).Name) {
                 case "cmdUp":
@@ -154,11 +145,11 @@ namespace The_Email_Client
             switch (((TextBox)sender).Name) {
                 case "OrderBox":
                     if (!string.IsNullOrWhiteSpace(OrderBox.Text))
-                        OrderBox.Text = Convert.ToInt16(OrderBox.Text) >= 99 ? "99" : Convert.ToInt16(OrderBox.Text) <= 0 ? "0" : OrderBox.Text;
+                        OrderBox.Text = Convert.ToInt16(OrderBox.Text) >= 10 ? "10" : Convert.ToInt16(OrderBox.Text) <= 0 ? "0" : OrderBox.Text;
                     break;
                 case "MagnitudeBox":
                     if (!string.IsNullOrWhiteSpace(MagnitudeBox.Text))
-                        MagnitudeBox.Text = Convert.ToInt16(MagnitudeBox.Text) >= 99 ? "99" : Convert.ToInt16(MagnitudeBox.Text) <= 0 ? "0" : MagnitudeBox.Text;
+                        MagnitudeBox.Text = Convert.ToInt16(MagnitudeBox.Text) >= 25 ? "25" : Convert.ToInt16(MagnitudeBox.Text) <= 0 ? "0" : MagnitudeBox.Text;
                     break;
             }
         }
@@ -190,13 +181,11 @@ namespace The_Email_Client
             switch ((string)PdfButton.Content) {
                 case "Start PDF":
                     PdfButton.Content = "Create PDF"; //Indicates user can now create a pdf with saved questions
-                    RecordingColour.Background = Brushes.LightGreen; //Indicates pdf saving is on
                     break;
                 case "Create PDF":
                     CreatePDFfromList(QuestionsforPDF);
                     QuestionsforPDF = new List<Equation>(); //clears list of current questions
                     PdfButton.Content = "Start PDF"; //Indicated user can start another Pdf now
-                    RecordingColour.Background = Brushes.Red; //Indicates pdf saving is off
                     break;
             }
         }
@@ -225,7 +214,7 @@ namespace The_Email_Client
                 if (i == 0) gfx.DrawString("Answers:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
                 for (int j = 0; j < 14; j++) {
                     if (j + (14 * i) < EquList.Count)
-                        gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(EquList[j + (14 * i)].SolvedEquationToString(), "[^0-9-/+/^/x ]+", "") }",
+                        gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(EquList[j + (14 * i)].FprimeEquationToString(), "[^0-9-/+/^/x ]+", "") }",
                             font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
                 }
             }
@@ -237,7 +226,6 @@ namespace The_Email_Client
         }
 
         private void EndPdfButton_Click(object sender, RoutedEventArgs e) {
-            RecordingColour.Background = Brushes.Red; //Indicated pdf saving is off
             PdfButton.Content = "Start PDF"; //Indicates user can start a new pdf
             QuestionsforPDF = new List<Equation>(); //Clears list of current equations
         }
@@ -251,6 +239,31 @@ namespace The_Email_Client
                 }
                 CreatePDFfromList(EquList); //creates pdf
             }
+        }
+
+        private void PageSelectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (!IsLoaded) {
+                return;
+            }
+            switch (PageSelectionComboBox.SelectedItem.ToString().Split(new string[] { ": " }, StringSplitOptions.None).Last()) {
+                case "Differentiation": //If selected, functions created will be solved with diferentiation
+                    TypeofFunction = "diferentiation";
+                    break;
+                case "Intergration": //If selected, functions created will be solved with intergration
+                    TypeofFunction = "integration";
+                    break;
+                case "Indicies": //If selected, will display the Indicies Page
+                    ShowIndiciesPage();
+                    break;
+                case "Email": //If Selected, will display the Email Page
+                    ShowEmailPage();
+                    break;
+            }
+        }
+
+        private void ProfileButton_Click(object sender, RoutedEventArgs e) {
+            ProfilesWindow profilewindow = new ProfilesWindow();
+            profilewindow.ShowDialog();
         }
     }
 }

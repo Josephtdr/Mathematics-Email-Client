@@ -48,6 +48,5 @@
         <Label x:Name="EmailLabel" Content="Email" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
 
         <TextBlock Grid.Row="5"  Grid.Column="1" HorizontalAlignment="Center"><Hyperlink Click="ForgottenPassword_Click">Forgotten Your Password?</Hyperlink></TextBlock>
-        <Button x:Name="button" Content="testing" HorizontalAlignment="Center" Height="22" VerticalAlignment="Center" Width="66" Click="Button_Click" />
     </Grid>
 </Page>

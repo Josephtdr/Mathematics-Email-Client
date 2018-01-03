@@ -25,7 +25,7 @@
             </RichTextBox.Resources>
         </RichTextBox>
 
-        <Label x:Name="StatusLabel" Content="Ready" HorizontalAlignment="Right" Margin="0,0,99,6" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="77"/>
+        <Label x:Name="StatusLabel" Content="Ready" HorizontalAlignment="Right" Margin="0,0,137,5" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="77"/>
         <Label x:Name="MBValueLable" Content="0" HorizontalAlignment="Left" Height="26" Margin="232,0,0,6" VerticalAlignment="Bottom" Width="48" FontFamily="Cambria Math" FontSize="18"/>
         <Label x:Name="OutOfLable" Content="/  25MB" HorizontalAlignment="Left" Height="26" Margin="256,0,0,6" VerticalAlignment="Bottom" Width="73" FontSize="18" FontFamily="Cambria Math"/>
 
@@ -37,7 +37,8 @@
         <Button x:Name="addemailTObutton" Content="To..." HorizontalAlignment="Left" Height="23" Margin="10,11,0,0" VerticalAlignment="Top" Width="26" Background="#FFF0F0F0" RenderTransformOrigin="1.577,0.522" Click="addemailTO_CC_BCCbuttons_Click"/>
         <Button x:Name="addemailCCbutton" Content="Cc..." HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" VerticalAlignment="Top" Width="33" Background="#FFF0F0F0" Click="addemailTO_CC_BCCbuttons_Click"/>
         <Button x:Name="addemailBCCbutton" Content="BCc..." HorizontalAlignment="Left" Height="23" Margin="10,67,0,0" VerticalAlignment="Top" Width="38" Background="#FFF0F0F0" Click="addemailTO_CC_BCCbuttons_Click"/>
-        <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Right" Margin="0,484,19,0" VerticalAlignment="Top" Width="75" Click="BackButton_Click" Height="24"/>
+        <Button x:Name="HomeButton" Content="Home" HorizontalAlignment="Right" Margin="0,0,75,5" VerticalAlignment="Bottom" Click="HomeButton_Click" Height="24" Width="45"/>
+        <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Right" Margin="0,0,19,5" VerticalAlignment="Bottom" Click="BackButton_Click" Height="24" Width="45"/>
 
         <Image x:Name="LoadingGif" gif:ImageBehavior.AnimatedSource="sendingemail.gif" Margin="302,202,302,63" HorizontalAlignment="Center" VerticalAlignment="Center" 
                gif:ImageBehavior.RepeatBehavior="Forever" Visibility="Hidden"/>

@@ -24,28 +24,29 @@ namespace The_Email_Client
         public List<string> SelectedContacts = new List<string>();
         
         protected Action ShowPreviousPage { get; set; }
-       
-        public EmailPage(Action ShowPreviousPage)
-        {
+        protected Action ShowHomePage { get; set; }
+        public EmailPage(Action ShowPreviousPage, Action ShowHomePage) {
             this.ShowPreviousPage = ShowPreviousPage;
+            this.ShowHomePage = ShowHomePage;
             InitializeComponent();
             MBValueLable.Foreground = Brushes.Green;
         }
         
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void BackButton_Click(object sender, RoutedEventArgs e) {
             ShowPreviousPage?.Invoke();
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void HomeButton_Click(object sender, RoutedEventArgs e) {
+            ShowHomePage();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e) {
             ProfilesWindow settingswindow = new ProfilesWindow();
             settingswindow.ShowDialog();
         }
 
-        private void UpdateMBValue(long bytes)
-        {
+        private void UpdateMBValue(long bytes) {
             int MB = (int)(bytes) / (int)(Math.Pow(1024, 2));
             MBValueLable.Content = MB.ToString();
             if (MB < 10) MBValueLable.Foreground = Brushes.Green;
@@ -54,15 +55,13 @@ namespace The_Email_Client
             if (bytes != 0) ClearAttachments_Button.IsEnabled = true;
         }
 
-        private void AttachmentButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void AttachmentButton_Click(object sender, RoutedEventArgs e) {
             MangerAttachmentsWindow MangerAttachmentsWindow = new MangerAttachmentsWindow();
             MangerAttachmentsWindow.ShowDialog();
             UpdateMBValue(Common.TotalFileLength);
         }
 
-        private void ClearAttachments_Button_Click(object sender, RoutedEventArgs e)
-        {
+        private void ClearAttachments_Button_Click(object sender, RoutedEventArgs e) {
             Common.Attachments.Clear();
             Common.AttachmentsSource.Clear();
             ClearAttachments_Button.IsEnabled = false;
@@ -70,8 +69,7 @@ namespace The_Email_Client
             UpdateMBValue(Common.TotalFileLength);
         }
 
-        private void ClearPage()
-        {
+        private void ClearPage() {
             BCCBox.Clear(); CCBox.Clear(); RecipientsBox.Clear();
             BodyBox.Document.Blocks.Clear(); SubjectBox.Clear(); 
             Common.Attachments.Clear();
@@ -82,8 +80,7 @@ namespace The_Email_Client
             StatusLabel.Content = "Sent";
             LoadingGif.Visibility = Visibility.Hidden;
         }
-        private void send_button_Click(object sender, RoutedEventArgs e)
-        {
+        private void send_button_Click(object sender, RoutedEventArgs e) {
             StatusLabel.Content = "Sending...";
             LoadingGif.Visibility = Visibility.Visible;
             List<string> Attachments = Common.Attachments;
@@ -104,25 +101,21 @@ namespace The_Email_Client
             new Thread(new ParameterizedThreadStart(SendEmail)) { IsBackground = true }.Start(tempemail);   
         }
 
-        private void SendEmail(object email)
-        {
-            try
-            {
+        private void SendEmail(object email) {
+            try {
                 ((Email)email).Send();
                 Dispatcher.Invoke(() => ClearPage());
             }
             catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
         }
 
-        private void addemailstotextboxes(Contacts[] contacts, System.Windows.Controls.TextBox textbox)
-        {
+        private void addemailstotextboxes(Contacts[] contacts, System.Windows.Controls.TextBox textbox) {
             foreach (Contacts contact in contacts)
                 if (textbox.Text == null || textbox.Text == "") textbox.Text += (contact.EmailAddress);
                 else textbox.Text += (";" + contact.EmailAddress);
         }
 
-        private void addemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)
-        {
+        private void addemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)  {
             SelectedContacts.Clear();
             foreach (string email in (RecipientsBox.Text).Split(';'))
                 if (!string.IsNullOrEmpty(email)) SelectedContacts.Add(email);
@@ -134,8 +127,7 @@ namespace The_Email_Client
             selectingcontactWindow selectingcontactWindow = new selectingcontactWindow(SelectedContacts.ToArray());
             selectingcontactWindow.ShowDialog();
 
-            switch ((string)(((System.Windows.Controls.Button)sender).Content))
-            {
+            switch ((string)(((System.Windows.Controls.Button)sender).Content)) {
                 case "To...":
                     addemailstotextboxes(selectingcontactWindow.SelectedContacts, RecipientsBox);
                     break;
@@ -148,8 +140,7 @@ namespace The_Email_Client
             }
         }
 
-        private void contactsmanagerbutton_Click(object sender, RoutedEventArgs e)
-        {
+        private void contactsmanagerbutton_Click(object sender, RoutedEventArgs e) {
             ContactsManagerWindows contactsmanagerwindow = new ContactsManagerWindows();
             contactsmanagerwindow.ShowDialog();
         }

@@ -20,15 +20,17 @@ namespace The_Email_Client
     /// </summary>
     public partial class HomePage : Page
     {
-        protected Action ShowMathSelectionPage { get; set; }
+        protected Action ShowCalculusPage { get; set; }
+        protected Action ShowIndiciesPage { get; set; }
         protected Action ShowEmailPage { get; set; }
         protected Action ShowLoginPage { get; set; }
-        public HomePage(Action ShowMathSelectionPage, Action ShowEmailPage, Action ShowLoginPage)
+        public HomePage(Action ShowEmailPage, Action ShowLoginPage, Action ShowCalculusPage, Action ShowIndiciesPage)
         {
             InitializeComponent();
             this.ShowEmailPage = ShowEmailPage;
-            this.ShowMathSelectionPage = ShowMathSelectionPage;
             this.ShowLoginPage = ShowLoginPage;
+            this.ShowCalculusPage = ShowCalculusPage;
+            this.ShowIndiciesPage = ShowIndiciesPage;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -36,14 +38,13 @@ namespace The_Email_Client
             switch ((string)(((System.Windows.Controls.Button)sender).Content))
             {
                 case "Email":
-                    if (String.IsNullOrWhiteSpace(Common.Profile.Email) || !Common.Inccorectemailformat(Common.Profile.Email)) {
-                        Common.Profile.Email = Constants.DEFAULTEMAIL;
-                        Common.Profile.Password = Constants.DEFAULTPASSWORD;
-                    }
                     ShowEmailPage();
                     break;
-                case "Maths!":
-                    ShowMathSelectionPage();
+                case "Calculus":
+                    ShowCalculusPage();
+                    break;
+                case "Indicies":
+                    ShowIndiciesPage();
                     break;
             }
         }

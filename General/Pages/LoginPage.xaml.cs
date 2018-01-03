@@ -70,15 +70,5 @@ namespace The_Email_Client
             ResettingPasswordWindow forgotPasswordWindow = new ResettingPasswordWindow();
             forgotPasswordWindow.ShowDialog();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            Password = "capitalutcreading"; UserName = "Martin"; Email = "martinsmathematicsclient@gmail.com";
-            if (Encryption.VerifyPasswordorEmail(UserName, Password, true) &&
-            Encryption.VerifyPasswordorEmail(UserName, Email, false))
-            {
-                UserNameTextBox.Clear(); EmailTextBox.Clear();
-                ShowHomePage?.Invoke();
-            }
-        }
     }
 }

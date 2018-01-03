@@ -77,8 +77,8 @@
     <Compile Include="Math Client\Pages\IndiciesPage.xaml.cs">
       <DependentUpon>IndiciesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Math Client\Pages\DifferentiationPage.xaml.cs">
-      <DependentUpon>DifferentiationPage.xaml</DependentUpon>
+    <Compile Include="Math Client\Pages\CalculusPage.xaml.cs">
+      <DependentUpon>CalculusPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="General\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -126,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Math Client\Pages\DifferentiationPage.xaml">
+    <Page Include="Math Client\Pages\CalculusPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -190,10 +190,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Math Client\Pages\MathSelectionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Math Client\Windows\MathmaticsCorrectIncorrectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,9 +200,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Math Client\Pages\MathSelectionPage.xaml.cs">
-      <DependentUpon>MathSelectionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Math Client\Classes\Math.cs" />
     <Compile Include="Math Client\Windows\MathmaticsCorrectIncorrectWindow.xaml.cs">
       <DependentUpon>MathmaticsCorrectIncorrectWindow.xaml</DependentUpon>

@@ -81,7 +81,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Win
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.g.cs
@@ -94,10 +93,8 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Gen
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\RegistrationPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.g.cs
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfAnimatedGif.dll
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\bin\Debug\WpfAnimatedGif.xml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.baml
@@ -110,7 +107,6 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Gen
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\RegistrationPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.baml
-D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Windows\MathmaticsCorrectIncorrectWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\WpfMath.dll
@@ -141,3 +137,5 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\PdfSharp.xml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\PdfSharp.Charting.xml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\de\PdfSharp.resources.dll
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\bin\Debug\de\PdfSharp.Charting.resources.dll
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.g.cs
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.baml
