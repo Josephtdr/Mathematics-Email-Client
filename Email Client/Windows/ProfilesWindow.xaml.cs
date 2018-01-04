@@ -85,7 +85,7 @@ namespace The_Email_Client
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
-            Common.Profile.UpdateDatabasefromSettings(Common.Profile);
+            Common.Profile.UpdateDatabasefromProfile(Common.Profile);
             SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             Title = "Settings Window - Saved";
             EditableSettings.Clear();
@@ -97,7 +97,7 @@ namespace The_Email_Client
         {
             Title = "Settings Window - Saved";
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
-            Common.Profile.UpdateDatabasefromSettings(Common.Profile);
+            Common.Profile.UpdateDatabasefromProfile(Common.Profile);
             Close();
         }
         private void TextChanged(object sender, TextChangedEventArgs e)

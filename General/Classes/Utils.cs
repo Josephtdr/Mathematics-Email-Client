@@ -7,10 +7,9 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.IO;
 using System.Net;
-namespace The_Email_Client
+namespace The_Email_Client 
 {
-    public class Profiles
-    {
+    public class Profiles {
         public string ID { get; set; }
         public string Email { get; set; }
         public string Port { get; set; }
@@ -18,81 +17,84 @@ namespace The_Email_Client
         public string Password { get; set; }
         public string Name { get; set; }
         public string UserName { get; set; }
-
-        public Profiles Defaults()
-        {
-            Profiles Defaults = new Profiles()
-            {
-                ID = "10",
-                Email = "testofcsharperinoemailerino@gmail.com",
-                Password = "nocopypasterino",
-                UserName = "Stool"
-            };
-            return Defaults;
-        }
-
-        public void GetInfofromDB(Profiles Profile, string UserName)
-        {
+        public int Settings_ID { get; set; }
+        
+        public void GetInfofromDB(Profiles Profile, string UserName) {
             
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
+            try {
                 cnctDTB.Open();
                 OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{UserName}'", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     Profile.ID = Common.Cleanstr(reader[0]);
                     Profile.Name = Common.Cleanstr(reader[1]);
+                    Profile.Settings_ID = Convert.ToInt16(reader[5]);
                 }
                 cnctDTB.Close();
 
                 cnctDTB.Open();
-                cmd = new OleDbCommand($"SELECT * FROM Settings WHERE Profile_ID={Common.Profile.ID}", cnctDTB);
+                cmd = new OleDbCommand($"SELECT * FROM Settings WHERE ID={Profile.Settings_ID}", cnctDTB);
                 reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
+                while (reader.Read()) {
                     Profile.Port = Common.Cleanstr(reader[1]);
                     Profile.Server = Common.Cleanstr(reader[2]);
                 }
-                
-                
-
-
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
         }
 
-        public void UpdateDatabasefromSettings(Profiles settings)
-        {
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"UPDATE Profiles SET Name ='{ settings.Name }', UserName ='{ settings.UserName }' WHERE ID ={ settings.ID }", cnctDTB);
-                cmd.ExecuteNonQuery();
-                cnctDTB.Close();
+        public void UpdateDatabasefromProfile(Profiles profile) {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
+            OleDbCommand cmd = new OleDbCommand("", cnctDTB);
+            try {
+                cnctDTB.Open();//opens the connection
+                cmd.CommandText = $"UPDATE Profiles SET Name ='{ profile.Name }', UserName ='{ profile.UserName }' WHERE ID ={ profile.ID }";
+                cmd.ExecuteNonQuery();//updates profile with name and username
+                cnctDTB.Close(); cnctDTB.Open();//closed then re opens the connection, to allow another command to run
+                if (profile.Settings_ID != 1) { //checks if user did not previously have default settings
+                    if (profile.Port == "587" && profile.Server == "smtp.gmail.com") {//checks if they now have default settings
+                        cmd.CommandText = $"DELETE FROM Settings WHERE ID = {profile.Settings_ID};";
+                        cmd.ExecuteNonQuery();//deletes there now redundant old settings
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"UPDATE Profiles SET Settings_ID = 1 WHERE ID = {profile.ID};";
+                        cmd.ExecuteNonQuery();//updates their profile to reflect their default settings
+                    }
+                    else {
+                        cmd.CommandText = $"UPDATE Settings SET Port ='{ profile.Port }', Server ='{ profile.Server }' WHERE ID ={ profile.Settings_ID };";
+                        cmd.ExecuteNonQuery();//updates their current none default settings
+                    }
+                }
+                else if (!(profile.Port == "587" && profile.Server == "smtp.gmail.com")) {//checks for defualt settings
+                    cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
+                        $"('{profile.Port}','{profile.Server}');";
+                    cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
+                    cnctDTB.Close(); cnctDTB.Open();
+                    cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = '{profile.Port}' AND Server = '{profile.Server}';";
+                    OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users settings
+                    int checkint = 1;
+                    int tempsettingsID = 0;
+                    while (Reader.Read()) {
+                        if (checkint <= 1)
+                            Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]);
+                        else 
+                            tempsettingsID = Convert.ToInt16(Reader[0]);
+                        ++checkint;
+                    }
 
-                cnctDTB.Open();
-                cmd = new OleDbCommand($"UPDATE Settings SET Port={settings.Port}, Server='{settings.Server}' WHERE Profile_ID={settings.ID} ;", cnctDTB);
-                cmd.ExecuteNonQuery();
+                    //get settings id and add to database etc....
+                }
+                
+                
             }
-            catch (Exception err)
-            {
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
         }
     }
 
-    public class Encryption
-    {
-        public static string HashString(string stringtohash)
-        {
+    public class Encryption {
+        public static string HashString(string stringtohash) {
             //Create the salt value with a cryptographic PRNG
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);

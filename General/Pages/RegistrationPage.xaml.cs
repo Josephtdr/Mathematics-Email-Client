@@ -17,48 +17,41 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for RegistrationPage.xaml
     /// </summary>
-    public partial class RegistrationPage : Page
-    {
+    public partial class RegistrationPage : Page {
 
         protected Action ShowLoginPage { get; set; }
 
-        public RegistrationPage(Action ShowLoginPage)
-        {
+        public RegistrationPage(Action ShowLoginPage) {
             InitializeComponent();
             this.ShowLoginPage = ShowLoginPage;
 
             KeyDown += delegate {
                 if (Keyboard.IsKeyDown(Key.Enter)) {
-                    if (
-                        UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch()
-                        && NonNullFields()) RegisterUser();
+                    if (UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch() && NonNullFields())
+                        RegisterUser();
                  }
             };
         }
         
-        private void SignUpbutton_Click(object sender, RoutedEventArgs e)
-        {
+        private void SignUpbutton_Click(object sender, RoutedEventArgs e) {
             if (Common.Inccorectemailformat(EmailTextBox.Text)
-                && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch()
-                && NonNullFields()) RegisterUser();
+                && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch() && NonNullFields())
+                RegisterUser();
         }
 
-        private bool NonNullFields()
-        {
+        private bool NonNullFields() {
             if (!string.IsNullOrWhiteSpace(EmailTextBox.Text) && !string.IsNullOrWhiteSpace(NameTextBox.Text)
                 && !string.IsNullOrWhiteSpace(UserNameTextBox.Text)) return true;
             else {
                 MessageBox.Show("No fields can be left empty.","Error!");
                 return false; }
-        }
+        }//make email optional
 
-        private bool EmailAlreadyExists(string Email)
-        {
+        private bool EmailAlreadyExists(string Email) {
             //OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             //try
             //{
@@ -82,85 +75,52 @@ namespace The_Email_Client
             return true;
         }
 
-        private bool UserNameAlreadyExists(string UserName)
-        {
+        private bool UserNameAlreadyExists(string UserName) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try
-            {
+            try {
                 cnctDTB.Open();
                 OleDbCommand cmd = new OleDbCommand($"SELECT UserName FROM Profiles WHERE [UserName]='{UserName}'", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
 
-                while (reader.Read()) if (reader.HasRows)
-                    {
+                while (reader.Read()) if (reader.HasRows) {
                         MessageBox.Show("UserName Already Exists!", "Error!");
                         return false;
                     }
             }
-            catch (Exception err)
-            {
-                System.Windows.MessageBox.Show(err.Message);
-            }
-            finally
-            {
-                cnctDTB.Close();
-            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
             return true;
         }
         
-        private bool PasswordsMatch()
-        {
+        private bool PasswordsMatch() {
             if (Passwordbox.Password == PasswordboxCopy.Password) return true;
-            else
-            {
+            else {
                 MessageBox.Show("Passwords do not Match!", "Error");
                 return false;
             }
         }
        
-        private void RegisterUser()
-        {
+        private void RegisterUser() {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            string hashedPassword = Encryption.HashString(Passwordbox.Password);
-            int userID = 0;
-            try
-            {
+            try {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Profiles ([Name],[UserName],[Password],[Email]) VALUES " + 
-                    $"('{NameTextBox.Text}','{UserNameTextBox.Text}','{hashedPassword}','{Encryption.HashString(EmailTextBox.Text)}');", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Profiles ([Name],[UserName],[Password],[Email],[Settings_ID]) " + 
+                    $"VALUES ('{NameTextBox.Text}','{UserNameTextBox.Text}','{Encryption.HashString(Passwordbox.Password)}',"+
+                    $"'{Encryption.HashString(EmailTextBox.Text)}', 1);", cnctDTB);
                 cmd.ExecuteNonQuery();
-
-                cnctDTB.Close();
-                cnctDTB.Open();
-
-                cmd = new OleDbCommand($"Select ID from Profiles WHERE UserName='{UserNameTextBox.Text}';",cnctDTB);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) userID = (int)reader[0];
-
-                cnctDTB.Close();
-                cnctDTB.Open();
-                cmd = new OleDbCommand($"INSERT INTO Settings ([Profile_ID],[Port],[Server]) VALUES "+
-                $"({userID},587,'smtp.gmail.com');", cnctDTB);
-                cmd.ExecuteNonQuery();
-
+                
                 MessageBox.Show("Successfully registered account.", "Success!");
                 EmailTextBox.Clear(); NameTextBox.Clear();
                 ShowLoginPage?.Invoke();
             }
-            catch (Exception err)
-            {
+            catch (Exception err) {
                 MessageBox.Show("Failed to registered account.", "Error!");
                 System.Windows.MessageBox.Show(err.Message);
             }
-            finally
-            {
-                cnctDTB.Close();
-            }
-
+            finally { cnctDTB.Close(); }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void BackButton_Click(object sender, RoutedEventArgs e) {
             EmailTextBox.Clear(); NameTextBox.Clear();
             ShowLoginPage?.Invoke();
         }

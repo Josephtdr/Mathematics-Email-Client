@@ -111,8 +111,7 @@ namespace The_Email_Client
 
         private void addemailstotextboxes(Contacts[] contacts, System.Windows.Controls.TextBox textbox) {
             foreach (Contacts contact in contacts)
-                if (textbox.Text == null || textbox.Text == "") textbox.Text += (contact.EmailAddress);
-                else textbox.Text += (";" + contact.EmailAddress);
+            textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? contact.EmailAddress: $";{contact.EmailAddress}";
         }
 
         private void addemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)  {

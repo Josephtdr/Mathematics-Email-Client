@@ -258,7 +258,7 @@ namespace The_Email_Client
                     Recipients = (emaillist.Split(';')).Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList().ToArray(),
                     Subject = $"{filename} Worksheet for class {4}",
                     Body = "",
-                    AttachmentNames = null
+                    AttachmentNames = new List<string>() { filename }
                 };
                 tempemail.Send();
             }

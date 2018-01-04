@@ -34,7 +34,7 @@
         <Button Content="Sign Up" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="62" Click="SignUpbutton_Click" />
 
         <Label x:Name="Passwordlabel" Content="Password" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" />
-        <Label x:Name="Passwordlabelcopy" Content="Retype Password" HorizontalAlignment="Center" Height="28" Margin="6,0,3,0" Grid.Row="5" Grid.Column="0" VerticalAlignment="Top"/>
+        <Label x:Name="Passwordlabelcopy" Content="Retype Password" HorizontalAlignment="Center" Height="28"  Grid.Row="5" Grid.Column="0" VerticalAlignment="Top"/>
         <Label x:Name="Titlelabel" Content="Register" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
         <Label x:Name="Namelabel" Content="Name" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" />
         <Label x:Name="Emaillabel" Content="Email" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" />

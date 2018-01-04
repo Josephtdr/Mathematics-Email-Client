@@ -28,16 +28,12 @@ namespace The_Email_Client
     /// </summary>
     /// 
     
-    public class Contacts {
-        public string Name { get; set; }
-        public string EmailAddress { get; set; }
-    }
 
     public partial class ContactsManagerWindows : Window {
         List<string> emaillist = new List<string>();
         
 
-        public ContactsManagerWindows() {
+        public ContactsManagerWindows(Class ediatableclass) {
             InitializeComponent();
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
                 && addcontactButton.IsEnabled) Addcontact(); };

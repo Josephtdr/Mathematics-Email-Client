@@ -82,33 +82,54 @@ public partial class ClassManagerWindow : Window
 
         private void AddcontactButton_Click(object sender, RoutedEventArgs e) {
             CreateClass();
+            
         }
 
         private void CreateClass() {
-            
-                OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-                try {
-                    cnctDTB.Open();
-                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Classes (Name) " +
-                        $"VALUES ('{ nametextbox.Text }');", cnctDTB);
-                    cmd.ExecuteNonQuery();
+            Class tempclass = new Class();
+            bool set = false;
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            try {
+                cnctDTB.Open();
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Classes (Name) " +
+                    $"VALUES ('{ nametextbox.Text }');", cnctDTB);
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = $"SELECT * FROM Classes WHERE Name = '{nametextbox.Text}';";
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) {
+                    tempclass.ID = Convert.ToInt16(reader[0]);
+                    tempclass.Name = (string)reader[1];
                 }
-                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-                finally { cnctDTB.Close(); }
-                searchNameTextBox.Clear();
-                nametextbox.Clear(); 
-                Updatetable("");
-            
+                set = true;
+            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
+            if (set) {
+                ClassEditerWindow classediterwindow = new ClassEditerWindow(tempclass);
+                classediterwindow.ShowDialog();
+            }
+            searchNameTextBox.Clear();
+            nametextbox.Clear(); 
+            Updatetable("");
         }
 
         private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (classDataGrid.SelectedItems.Count == 0) RemoveClassButton.IsEnabled = false;
+            if (classDataGrid.SelectedItems.Count == 1) EditClassButton.IsEnabled = true;
+            if (classDataGrid.SelectedItems.Count == 0) {
+                RemoveClassButton.IsEnabled = false;
+                EditClassButton.IsEnabled = false;
+            }
             else RemoveClassButton.IsEnabled = true;
         }
 
         private void Nametextbox_TextChanged(object sender, TextChangedEventArgs e) {
             if (string.IsNullOrWhiteSpace(nametextbox.Text)) CreateClassButton.IsEnabled = false;
             else CreateClassButton.IsEnabled = true;
+        }
+
+        private void EditClassButton_Click(object sender, RoutedEventArgs e) {
+            ClassEditerWindow classediterwindow = new ClassEditerWindow((Class)(classDataGrid.SelectedItem));
+            classediterwindow.ShowDialog();
         }
     }
 }

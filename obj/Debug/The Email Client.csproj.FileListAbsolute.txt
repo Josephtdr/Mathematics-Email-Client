@@ -53,7 +53,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\MainWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\The Email Client.csprojResolveAssemblyReference.cache
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\HomePage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.g.cs
@@ -66,7 +65,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\Lo
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\RegistrationPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\DifferentiationPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\HomePage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.baml
@@ -79,8 +77,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\Lo
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\RegistrationPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\selectingcontactWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ProfilesWindow.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\MathSelectionPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\Pages\HomePage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\ResetPasswordPage.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\General\ResettingPassword\Pages\EnterResetCodePage.g.cs
@@ -141,3 +137,9 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Mat
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ClassManagerWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ClassManagerWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ClassManagerWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ClassManagerWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Math Client\Pages\CalculusPage.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ClassEditerWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ClassEditerWindow.baml
