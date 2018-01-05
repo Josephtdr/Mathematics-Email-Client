@@ -1,4 +1,4 @@
-﻿<Window x:Class="The_Email_Client.ContactsManagerWindows"
+﻿<Window x:Class="The_Email_Client.StudentsManagerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
 
     <Grid>
 
-        <TextBox x:Name="searchNameTextBox" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" TextChanged="SearchTextBoxes_TextChanged" Margin="0,0,0,0"/>
+        <TextBox x:Name="searchNameTextBox" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" TextChanged="SearchTextBoxes_TextChanged" Margin="0,0,0,0"/>
         <TextBlock IsHitTestVisible="False" Text="Search via Name" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,2,0,0" Foreground="DarkGray" Height="15" Width="91" RenderTransformOrigin="0.5,0.5">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -23,8 +23,8 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <TextBox x:Name="searchEmailTextBox" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="233" TextChanged="SearchTextBoxes_TextChanged" Margin="236,0,0,0"/>
-        <TextBlock IsHitTestVisible="False" Text="Search via Email" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="239,2,0,0" Foreground="DarkGray" Height="15" Width="86">
+        <TextBox x:Name="searchEmailTextBox" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="263" TextChanged="SearchTextBoxes_TextChanged" Margin="206,0,0,0"/>
+        <TextBlock IsHitTestVisible="False" Text="Search via Email" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="211,2,0,0" Foreground="DarkGray" Height="15" Width="82">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -36,18 +36,19 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        
-        
-        
-        
-        <DataGrid x:Name="contactsDataGrid" Margin="0,20,0,39" IsReadOnly="True" SelectionChanged="ContactsDataGrid_SelectionChanged" Background="#FFD9D0FF">
+
+
+
+
+        <DataGrid x:Name="StudentsDataGrid" Margin="0,20,0,39" IsReadOnly="True" SelectionChanged="ContactsDataGrid_SelectionChanged" Background="#FFD9D0FF">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" IsReadOnly="True"  Binding="{Binding Path=Name}" Width="*"/>
-                <DataGridTextColumn Header="Email Address" IsReadOnly="True"  Binding="{Binding Path=EmailAddress}" Width="*"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
+                <DataGridTextColumn Header="Email Address" IsReadOnly="False"  Binding="{Binding Path=EmailAddress}" Width="*"/>
+                <DataGridCheckBoxColumn Header="In Class" Width="60" Binding="{Binding Path=InClass}"/>
             </DataGrid.Columns>
         </DataGrid>
-        
-        <TextBox x:Name="emailtextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,56,20" TextChanged="Addcontacttextboxes_TextChanged">
+
+        <TextBox x:Name="emailtextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,112,20" TextChanged="Addcontacttextboxes_TextChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -95,7 +96,8 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button x:Name="addcontactButton" Content="Add " HorizontalAlignment="Right" Height="20" Margin="0,0,56,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="False"/>
-        <Button x:Name="removecontactButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" IsEnabled="False"/>
+        <Button x:Name="addcontactButton" Content="New" HorizontalAlignment="Right" Height="20" Margin="0,0,61,0" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="False"/>
+        <Button x:Name="removecontactButton" Content="  Delete&#xD;&#xA;Student(s)" Height="40" VerticalAlignment="Bottom" Width="61" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" IsEnabled="False"/>
+        <Button x:Name="UpdateDBButton" Content="Update" HorizontalAlignment="Right" Height="20" Margin="0,0,61,20" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="UpdateDBButton_Click" IsEnabled="True"/>
     </Grid>
 </Window>

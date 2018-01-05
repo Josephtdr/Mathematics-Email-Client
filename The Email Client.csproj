@@ -106,8 +106,8 @@
     </Compile>
     <Compile Include="General\Classes\Common.cs" />
     <Compile Include="General\Classes\Constants.cs" />
-    <Compile Include="Email Client\Windows\ContactsManagerWindows.xaml.cs">
-      <DependentUpon>ContactsManagerWindows.xaml</DependentUpon>
+    <Compile Include="Email Client\Windows\StudentsManagerWindow.xaml.cs">
+      <DependentUpon>StudentsManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Email Client\Pages\EmailPage.xaml.cs">
       <DependentUpon>EmailPage.xaml</DependentUpon>
@@ -168,7 +168,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Email Client\Windows\ContactsManagerWindows.xaml">
+    <Page Include="Email Client\Windows\StudentsManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

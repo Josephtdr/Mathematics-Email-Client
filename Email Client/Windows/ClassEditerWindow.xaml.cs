@@ -17,10 +17,12 @@ namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for ClassEditerWindow.xaml
     /// </summary>
-    public class Contacts {
+    public class Student {
         public string Name { get; set; }
         public string EmailAddress { get; set; }
         public int ID { get; set; }
+        public bool InClass { get; set; }
+        
     }
     public partial class ClassEditerWindow : Window {
         private List<string> emaillist = new List<string>();
@@ -48,10 +50,12 @@ namespace The_Email_Client {
                 OleDbDataReader reader = cmd.ExecuteReader();
 
                 contactsDataGrid.Items.Clear();
-                emaillist.Clear();
+                if (string.IsNullOrWhiteSpace(searchemailValue) && string.IsNullOrWhiteSpace(searchnameValue))
+                    emaillist.Clear();
                 while (reader.Read()) {
-                    contactsDataGrid.Items.Add(new Contacts { ID = Convert.ToInt16(reader[0]),Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
-                    emaillist.Add(Common.Cleanstr(reader[2])); //doesnt work lul as it will mess up when theyre searching
+                    contactsDataGrid.Items.Add(new Student { ID = Convert.ToInt16(reader[0]),Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
+                    if(string.IsNullOrWhiteSpace(searchemailValue) && string.IsNullOrWhiteSpace(searchnameValue))
+                        emaillist.Add(Common.Cleanstr(reader[2])); 
                 }
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
@@ -64,7 +68,7 @@ namespace The_Email_Client {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
                     cnctDTB.Open();
-                    foreach (Contacts Contact in contactsDataGrid.SelectedItems) {
+                    foreach (Student Contact in contactsDataGrid.SelectedItems) {
                         OleDbCommand cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {editableclass.ID}" +
                             $" AND Student_ID = {Contact.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
@@ -163,7 +167,8 @@ namespace The_Email_Client {
         }
 
         private void browsestudentsButton_Click(object sender, RoutedEventArgs e) {
-
+            StudentsManagerWindow studentsmanagerwindow = new StudentsManagerWindow(editableclass,emaillist);
+            studentsmanagerwindow.ShowDialog();
         }
     }
 }

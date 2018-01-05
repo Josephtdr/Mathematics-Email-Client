@@ -25,13 +25,13 @@ namespace The_Email_Client {
     public partial class selectingcontactWindow : Window {
 
         List<string> emaillist = new List<string>();
-        public Contacts[] SelectedContacts { get; protected set; }
+        public Student[] SelectedContacts { get; protected set; }
         public string[] preexistingcontacts;
 
         public selectingcontactWindow(string[] contacts) {
             InitializeComponent();
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
-            SelectedContacts = new Contacts[0];
+            SelectedContacts = new Student[0];
             this.preexistingcontacts = contacts;
             updatetable("","");
         }
@@ -59,7 +59,7 @@ namespace The_Email_Client {
                             includecontact = false;  
                     }
                     if (includecontact) {
-                        contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
+                        contactsDataGrid.Items.Add(new Student { Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
                         emaillist.Add(Common.Cleanstr(reader[2]));
                     }
                 }
@@ -69,8 +69,8 @@ namespace The_Email_Client {
         }
 
         private void addcontacttoemailButton_Click(object sender, RoutedEventArgs e) {
-            List<Contacts> contacts = new List<Contacts>();
-            foreach(Contacts contact in contactsDataGrid.SelectedItems)
+            List<Student> contacts = new List<Student>();
+            foreach(Student contact in contactsDataGrid.SelectedItems)
                 contacts.Add(contact);
             
             SelectedContacts = contacts.ToArray();

@@ -29,32 +29,44 @@ namespace The_Email_Client
     /// 
     
 
-    public partial class ContactsManagerWindows : Window {
+    public partial class StudentsManagerWindow : Window {
         List<string> emaillist = new List<string>();
-        
+        int Class_ID { get; set; }
 
-        public ContactsManagerWindows(Class ediatableclass) {
+        public StudentsManagerWindow(Class editableclass, List<string> EmailList) {
             InitializeComponent();
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
                 && addcontactButton.IsEnabled) Addcontact(); };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
+            Class_ID = editableclass.ID;
+            emaillist = EmailList;
             Updatetable("","");
+        }
+        protected override void OnClosed(EventArgs e) {
+            //overite to ask if they want to save data etc...........
+            base.OnClosed(e);
         }
 
         public void Updatetable(string searchemailValue, string searchnameValue) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try {
                 cnctDTB.Open();
-                string InsertSql = $"SELECT * FROM Contacts WHERE Profile_ID={Common.Profile.ID}"+
-                    $" AND Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
+                string InsertSql = $"SELECT * FROM Students" +
+                    $" WHERE Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
                 OleDbCommand cmd = new OleDbCommand(InsertSql, cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
 
-                contactsDataGrid.Items.Clear();
-                emaillist.Clear();
+                StudentsDataGrid.Items.Clear();
+                bool inclass = false;
                 while (reader.Read()) {
-                    contactsDataGrid.Items.Add(new Contacts { Name = Common.Cleanstr(reader[0]), EmailAddress = Common.Cleanstr(reader[1]) });
-                    emaillist.Add(Common.Cleanstr(reader[1]));
+                    if (emaillist.Contains(reader[2])) inclass = true;
+                    else inclass = false;
+                    StudentsDataGrid.Items.Add(new Student {
+                        ID = Convert.ToInt16(reader[0]),
+                        Name = Common.Cleanstr(reader[1]),
+                        EmailAddress = Common.Cleanstr(reader[2]),
+                        InClass = inclass
+                    });
                 }
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
@@ -62,24 +74,20 @@ namespace The_Email_Client
         }
 
         private void RemovecontactButton_Click(object sender, RoutedEventArgs e) {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the contact(s).", "Question?", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the students(s).", "Question?", MessageBoxButton.YesNo);
             if ( result == MessageBoxResult.Yes) {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
                     cnctDTB.Open();
-                    foreach (Contacts contact in contactsDataGrid.SelectedItems) {
-                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Contacts WHERE Email ='{contact.EmailAddress}'"+
-                            $" AND Profile_ID={Common.Profile.ID};", cnctDTB);
+                    foreach (Student student in StudentsDataGrid.SelectedItems) {
+                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Students WHERE ID ='{student.ID}';", cnctDTB);
                         cmd.ExecuteNonQuery();
                     }
                 }
-                catch (Exception err) {
-                    System.Windows.MessageBox.Show(err.Message);
-                }
-                finally {
-                    cnctDTB.Close();
-                }
-                searchEmailTextBox.Clear(); searchNameTextBox.Clear();
+                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                finally { cnctDTB.Close(); }
+                searchEmailTextBox.Clear();
+                searchNameTextBox.Clear();
                 Updatetable("","");
             }
         }
@@ -92,24 +100,16 @@ namespace The_Email_Client
         }
 
         private void Addcontact() {
-            if (Addcontacterrorchecking(emailtextbox.Text.ToString()))
-            {
+            if (Addcontacterrorchecking(emailtextbox.Text.ToString())) {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-                try
-                {
+                try {
                     cnctDTB.Open();
-                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Contacts (Name, Email, Profile_ID) "+
-                        $"VALUES ('{ nametextbox.Text }','{ emailtextbox.Text }',{Common.Profile.ID});", cnctDTB);
+                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Students (Name, Email) "+
+                        $"VALUES ('{ nametextbox.Text }','{ emailtextbox.Text }');", cnctDTB);
                     cmd.ExecuteNonQuery();
                 }
-                catch (Exception err)
-                {
-                    System.Windows.MessageBox.Show(err.Message);
-                }
-                finally
-                {
-                    cnctDTB.Close();
-                }
+                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                finally { cnctDTB.Close(); }
                 emailtextbox.Clear(); searchNameTextBox.Clear();
                 nametextbox.Clear(); searchEmailTextBox.Clear(); 
                 Updatetable("","");
@@ -122,24 +122,26 @@ namespace The_Email_Client
         }
 
         private bool Preexistingemail(string email) {
-            foreach (string preemail in emaillist)
-            {
-                if (email == preemail) {
-                    MessageBox.Show("A contact with this email already exists!", "Error");
-                    return false;
-                }
+            if (emaillist.Contains(email)) {
+                MessageBox.Show("A contact with this email already exists!", "Error");
+                return false;
             }
-            return true;
+             return true;
         }
 
         private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (contactsDataGrid.SelectedItems.Count == 0) removecontactButton.IsEnabled = false;
+            if (StudentsDataGrid.SelectedItems.Count == 0) removecontactButton.IsEnabled = false;
             else removecontactButton.IsEnabled = true;
         }
 
         private void Addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
-            if (emailtextbox.Text == "" || nametextbox.Text == "") addcontactButton.IsEnabled = false;
+            if (string.IsNullOrWhiteSpace(emailtextbox.Text) || string.IsNullOrWhiteSpace(nametextbox.Text))
+                addcontactButton.IsEnabled = false;
             else addcontactButton.IsEnabled = true;
+        }
+
+        private void UpdateDBButton_Click(object sender, RoutedEventArgs e) {
+
         }
     }
 }

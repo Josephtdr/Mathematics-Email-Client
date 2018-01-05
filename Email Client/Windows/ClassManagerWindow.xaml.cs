@@ -61,17 +61,18 @@ public partial class ClassManagerWindow : Window
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 OleDbCommand cmd;
                 try {
+                    cnctDTB.Open();
                     foreach (Class Class in classDataGrid.SelectedItems) {
-                        cnctDTB.Open();
                         cmd = new OleDbCommand($"DELETE FROM Classes WHERE ID = {Class.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
-                        cnctDTB.Close();
-                        cnctDTB.Open();
+                        cnctDTB.Close(); cnctDTB.Open();
                         cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {Class.ID};", cnctDTB);
-                        cnctDTB.Close();
+                        cmd.ExecuteNonQuery();
+                        cnctDTB.Close(); cnctDTB.Open();
                     }
                 }
                 catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                finally { cnctDTB.Close(); }
                 searchNameTextBox.Clear();
                 Updatetable("");
             }

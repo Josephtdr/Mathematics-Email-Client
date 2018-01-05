@@ -109,8 +109,8 @@ namespace The_Email_Client
             catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
         }
 
-        private void addemailstotextboxes(Contacts[] contacts, System.Windows.Controls.TextBox textbox) {
-            foreach (Contacts contact in contacts)
+        private void addemailstotextboxes(Student[] contacts, System.Windows.Controls.TextBox textbox) {
+            foreach (Student contact in contacts)
             textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? contact.EmailAddress: $";{contact.EmailAddress}";
         }
 
