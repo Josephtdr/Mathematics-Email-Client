@@ -82,11 +82,12 @@ namespace The_Email_Client
                             tempsettingsID = Convert.ToInt16(Reader[0]);
                         ++checkint;
                     }
-
-                    //get settings id and add to database etc....
+                    if (tempsettingsID != 0) {
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"DELETE FROM Settings WHERE Settings_ID = {tempsettingsID};";
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-                
-                
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }

@@ -156,11 +156,6 @@ namespace The_Email_Client {
             return true;
         }
 
-        private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (contactsDataGrid.SelectedItems.Count == 0) removecontactButton.IsEnabled = false;
-            else removecontactButton.IsEnabled = true;
-        }
-
         private void Addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
             if (emailtextbox.Text == "" || nametextbox.Text == "") addcontactButton.IsEnabled = false;
             else addcontactButton.IsEnabled = true;

@@ -59,7 +59,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Resettin
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\ForgottonPasswordPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Windows\ResettingPasswordWindow.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\MangerAttachmentsWindow.g.cs
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ContactsManagerWindows.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Pages\EmailPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\LoginPage.g.cs
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\RegistrationPage.g.cs
@@ -71,7 +70,6 @@ C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Resettin
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Pages\ForgottonPasswordPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\ResettingPassword\Windows\ResettingPasswordWindow.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\MangerAttachmentsWindow.baml
-C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\ContactsManagerWindows.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Pages\EmailPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\LoginPage.baml
 C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\General\Pages\RegistrationPage.baml
@@ -145,3 +143,5 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Ema
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\ClassEditerWindow.baml
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\StudentsManagerWindow.g.cs
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\Email Client\Windows\StudentsManagerWindow.baml
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\StudentsManagerWindow.g.cs
+C:\Users\joseph.dowling\Documents\GitHub\Email-Client\obj\Debug\Email Client\Windows\StudentsManagerWindow.baml

@@ -42,10 +42,6 @@ namespace The_Email_Client
             emaillist = EmailList;
             Updatetable("","");
         }
-        protected override void OnClosed(EventArgs e) {
-            //overite to ask if they want to save data etc...........
-            base.OnClosed(e);
-        }
 
         public void Updatetable(string searchemailValue, string searchnameValue) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
@@ -117,30 +113,16 @@ namespace The_Email_Client
         }
 
         private bool Addcontacterrorchecking(string email) {
-            if (Preexistingemail(email) && Common.Inccorectemailformat(email)) return true;
+            if (Common.Preexistingemail(email, emaillist) && Common.Inccorectemailformat(email)) return true;
             else return false;
         }
 
-        private bool Preexistingemail(string email) {
-            if (emaillist.Contains(email)) {
-                MessageBox.Show("A contact with this email already exists!", "Error");
-                return false;
-            }
-             return true;
-        }
-
-        private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (StudentsDataGrid.SelectedItems.Count == 0) removecontactButton.IsEnabled = false;
-            else removecontactButton.IsEnabled = true;
-        }
-
         private void Addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
-            if (string.IsNullOrWhiteSpace(emailtextbox.Text) || string.IsNullOrWhiteSpace(nametextbox.Text))
-                addcontactButton.IsEnabled = false;
-            else addcontactButton.IsEnabled = true;
+            addcontactButton.IsEnabled = (string.IsNullOrWhiteSpace(emailtextbox.Text) ||
+                string.IsNullOrWhiteSpace(nametextbox.Text)) ? false : true;
         }
 
-        private void UpdateDBButton_Click(object sender, RoutedEventArgs e) {
+        private void addstudentClassButton_Click(object sender, RoutedEventArgs e) {
 
         }
     }

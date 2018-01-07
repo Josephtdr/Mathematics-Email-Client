@@ -50,6 +50,14 @@ namespace The_Email_Client
             }
         }
 
+        public static bool Preexistingemail(string email, List<string> emaillist) {
+            if (emaillist.Contains(email)) {
+                System.Windows.MessageBox.Show("A contact with this email already exists!", "Error");
+                return false;
+            }
+            return true;
+        }
+
         public static bool Inccorectpasswordformat(string password)
         {
             if (Regex.IsMatch(password, Constants.VALIDPASSWORDPATTERN)) return true;

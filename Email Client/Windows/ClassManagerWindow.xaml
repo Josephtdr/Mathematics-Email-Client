@@ -22,12 +22,12 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <DataGrid x:Name="classDataGrid" Margin="0,20,0,39" IsReadOnly="True" SelectionChanged="ContactsDataGrid_SelectionChanged" Background="#FFD9D0FF">
+        <DataGrid x:Name="classDataGrid" Margin="0,20,0,39" IsReadOnly="True"  Background="#FFD9D0FF" SelectionChanged="ContactsDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Class Name" IsReadOnly="True"  Binding="{Binding Path=Name}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBox x:Name="nametextbox" Height="40" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,168,0" TextChanged="Nametextbox_TextChanged">
+        <TextBox x:Name="nametextbox" Height="40" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,168,0">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -51,8 +51,21 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button x:Name="CreateClassButton" Content="Create&#xD;&#xA;  New " HorizontalAlignment="Right" Height="40" Margin="0,0,112,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="False"/>
-        <Button x:Name="RemoveClassButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" IsEnabled="False"/>
+        <Button x:Name="CreateClassButton" Content="Create&#xD;&#xA;  New " HorizontalAlignment="Right" Height="40" Margin="0,0,112,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="{Binding ElementName=nametextbox,Path=Text.Length}"/>
+        <Button x:Name="RemoveClassButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" IsEnabled="{Binding ElementName=classDataGrid,Path=SelectedItem}">
+        <Button.Style>
+            <Style TargetType="Button">
+                <Setter Property="IsEnabled" Value="True" />
+                <Setter Property="Opacity" Value="1" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=classDataGrid, Path=SelectedItem}" Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="Opacity" Value=".5" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Button.Style>
+        </Button>
         <Button x:Name="EditClassButton" Content="    Edit&#xA; Selected " HorizontalAlignment="Right" Height="40" Margin="0,0,56,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="EditClassButton_Click" IsEnabled="False"/>
     </Grid>
 </Window>

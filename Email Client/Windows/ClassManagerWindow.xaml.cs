@@ -116,16 +116,7 @@ public partial class ClassManagerWindow : Window
 
         private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (classDataGrid.SelectedItems.Count == 1) EditClassButton.IsEnabled = true;
-            if (classDataGrid.SelectedItems.Count == 0) {
-                RemoveClassButton.IsEnabled = false;
-                EditClassButton.IsEnabled = false;
-            }
-            else RemoveClassButton.IsEnabled = true;
-        }
-
-        private void Nametextbox_TextChanged(object sender, TextChangedEventArgs e) {
-            if (string.IsNullOrWhiteSpace(nametextbox.Text)) CreateClassButton.IsEnabled = false;
-            else CreateClassButton.IsEnabled = true;
+            else EditClassButton.IsEnabled = false;
         }
 
         private void EditClassButton_Click(object sender, RoutedEventArgs e) {
