@@ -19,29 +19,63 @@ namespace The_Email_Client
         public string UserName { get; set; }
         public int Settings_ID { get; set; }
         
-        public void GetInfofromDB(Profiles Profile, string UserName) {      
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+        private static void DeleteRedundantSettings(int Settings_ID) {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
             try {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{UserName}';", cnctDTB);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    Profile.ID = Common.Cleanstr(reader[0]);
-                    Profile.Name = Common.Cleanstr(reader[1]);
-                    Profile.Settings_ID = Convert.ToInt16(reader[5]);
+                cnctDTB.Open();//opens the connection
+                OleDbCommand cmd = new OleDbCommand($"SELECT ID FROM Profiles WHERE Settings_ID = {Settings_ID};", cnctDTB);
+                OleDbDataReader Reader = cmd.ExecuteReader();
+                if (!Reader.HasRows) { //checks no other profiles use the same old settings values
+                    cnctDTB.Close(); cnctDTB.Open();
+                    cmd.CommandText = $"DELETE FROM Settings WHERE ID = {Settings_ID};";
+                    cmd.ExecuteNonQuery();//if none have it, deletes there now redundant old settings
                 }
-                cnctDTB.Close();
-
-                cnctDTB.Open();
-                cmd = new OleDbCommand($"SELECT * FROM Settings WHERE ID={Profile.Settings_ID};", cnctDTB);
-                reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    Profile.Port = Common.Cleanstr(reader[1]);
-                    Profile.Server = Common.Cleanstr(reader[2]);
-                }
+                cnctDTB.Close();//closes the connection}
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
+        }
+        private static void CreateNewSettings(Profiles profile) {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
+            try {
+                cnctDTB.Open(); //opens the connection
+                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Settings (Port, Server) VALUES " +
+                    $"({profile.Port},'{profile.Server}');", cnctDTB);
+                cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
+                cnctDTB.Close(); cnctDTB.Open();
+                cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
+                OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users exact settings
+                while (Reader.Read())
+                    Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]); //updates their local profile to reflect their new settings
+                cnctDTB.Close(); cnctDTB.Open();
+                cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
+                cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
+            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
+        }
+
+        public void GetInfofromDB(Profiles Profile, string UserName) { //updates local profile from database    
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection
+            try {
+                cnctDTB.Open(); //opens connection
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{UserName}';", cnctDTB);
+                OleDbDataReader reader = cmd.ExecuteReader(); //locates users profile in database from their username
+                while (reader.Read()) {
+                    Profile.ID = Common.Cleanstr(reader[0]); //updates users ID
+                    Profile.Name = Common.Cleanstr(reader[1]); //updates users Name
+                    Profile.Settings_ID = Convert.ToInt16(reader[5]); //updates users settings ID
+                }
+                cnctDTB.Close(); cnctDTB.Open(); //reopensconnection
+                cmd = new OleDbCommand($"SELECT * FROM Settings WHERE ID={Profile.Settings_ID};", cnctDTB);
+                reader = cmd.ExecuteReader();
+                while (reader.Read()) {//locates users settings in database from their settings ID
+                    Profile.Port = Common.Cleanstr(reader[1]); //updates users port
+                    Profile.Server = Common.Cleanstr(reader[2]); //updates users server
+                }
+            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }//displays error in the event of an error
+            finally { cnctDTB.Close(); } //closes connection
         }
 
         public void UpdateDatabasefromProfile(Profiles profile) {
@@ -56,15 +90,8 @@ namespace The_Email_Client
                     if (profile.Port == "587" && profile.Server == "smtp.gmail.com") {//checks if they now have default settings
                         cmd.CommandText = $"UPDATE Profiles SET Settings_ID = 1 WHERE ID = {profile.ID};";
                         cmd.ExecuteNonQuery();//updates their profile to reflect their default settings
-                        
-                        cnctDTB.Close(); cnctDTB.Open();
-                        cmd.CommandText = $"SELECT ID FROM Profiles WHERE Settings_ID = {profile.Settings_ID};";
-                        OleDbDataReader tempreader = cmd.ExecuteReader();
-                        if (!tempreader.HasRows) { //checks no other profiles use the same old settings values
-                            cnctDTB.Close(); cnctDTB.Open();
-                            cmd.CommandText = $"DELETE FROM Settings WHERE ID = {profile.Settings_ID};";
-                            cmd.ExecuteNonQuery();//if none have it, deletes there now redundant old settings
-                        }
+
+                        DeleteRedundantSettings(profile.Settings_ID);//Deletes any reduant settings
                         Common.Profile.Settings_ID = 1; //updates their local profile to reflect their default settings
                     }
                     else {
@@ -79,27 +106,9 @@ namespace The_Email_Client
                             cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
                         }
                         else {
-                            cnctDTB.Close(); cnctDTB.Open();
-                            cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
-                                $"({profile.Port},'{profile.Server}');";
-                            cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
-                            cnctDTB.Close(); cnctDTB.Open();
-                            cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
-                            OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users exact settings
-                            while (Reader.Read())
-                                Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]); //updates their local profile to reflect their new settings
-                            cnctDTB.Close(); cnctDTB.Open();
-                            cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
-                            cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
+                            CreateNewSettings(profile);
                         }
-                        cnctDTB.Close(); cnctDTB.Open();
-                        cmd.CommandText = $"SELECT ID FROM Profiles WHERE Settings_ID = {tempsettingsid};";
-                        OleDbDataReader tempreader = cmd.ExecuteReader();
-                        if (!tempreader.HasRows) { //checks no other profiles use the same old settings values
-                            cnctDTB.Close(); cnctDTB.Open();
-                            cmd.CommandText = $"DELETE FROM Settings WHERE ID = {tempsettingsid};";
-                            cmd.ExecuteNonQuery();//if none have it, deletes there now redundant old settings      
-                        }
+                        DeleteRedundantSettings(tempsettingsid); //Deletes any reduant settings
                     }
                 }
                 else if (!(profile.Port == "587" && profile.Server == "smtp.gmail.com")) { //checks if the user has default settings
@@ -112,19 +121,8 @@ namespace The_Email_Client
                         cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
                         cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
                     }
-                    else { 
-                        cnctDTB.Close(); cnctDTB.Open();
-                        cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
-                            $"({profile.Port},'{profile.Server}');";
-                        cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
-                        cnctDTB.Close(); cnctDTB.Open();
-                        cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
-                        OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users exact settings
-                        while (Reader.Read()) 
-                            Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]); //updates their local profile to reflect their new settings
-                        cnctDTB.Close(); cnctDTB.Open();
-                        cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
-                        cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
+                    else {
+                        CreateNewSettings(profile);
                     }
                 }
             }
