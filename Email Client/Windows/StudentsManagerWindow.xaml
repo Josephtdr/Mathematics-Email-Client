@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:The_Email_Client"
         mc:Ignorable="d"
-        Title="ContactsManagerWindows" Height="300" Width="477">
+        Title="StudentsManagerWindows" Height="300" Width="477">
 
     <Grid>
 
@@ -37,14 +37,10 @@
             </TextBlock.Style>
         </TextBlock>
 
-
-
-
         <DataGrid x:Name="StudentsDataGrid" Margin="0,20,0,39" Background="#FFD9D0FF">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
                 <DataGridTextColumn Header="Email Address" IsReadOnly="False"  Binding="{Binding Path=EmailAddress}" Width="*"/>
-                <DataGridCheckBoxColumn Header="In Class" Width="60" Binding="{Binding Path=InClass}"/>
             </DataGrid.Columns>
         </DataGrid>
 

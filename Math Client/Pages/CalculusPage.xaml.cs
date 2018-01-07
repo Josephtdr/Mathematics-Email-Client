@@ -331,9 +331,6 @@ namespace The_Email_Client
 
         private void CreateRanPDFEmailButton_Click(object sender, RoutedEventArgs e) {
             CreateRandomPDF(true); //created a random pdf according to user specifications
-
-            //Email portion from database etc
-
         }
 
         private void CreateEmailPDFButton_Click(object sender, RoutedEventArgs e) {

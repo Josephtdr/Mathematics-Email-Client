@@ -24,7 +24,7 @@ namespace The_Email_Client
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{UserName}'", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Profiles WHERE UserName='{UserName}';", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Profile.ID = Common.Cleanstr(reader[0]);
@@ -34,7 +34,7 @@ namespace The_Email_Client
                 cnctDTB.Close();
 
                 cnctDTB.Open();
-                cmd = new OleDbCommand($"SELECT * FROM Settings WHERE ID={Profile.Settings_ID}", cnctDTB);
+                cmd = new OleDbCommand($"SELECT * FROM Settings WHERE ID={Profile.Settings_ID};", cnctDTB);
                 reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Profile.Port = Common.Cleanstr(reader[1]);
@@ -50,42 +50,48 @@ namespace The_Email_Client
             OleDbCommand cmd = new OleDbCommand("", cnctDTB);
             try {
                 cnctDTB.Open();//opens the connection
-                cmd.CommandText = $"UPDATE Profiles SET Name ='{ profile.Name }', UserName ='{ profile.UserName }' WHERE ID ={ profile.ID }";
+                cmd.CommandText = $"UPDATE Profiles SET Name ='{ profile.Name }', UserName ='{ profile.UserName }' WHERE ID ={ profile.ID };";
                 cmd.ExecuteNonQuery();//updates profile with name and username
                 cnctDTB.Close(); cnctDTB.Open();//closed then re opens the connection, to allow another command to run
                 if (profile.Settings_ID != 1) { //checks if user did not previously have default settings
                     if (profile.Port == "587" && profile.Server == "smtp.gmail.com") {//checks if they now have default settings
-                        cmd.CommandText = $"DELETE FROM Settings WHERE ID = {profile.Settings_ID};";
-                        cmd.ExecuteNonQuery();//deletes there now redundant old settings
-                        cnctDTB.Close(); cnctDTB.Open();
                         cmd.CommandText = $"UPDATE Profiles SET Settings_ID = 1 WHERE ID = {profile.ID};";
                         cmd.ExecuteNonQuery();//updates their profile to reflect their default settings
-                    }
-                    else {
-                        cmd.CommandText = $"UPDATE Settings SET Port ='{ profile.Port }', Server ='{ profile.Server }' WHERE ID ={ profile.Settings_ID };";
-                        cmd.ExecuteNonQuery();//updates their current none default settings
+                        
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"SELECT ID FROM Profiles WHERE Settings_ID = {profile.Settings_ID};";
+                        OleDbDataReader tempreader = cmd.ExecuteReader();
+                        if (!tempreader.HasRows) { //checks no other profiles use the same old settings values
+                            cnctDTB.Close(); cnctDTB.Open();
+                            cmd.CommandText = $"DELETE FROM Settings WHERE ID = {profile.Settings_ID};";
+                            cmd.ExecuteNonQuery();//if none have it, deletes there now redundant old settings
+                        }
+                        Common.Profile.Settings_ID = 1; //updates their local profile to reflect their default settings
                     }
                 }
-                else if (!(profile.Port == "587" && profile.Server == "smtp.gmail.com")) {//checks for defualt settings
-                    cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
-                        $"('{profile.Port}','{profile.Server}');";
-                    cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
-                    cnctDTB.Close(); cnctDTB.Open();
-                    cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = '{profile.Port}' AND Server = '{profile.Server}';";
-                    OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users settings
-                    int checkint = 1;
-                    int tempsettingsID = 0;
-                    while (Reader.Read()) {
-                        if (checkint <= 1)
-                            Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]);
-                        else 
-                            tempsettingsID = Convert.ToInt16(Reader[0]);
-                        ++checkint;
-                    }
-                    if (tempsettingsID != 0) {
+                if (!(profile.Port == "587" && profile.Server == "smtp.gmail.com")) { //checks if the user has default settings
+                    cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
+                    OleDbDataReader tempReader = cmd.ExecuteReader();
+                    if (tempReader.HasRows) { //checks if the users new settings already exist in the database
+                        while (tempReader.Read())
+                            Common.Profile.Settings_ID = Convert.ToInt16(tempReader[0]);
                         cnctDTB.Close(); cnctDTB.Open();
-                        cmd.CommandText = $"DELETE FROM Settings WHERE Settings_ID = {tempsettingsID};";
-                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
+                        cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
+                    }
+                    else {
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
+                            $"({profile.Port},'{profile.Server}');";
+                        cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
+                        OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users exact settings
+                        while (Reader.Read()) 
+                            Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]); //updates their local profile to reflect their new settings
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
+                        cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
                     }
                 }
             }

@@ -58,7 +58,7 @@
                 <Setter Property="IsEnabled" Value="True" />
                 <Setter Property="Opacity" Value="1" />
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=classDataGrid, Path=SelectedItem}" Value="{x:Null}">
+                    <DataTrigger Binding="{Binding ElementName=classDataGrid, Path=SelectedItem}" >
                         <Setter Property="IsEnabled" Value="False" />
                         <Setter Property="Opacity" Value=".5" />
                     </DataTrigger>

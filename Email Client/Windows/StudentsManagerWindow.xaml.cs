@@ -45,25 +45,27 @@ namespace The_Email_Client
 
         public void Updatetable(string searchemailValue, string searchnameValue) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            List<string> tempemaillist = new List<string>();
             try {
                 cnctDTB.Open();
                 string InsertSql = $"SELECT * FROM Students" +
                     $" WHERE Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
                 OleDbCommand cmd = new OleDbCommand(InsertSql, cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
-
+                if (string.IsNullOrWhiteSpace(searchemailValue) && string.IsNullOrWhiteSpace(searchnameValue)) 
+                    tempemaillist = new List<string>();
                 StudentsDataGrid.Items.Clear();
-                bool inclass = false;
                 while (reader.Read()) {
-                    if (emaillist.Contains(reader[2])) inclass = true;
-                    else inclass = false;
+                    if (!emaillist.Contains(Common.Cleanstr(reader[2]))) 
                     StudentsDataGrid.Items.Add(new Student {
                         ID = Convert.ToInt16(reader[0]),
                         Name = Common.Cleanstr(reader[1]),
                         EmailAddress = Common.Cleanstr(reader[2]),
-                        InClass = inclass
                     });
+                    tempemaillist.Add(Common.Cleanstr(reader[2]));
                 }
+                if (string.IsNullOrWhiteSpace(searchemailValue) && string.IsNullOrWhiteSpace(searchnameValue))
+                    emaillist = tempemaillist;
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }

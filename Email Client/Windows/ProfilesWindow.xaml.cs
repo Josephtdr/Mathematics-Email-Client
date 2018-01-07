@@ -30,12 +30,12 @@ namespace The_Email_Client
     public partial class ProfilesWindow : Window
     {
         protected BindingExpression[] expressions;
-        private List<string> SettingsResetValues { get; set; }
+        private List<string> ProfileResetValues { get; set; }
         private List<string> EditableSettings { get; set; }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (Title == "Settings Window - Unsaved")
+            if (Title == "Profile Window - Unsaved")
             {
                 switch (MessageBox.Show("Are you sure you want to Quit without Saving?", "Unsaved Data!", MessageBoxButton.YesNo))
                 {
@@ -55,11 +55,11 @@ namespace The_Email_Client
         {
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             
-            SettingsResetValues = new List<string>();
+            ProfileResetValues = new List<string>();
             EditableSettings = new List<string>();
             if (Common.Profile != null) {
-                SettingsResetValues.Add(Common.Profile.Name); SettingsResetValues.Add(Common.Profile.Port);
-                SettingsResetValues.Add(Common.Profile.Server); SettingsResetValues.Add(Common.Profile.UserName);
+                ProfileResetValues.Add(Common.Profile.Name); ProfileResetValues.Add(Common.Profile.Port);
+                ProfileResetValues.Add(Common.Profile.Server); ProfileResetValues.Add(Common.Profile.UserName);
                 EditableSettings.Add(Common.Profile.Name); EditableSettings.Add(Common.Profile.Port);
                 EditableSettings.Add(Common.Profile.Server); EditableSettings.Add(Common.Profile.UserName);
             }
@@ -87,7 +87,7 @@ namespace The_Email_Client
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
             Common.Profile.UpdateDatabasefromProfile(Common.Profile);
             SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
-            Title = "Settings Window - Saved";
+            Title = "Profile Window - Saved";
             EditableSettings.Clear();
             EditableSettings.Add(UserNameBox.Text); EditableSettings.Add(PortBox.Text);
             EditableSettings.Add(ServerBox.Text); EditableSettings.Add(UserUserNameBox.Text);
@@ -95,7 +95,7 @@ namespace The_Email_Client
         
         private void SaveExitButton_Click(object sender, RoutedEventArgs e)
         {
-            Title = "Settings Window - Saved";
+            Title = "Profile Window - Saved";
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
             Common.Profile.UpdateDatabasefromProfile(Common.Profile);
             Close();
@@ -109,16 +109,16 @@ namespace The_Email_Client
             
             if (!defaultvalues)
             {
-                Title = "Settings Window - Unsaved";
+                Title = "Profile Window - Unsaved";
                 SaveButton.IsEnabled = true; SaveExitButton.IsEnabled = true;
             }
             else
             {
-                Title = "Settings Window";
+                Title = "Profile Window";
                 SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             }
-            if (UserNameBox.Text != SettingsResetValues[0] || PortBox.Text != SettingsResetValues[1]
-               || ServerBox.Text != SettingsResetValues[2] || UserUserNameBox.Text != SettingsResetValues[3])
+            if (UserNameBox.Text != ProfileResetValues[0] || PortBox.Text != ProfileResetValues[1]
+               || ServerBox.Text != ProfileResetValues[2] || UserUserNameBox.Text != ProfileResetValues[3])
                 ResetButton.IsEnabled = true;
 
             else ResetButton.IsEnabled = false;
@@ -126,10 +126,10 @@ namespace The_Email_Client
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            UserNameBox.Text = SettingsResetValues[0];
-            PortBox.Text = SettingsResetValues[1];
-            ServerBox.Text = SettingsResetValues[2];
-            UserUserNameBox.Text = SettingsResetValues[3];
+            UserNameBox.Text = ProfileResetValues[0];
+            PortBox.Text = ProfileResetValues[1];
+            ServerBox.Text = ProfileResetValues[2];
+            UserUserNameBox.Text = ProfileResetValues[3];
         }
 
         private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)

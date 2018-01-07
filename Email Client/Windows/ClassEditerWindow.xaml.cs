@@ -21,7 +21,6 @@ namespace The_Email_Client {
         public string Name { get; set; }
         public string EmailAddress { get; set; }
         public int ID { get; set; }
-        public bool InClass { get; set; }
         
     }
     public partial class ClassEditerWindow : Window {
