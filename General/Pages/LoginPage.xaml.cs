@@ -37,13 +37,15 @@ namespace The_Email_Client
             DataContext = this;
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
                 { Password = Passwordbox.Password; UserName = UserNameTextBox.Text; Email = EmailTextBox.Text;
-                    if (Encryption.VerifyPasswordorEmail(UserName, Password, true) && String.IsNullOrWhiteSpace(Email)) {
-                        UserNameTextBox.Clear(); 
-                        ShowHomePage?.Invoke();
-                    }
-                    else if (Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
-                        UserNameTextBox.Clear(); EmailTextBox.Clear();
-                        ShowHomePage?.Invoke();
+                    if (Encryption.VerifyPasswordorEmail(UserName, Password, true)) {
+                        if (String.IsNullOrWhiteSpace(Email)) {
+                            UserNameTextBox.Clear();
+                            ShowHomePage?.Invoke();
+                        }
+                        else if (Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
+                            UserNameTextBox.Clear(); EmailTextBox.Clear();
+                            ShowHomePage?.Invoke();
+                        }
                     }
                 }
                 
