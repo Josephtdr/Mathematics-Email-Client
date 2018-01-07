@@ -144,3 +144,4 @@ D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.csproj.CoreCompileInputs.cache
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.exe
 D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.pdb
+D:\Microsoft Visual Studio\2017\Projects\Email Client\Email-Client\obj\Debug\The Email Client.csprojResolveAssemblyReference.cache

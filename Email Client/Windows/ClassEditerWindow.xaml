@@ -95,7 +95,7 @@
             </TextBox.Style>
         </TextBox>
         <Button x:Name="addcontactButton" Content="Add " HorizontalAlignment="Right" Height="20" Margin="0,0,56,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="False"/>
-        <Button x:Name="removecontactButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" IsEnabled="{Binding ElementName=contactsDataGrid, Path=SelectedItem}">
+        <Button x:Name="removecontactButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" Command="{Binding Remove}" CommandParameter="{Binding ElementName=contactsDataGrid, Path=SelectedItem}">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />

@@ -93,7 +93,7 @@
             </TextBox.Style>
         </TextBox>
         <Button x:Name="addcontactButton" Content="New" HorizontalAlignment="Right" Height="20" Margin="0,0,61,0" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="False"/>
-        <Button x:Name="removecontactButton" Content="  Delete&#xD;&#xA;Student(s)" Height="40" VerticalAlignment="Bottom" Width="61" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" IsEnabled="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
+        <Button x:Name="removecontactButton" Content="  Delete&#xD;&#xA;Student(s)" Height="40" VerticalAlignment="Bottom" Width="61" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" Command="{Binding Remove}" CommandParameter="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
         <Button.Style>
             <Style TargetType="Button">
                 <Setter Property="IsEnabled" Value="True" />
@@ -107,7 +107,7 @@
             </Style>
         </Button.Style>
         </Button>
-        <Button x:Name="addstudentClassButton" Content="Add" HorizontalAlignment="Right" Height="20" Margin="0,0,61,20" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="addstudentClassButton_Click" IsEnabled="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
+        <Button x:Name="addstudentClassButton" Content="Add" HorizontalAlignment="Right" Height="20" Margin="0,0,61,20" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="addstudentClassButton_Click" Command="{Binding Remove}" CommandParameter="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
         <Button.Style>
             <Style TargetType="Button">
                 <Setter Property="IsEnabled" Value="True" />

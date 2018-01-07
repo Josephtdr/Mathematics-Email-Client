@@ -19,8 +19,7 @@ namespace The_Email_Client
         public string UserName { get; set; }
         public int Settings_ID { get; set; }
         
-        public void GetInfofromDB(Profiles Profile, string UserName) {
-            
+        public void GetInfofromDB(Profiles Profile, string UserName) {      
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try {
                 cnctDTB.Open();
@@ -68,8 +67,42 @@ namespace The_Email_Client
                         }
                         Common.Profile.Settings_ID = 1; //updates their local profile to reflect their default settings
                     }
+                    else {
+                        int tempsettingsid = profile.Settings_ID;
+                        cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
+                        OleDbDataReader tempReader = cmd.ExecuteReader();
+                        if (tempReader.HasRows) { //checks if the users new settings already exist in the database
+                            while (tempReader.Read())
+                                Common.Profile.Settings_ID = Convert.ToInt16(tempReader[0]);
+                            cnctDTB.Close(); cnctDTB.Open();
+                            cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
+                            cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
+                        }
+                        else {
+                            cnctDTB.Close(); cnctDTB.Open();
+                            cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
+                                $"({profile.Port},'{profile.Server}');";
+                            cmd.ExecuteNonQuery();//creates a new none default settings value for their profile
+                            cnctDTB.Close(); cnctDTB.Open();
+                            cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
+                            OleDbDataReader Reader = cmd.ExecuteReader();//selects all instances from the database with the users exact settings
+                            while (Reader.Read())
+                                Common.Profile.Settings_ID = Convert.ToInt16(Reader[0]); //updates their local profile to reflect their new settings
+                            cnctDTB.Close(); cnctDTB.Open();
+                            cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
+                            cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
+                        }
+                        cnctDTB.Close(); cnctDTB.Open();
+                        cmd.CommandText = $"SELECT ID FROM Profiles WHERE Settings_ID = {tempsettingsid};";
+                        OleDbDataReader tempreader = cmd.ExecuteReader();
+                        if (!tempreader.HasRows) { //checks no other profiles use the same old settings values
+                            cnctDTB.Close(); cnctDTB.Open();
+                            cmd.CommandText = $"DELETE FROM Settings WHERE ID = {tempsettingsid};";
+                            cmd.ExecuteNonQuery();//if none have it, deletes there now redundant old settings      
+                        }
+                    }
                 }
-                if (!(profile.Port == "587" && profile.Server == "smtp.gmail.com")) { //checks if the user has default settings
+                else if (!(profile.Port == "587" && profile.Server == "smtp.gmail.com")) { //checks if the user has default settings
                     cmd.CommandText = $"SELECT ID FROM Settings WHERE Port = {profile.Port} AND Server = '{profile.Server}';";
                     OleDbDataReader tempReader = cmd.ExecuteReader();
                     if (tempReader.HasRows) { //checks if the users new settings already exist in the database
@@ -79,7 +112,7 @@ namespace The_Email_Client
                         cmd.CommandText = $"UPDATE Profiles SET Settings_ID = {Common.Profile.Settings_ID} WHERE ID = {profile.ID};";
                         cmd.ExecuteNonQuery(); //updates the users profile to reflect their new settings
                     }
-                    else {
+                    else { 
                         cnctDTB.Close(); cnctDTB.Open();
                         cmd.CommandText = $"INSERT INTO Settings (Port, Server) VALUES " +
                             $"({profile.Port},'{profile.Server}');";
