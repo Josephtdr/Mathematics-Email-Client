@@ -67,17 +67,18 @@ namespace The_Email_Client {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
                     cnctDTB.Open();
-                    foreach (Student Contact in contactsDataGrid.SelectedItems) {
+                    foreach (Student student in contactsDataGrid.SelectedItems) {
                         OleDbCommand cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {editableclass.ID}" +
-                            $" AND Student_ID = {Contact.ID};", cnctDTB);
+                            $" AND Student_ID = {student.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
-                        cmd.CommandText = $"SELECT * FROM Class_Lists WHERE Student_ID = {Contact.ID};";
-                        OleDbDataReader Reader = cmd.ExecuteReader();
-                        if(!Reader.HasRows) {
-                            cnctDTB.Close(); cnctDTB.Open();
-                            cmd.CommandText = $"DELETE FROM Students WHERE Student_ID = {Contact.ID};";
-                            cmd.ExecuteNonQuery();
-                        }
+                        //cnctDTB.Close(); cnctDTB.Open();
+                        //cmd.CommandText = $"SELECT * FROM Class_Lists WHERE Student_ID = {student.ID};";
+                        //OleDbDataReader Reader = cmd.ExecuteReader();
+                        //if(!Reader.HasRows) {
+                        //    cnctDTB.Close(); cnctDTB.Open();
+                        //    cmd.CommandText = $"DELETE FROM Students WHERE Student_ID = {student.ID};";
+                        //    cmd.ExecuteNonQuery();
+                        //} //deleletes students which are in no classes [optional]
                     }
                 }
                 catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
@@ -161,8 +162,9 @@ namespace The_Email_Client {
         }
 
         private void browsestudentsButton_Click(object sender, RoutedEventArgs e) {
-            StudentsManagerWindow studentsmanagerwindow = new StudentsManagerWindow(editableclass,emaillist);
+            StudentsManagerWindow studentsmanagerwindow = new StudentsManagerWindow(editableclass);
             studentsmanagerwindow.ShowDialog();
+            Updatetable("","");
         }
     }
 }
