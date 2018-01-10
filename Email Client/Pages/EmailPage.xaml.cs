@@ -135,21 +135,23 @@ namespace The_Email_Client
 
         private void addemailstotextboxes(Object[] contacts, System.Windows.Controls.TextBox textbox) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            if (contacts != null && contacts[0].GetType() == typeof(Class)) {
-                foreach (Class Class in contacts)
-                    try {
-                        cnctDTB.Open();
-                        OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Classes WHERE Name = '{Class.Name}';", cnctDTB);
-                        OleDbDataReader Reader = cmd.ExecuteReader();
-                        while (Reader.Read())
-                            textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? $"{{{Reader[1].ToString()}}}" : $";{{{Reader[1].ToString()}}}";
-                    }
-                    catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-                    finally { cnctDTB.Close(); }  
-            }
-            else {
-                foreach (Student student in contacts)
-                    textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? student.EmailAddress : $";{student.EmailAddress}";
+            if (contacts != null) {
+                if(contacts[0].GetType() == typeof(Class)) {
+                        foreach (Class Class in contacts)
+                            try {
+                                cnctDTB.Open();
+                                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Classes WHERE Name = '{Class.Name}';", cnctDTB);
+                                OleDbDataReader Reader = cmd.ExecuteReader();
+                                while (Reader.Read())
+                                    textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? $"{{{Reader[1].ToString()}}}" : $";{{{Reader[1].ToString()}}}";
+                            }
+                            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                            finally { cnctDTB.Close(); }
+                }
+                else {
+                        foreach (Student student in contacts)
+                            textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? student.EmailAddress : $";{student.EmailAddress}";
+                }
             }
         }
 

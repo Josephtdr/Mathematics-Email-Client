@@ -9,17 +9,21 @@
     <Grid>
 
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            
+
             <TabItem Header="Add Class">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="classDataGrid" IsReadOnly="True" Margin="0,20" Background="#FFD9D0FF">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="97*"/>
+                        <ColumnDefinition Width="189*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="classDataGrid" IsReadOnly="True" Margin="0,20" Background="#FFD9D0FF" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" IsReadOnly="True"  Binding="{Binding Path=Name}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="addclasstoemailButton" Content="Add Selected" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Bottom" Background="#FFF0F0F0" Click="addcontacttoemailButton_Click"/>
+                    <Button x:Name="addclasstoemailButton" Content="Add Selected" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Bottom" Background="#FFF0F0F0" Click="addcontacttoemailButton_Click" Grid.ColumnSpan="2"/>
 
-                    <TextBox x:Name="searchclassNameTextBox" HorizontalAlignment="Stretch" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="searchTextBoxes_TextChanged"/>
+                    <TextBox x:Name="searchclassNameTextBox" HorizontalAlignment="Stretch" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="searchTextBoxes_TextChanged" Grid.ColumnSpan="2"/>
                     <TextBlock IsHitTestVisible="False" Text="Search via Name" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,2,0,0" Foreground="DarkGray" Height="15" Width="91" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -34,9 +38,9 @@
                     </TextBlock>
                 </Grid>
             </TabItem>
-        <TabItem Header="Add Student">
+            <TabItem Header="Add Student">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="studensDataGrid" IsReadOnly="True" Margin="0,20" Background="#FFD9D0FF">
+                    <DataGrid x:Name="studentsDataGrid" IsReadOnly="True" Margin="0,20" Background="#FFD9D0FF">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" IsReadOnly="True"  Binding="{Binding Path=Name}" Width="*"/>
                             <DataGridTextColumn Header="Email Address" IsReadOnly="True"  Binding="{Binding Path=EmailAddress}" Width="*"/>

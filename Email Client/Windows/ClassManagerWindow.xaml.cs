@@ -19,35 +19,33 @@ namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for ClassManagerWindow.xaml
     /// </summary>
-public partial class ClassManagerWindow : Window
-    {
-        //List<string> ClassNames = new List<string>();
-
-        public ClassManagerWindow()
-        {
+    public partial class ClassManagerWindow : Window {
+        List<string> ClassNames = new List<string>();
+        DataGrid tempclassdatagrid = new DataGrid();
+        public ClassManagerWindow() {
             InitializeComponent();
-            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
+            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter)
                 && CreateClassButton.IsEnabled) CreateClass(); };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
-            Updatetable("");
+            Updatetable();
         }
 
-        public void Updatetable(string searchnameValue) {
+        public void Updatetable() {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             try {
                 cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Classes " +
-                    $"WHERE Name LIKE '%{searchnameValue}%';", cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Classes;", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
 
                 classDataGrid.Items.Clear();
-                //ClassNames.Clear();
+                ClassNames.Clear();
                 while (reader.Read()) {
                     classDataGrid.Items.Add(new Class { Name = Common.Cleanstr(reader[1]), ID = Convert.ToInt16(Common.Cleanstr(reader[0])) });
-                    //ClassNames.Add(Common.Cleanstr(reader[1]));
+                    tempclassdatagrid.Items.Add(new Class { Name = Common.Cleanstr(reader[1]), ID = Convert.ToInt16(Common.Cleanstr(reader[0])) });
+                    ClassNames.Add(Common.Cleanstr(reader[1]));
                 }
             }
-            catch (Exception err) {  System.Windows.MessageBox.Show(err.Message); }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
         }
 
@@ -70,46 +68,55 @@ public partial class ClassManagerWindow : Window
                 catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
                 finally { cnctDTB.Close(); }
                 searchNameTextBox.Clear();
-                Updatetable("");
+                Updatetable();
             }
         }
         private void SearchTextBoxes_TextChanged(object sender, TextChangedEventArgs e) {
-            Updatetable(searchNameTextBox.Text);
+            SearchTable(searchNameTextBox.Text, classDataGrid);
+        }
+
+        private void SearchTable(string searchname, DataGrid datagrid) {
+            datagrid.Items.Clear();
+
+            for (int i = 0; i < tempclassdatagrid.Items.Count; i++) {
+                if (string.IsNullOrWhiteSpace(searchname) || (((Class)tempclassdatagrid.Items[i]).Name.ToLower()).Contains(searchname.ToLower()))
+                    datagrid.Items.Add(tempclassdatagrid.Items[i]);
+            }
         }
 
         private void AddcontactButton_Click(object sender, RoutedEventArgs e) {
             CreateClass();
-            
+
         }
 
         private void CreateClass() {
-            Class tempclass = new Class();
-            bool set = false;
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try {
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"INSERT INTO Classes (Name) " +
-                    $"VALUES ('{ nametextbox.Text }');", cnctDTB);
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = $"SELECT * FROM Classes WHERE Name = '{nametextbox.Text}';";
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    tempclass.ID = Convert.ToInt16(reader[0]);
-                    tempclass.Name = (string)reader[1];
+            if (!ClassNames.Contains(nametextbox.Text)) {
+                Class tempclass = new Class();
+                OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+                try {
+                    cnctDTB.Open();
+                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Classes (Name) " +
+                        $"VALUES ('{ nametextbox.Text }');", cnctDTB);
+                    cmd.ExecuteNonQuery();
+                    cmd.CommandText = $"SELECT * FROM Classes WHERE Name = '{nametextbox.Text}';";
+                    OleDbDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        tempclass.ID = Convert.ToInt16(reader[0]);
+                        tempclass.Name = (string)reader[1];
+                    }
+                    ClassEditerWindow classediterwindow = new ClassEditerWindow(tempclass);
+                    classediterwindow.ShowDialog();
                 }
-                set = true;
+                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                finally { cnctDTB.Close(); }
+                searchNameTextBox.Clear();
+                nametextbox.Clear();
+                Updatetable();
             }
-            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-            finally { cnctDTB.Close(); }
-            if (set) {
-                ClassEditerWindow classediterwindow = new ClassEditerWindow(tempclass);
-                classediterwindow.ShowDialog();
-            }
-            searchNameTextBox.Clear();
-            nametextbox.Clear(); 
-            Updatetable("");
+            else 
+                MessageBox.Show("A Class with that name already exists!", "Error!");
         }
-
+      
         private void ContactsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (classDataGrid.SelectedItems.Count == 1) EditClassButton.IsEnabled = true;
             else EditClassButton.IsEnabled = false;

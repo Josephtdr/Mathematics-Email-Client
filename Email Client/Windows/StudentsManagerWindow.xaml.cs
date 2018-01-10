@@ -32,6 +32,7 @@ namespace The_Email_Client
     public partial class StudentsManagerWindow : Window {
         List<string> Classemailslist = new List<string>();
         List<string> emaillist = new List<string>();
+        DataGrid tempstudentdatagrid = new DataGrid();
         int Class_ID { get; set; }
 
         public StudentsManagerWindow(Class editableclass) {
@@ -40,7 +41,7 @@ namespace The_Email_Client
                 && addcontactButton.IsEnabled) CreateStudent(); };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             Class_ID = editableclass.ID;
-            Updatetable("","");
+            Updatetable();
         }
 
         private void UpdateClassemailslist() {//updates list of students in the current emaillist
@@ -58,22 +59,27 @@ namespace The_Email_Client
             finally { cnctDTB.Close(); } //closes connection
         }
 
-        private void Updatetable(string searchemailValue, string searchnameValue) {
+        private void Updatetable() {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
             UpdateClassemailslist();
             try {
                 cnctDTB.Open(); //opens connection
-                string InsertSql = $"SELECT * FROM Students" +
-                    $" WHERE Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
+                string InsertSql = $"SELECT * FROM Students;";
                 OleDbCommand cmd = new OleDbCommand(InsertSql, cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 StudentsDataGrid.Items.Clear();
                 while (reader.Read()) {
-                        StudentsDataGrid.Items.Add(new Student {
-                            ID = Convert.ToInt16(reader[0]),
-                            Name = Common.Cleanstr(reader[1]),
-                            EmailAddress = Common.Cleanstr(reader[2]),
-                            InClass = Classemailslist.Contains(Common.Cleanstr(reader[2]))
+                    StudentsDataGrid.Items.Add(new Student {
+                        ID = Convert.ToInt16(reader[0]),
+                        Name = Common.Cleanstr(reader[1]),
+                        EmailAddress = Common.Cleanstr(reader[2]),
+                        InClass = Classemailslist.Contains(Common.Cleanstr(reader[2]))
+                    });
+                    tempstudentdatagrid.Items.Add(new Student {
+                        ID = Convert.ToInt16(reader[0]),
+                        Name = Common.Cleanstr(reader[1]),
+                        EmailAddress = Common.Cleanstr(reader[2]),
+                        InClass = Classemailslist.Contains(Common.Cleanstr(reader[2]))
                     });
                 }
             }
@@ -98,11 +104,20 @@ namespace The_Email_Client
                 finally { cnctDTB.Close(); }
                 searchEmailTextBox.Clear();
                 searchNameTextBox.Clear();
-                Updatetable("","");
+                Updatetable();
             }
         }
         private void SearchTextBoxes_TextChanged(object sender, TextChangedEventArgs e) {
-            Updatetable(searchEmailTextBox.Text, searchNameTextBox.Text);
+            SearchTable(searchNameTextBox.Text, searchEmailTextBox.Text, StudentsDataGrid);
+        }
+
+        private void SearchTable(string searchname, string searchemail, DataGrid datagrid) {
+            datagrid.Items.Clear();
+            for (int i = 0; i < tempstudentdatagrid.Items.Count; i++) {
+                if ((string.IsNullOrWhiteSpace(searchname) || (((Student)tempstudentdatagrid.Items[i]).Name.ToLower()).Contains(searchname.ToLower()))
+                    && (string.IsNullOrWhiteSpace(searchemail) || (((Student)tempstudentdatagrid.Items[i]).EmailAddress.ToLower()).Contains(searchemail.ToLower())))
+                    datagrid.Items.Add(tempstudentdatagrid.Items[i]);
+            }
         }
 
         private void CreatestudentButton_Click(object sender, RoutedEventArgs e) {
@@ -122,7 +137,7 @@ namespace The_Email_Client
                 finally { cnctDTB.Close(); } //closes connection
                 emailtextbox.Clear(); searchNameTextBox.Clear();
                 nametextbox.Clear(); searchEmailTextBox.Clear(); 
-                Updatetable("","");
+                Updatetable();
             }
         }
 
@@ -150,7 +165,7 @@ namespace The_Email_Client
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); } //closes connection
-            Updatetable("", "");
+            Updatetable();
         }
 
         private void RemoveFromClassButton_Click(object sender, RoutedEventArgs e) {
@@ -175,7 +190,7 @@ namespace The_Email_Client
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
-            Updatetable("", "");
+            Updatetable();
         }
     }
 }
