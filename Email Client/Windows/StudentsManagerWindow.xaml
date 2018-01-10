@@ -37,10 +37,11 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <DataGrid x:Name="StudentsDataGrid" Margin="0,20,0,39" Background="#FFD9D0FF">
+        <DataGrid x:Name="StudentsDataGrid" Margin="0,20,0,39" Background="#FFD9D0FF" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
-                <DataGridTextColumn Header="Email Address" IsReadOnly="False"  Binding="{Binding Path=EmailAddress}" Width="*"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Email Address" IsReadOnly="True"  Binding="{Binding Path=EmailAddress}" Width="*"/>
+                <DataGridCheckBoxColumn Header="In Class?" IsReadOnly="True"  Binding="{Binding Path=InClass}" Width="58"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -68,7 +69,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <TextBox x:Name="nametextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,112,0" TextChanged="Addcontacttextboxes_TextChanged">
+        <TextBox x:Name="nametextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,163,0" TextChanged="Addcontacttextboxes_TextChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -92,7 +93,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button x:Name="addcontactButton" Content="New" HorizontalAlignment="Right" Height="20" Margin="0,0,61,0" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="CreatestudentButton_Click" IsEnabled="False"/>
+        <Button x:Name="addcontactButton" Content="New" HorizontalAlignment="Right" Height="20" Margin="0,0,112,0" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="CreatestudentButton_Click" IsEnabled="False"/>
         <Button x:Name="removecontactButton" Content="  Delete&#xD;&#xA;Student(s)" Height="40" VerticalAlignment="Bottom" Width="61" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" Command="{Binding Remove}" CommandParameter="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
         <Button.Style>
             <Style TargetType="Button">
@@ -107,7 +108,21 @@
             </Style>
         </Button.Style>
         </Button>
-        <Button x:Name="addstudentClassButton" Content="Add" HorizontalAlignment="Right" Height="20" Margin="0,0,61,20" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="addstudentClassButton_Click" Command="{Binding Remove}" CommandParameter="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
+        <Button x:Name="addstudentClassButton" Content="Add" HorizontalAlignment="Right" Height="20" Margin="0,0,61,20" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="addstudentClassButton_Click" CommandParameter="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
+        <Button.Style>
+            <Style TargetType="Button">
+                <Setter Property="IsEnabled" Value="True" />
+                <Setter Property="Opacity" Value="1" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}" Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="Opacity" Value=".5" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Button.Style>
+        </Button>
+        <Button x:Name="RemoveFromClassButton" Content="Remove" HorizontalAlignment="Right" Height="20" Margin="0,0,61,0" VerticalAlignment="Bottom" Width="51" Background="#FFF0F0F0" Click="RemoveFromClassButton_Click" CommandParameter="{Binding ElementName=StudentsDataGrid, Path=SelectedItem}">
         <Button.Style>
             <Style TargetType="Button">
                 <Setter Property="IsEnabled" Value="True" />

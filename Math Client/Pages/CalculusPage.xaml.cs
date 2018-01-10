@@ -2,23 +2,13 @@
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Globalization;
-using PdfSharp;
-using System.Data.OleDb;
 
 namespace The_Email_Client
 {
@@ -38,13 +28,19 @@ namespace The_Email_Client
 
         public CalculusPage(Action ShowHomePage, Action ShowIndiciesPage, Action ShowEmailPage) {
             InitializeComponent();
-            QuestionsforPDF = new List<Equation>(); //sets the list to a blank list
             this.ShowHomePage = ShowHomePage; //initilises the function from the MainWindow.xaml.cs
             this.ShowEmailPage = ShowEmailPage; //initilises the function from the MainWindow.xaml.cs
             this.ShowIndiciesPage = ShowIndiciesPage; //initilises the function from the MainWindow.xaml.cs
-            TypeofFunction = "diferentiation";
-            UpdateClassCombobox();
+            QuestionsforPDF = new List<Equation>(); //sets the list to a blank list
+            Initiaize();
         }
+
+        public void Initiaize() {
+            TypeofFunction = "diferentiation";
+            PageSelectionComboBox.SelectedIndex = 0; 
+            UpdateClassCombobox(); //Gets the classes from the database 
+        }
+
         //takes the user to the home page
         private void HomeButton_Click(object sender, RoutedEventArgs e) {
             ShowHomePage();
@@ -67,10 +63,10 @@ namespace The_Email_Client
             if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(MagnitudeBox.Text)) {
                 switch (TypeofFunction) {
                     case "diferentiation": //creates an eqaution to be solved with diferentiation
-                        Equ = new Diferentiation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions);
+                        Equ = new Diferentiation(Equation.CreateRandomEquation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions));
                         break;
                     case "integration": //creates an eqaution to be solved with intergration
-                        Equ = new Integration(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions);
+                        Equ = new Integration(Equation.CreateRandomEquation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions));
                         break;
                 }
                 return Equ;
@@ -198,7 +194,11 @@ namespace The_Email_Client
         }
 
         //Function to create a PDF from a list of Equations
-        private void CreatePDFfromList(List<Equation> EquList, bool email) {
+        private bool CreatePDFfromList(List<Equation> EquList, bool email) {
+            if (email && ClassesCombobox.SelectedItem == null) {
+                MessageBox.Show("You must select a class to email.", "Error!");
+                return false;
+            }
             PdfDocument document = new PdfDocument();
             PdfPage page;
             XGraphics gfx;
@@ -232,37 +232,42 @@ namespace The_Email_Client
             document.Save(filename);
             Process.Start(filename);
 
-            if (email && ClassesCombobox.SelectedItem != null) {
-                OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-                string emaillist = "";
-                Class tempclass = new Class();
-                try {
-                    tempclass = (Class)(ClassesCombobox.SelectedItem);
-                    cnctDTB.Open();
-                    OleDbCommand cmd = new OleDbCommand($"SELECT Students.Email FROM Class_Lists, Students WHERE " +
-                        $"Class_Lists.Student_ID = Students.ID AND Class_Lists.Class_ID = {tempclass.ID};", cnctDTB); //doesnt work btw
-                    OleDbDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read()) {
-                        emaillist += $"{Common.Cleanstr(reader[0])};";
-                    }
-                }
-                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-                finally { cnctDTB.Close(); }
-
-                Email tempemail = new Email {
-                    Server = Common.Profile.Server,
-                    Port = Convert.ToInt16(Common.Profile.Port),
-                    UserEmail = Common.Profile.Email,
-                    UserPassword = Common.Profile.Password,
-                    UserName = Common.Profile.Name,
-                    Recipients = (emaillist.Split(';')).Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList().ToArray(),
-                    Subject = $"{filename} Worksheet for class {4}",
-                    Body = "",
-                    AttachmentNames = new List<string>() { filename }
-                };
-                tempemail.Send();
-            }
+            if (email)
+                SendPDFEmail(filename);
+            return true;
         }
+
+        private void SendPDFEmail(string filename) {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            string emaillist = "";
+            Class tempclass = new Class();
+            try {
+                tempclass = (Class)(ClassesCombobox.SelectedItem);
+                cnctDTB.Open();
+                OleDbCommand cmd = new OleDbCommand($"SELECT Students.Email FROM Class_Lists, Students WHERE " +
+                    $"Class_Lists.Student_ID = Students.ID AND Class_Lists.Class_ID = {tempclass.ID};", cnctDTB); //doesnt work btw
+                OleDbDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) {
+                    emaillist += $"{Common.Cleanstr(reader[0])};";
+                }
+            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
+
+            Email tempemail = new Email {
+                Server = Common.Profile.Server,
+                Port = Convert.ToInt16(Common.Profile.Port),
+                UserEmail = Common.Profile.Email,
+                UserPassword = Common.Profile.Password,
+                UserName = Common.Profile.Name,
+                Recipients = (emaillist.Split(';')).Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList().ToArray(),
+                Subject = $"{filename} Worksheet for class {4}",
+                Body = "",
+                AttachmentNames = new List<string>() { filename }
+            };
+            tempemail.Send();
+        }
+    
 
         //creates a random pdf according to user perameters
         private void CreateRandomPDF(bool email) {
@@ -334,9 +339,10 @@ namespace The_Email_Client
         }
 
         private void CreateEmailPDFButton_Click(object sender, RoutedEventArgs e) {
-            CreatePDFfromList(QuestionsforPDF, true); //Creates a pdf from the current list of equations 
-            QuestionsforPDF = new List<Equation>(); //clears list of current questions
-            ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
+            if (CreatePDFfromList(QuestionsforPDF, true)) { //Creates a pdf from the current list of equations 
+                QuestionsforPDF = new List<Equation>(); //clears list of current questions
+                ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
+            }
         }
 
         private void CreatePDFButton_Click(object sender, RoutedEventArgs e) {
@@ -361,6 +367,5 @@ namespace The_Email_Client
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
         }
-
     }
 }

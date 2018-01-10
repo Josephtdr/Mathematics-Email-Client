@@ -69,11 +69,11 @@ namespace The_Email_Client
                 OleDbDataReader reader = cmd.ExecuteReader();
                 StudentsDataGrid.Items.Clear();
                 while (reader.Read()) {
-                    if (!Classemailslist.Contains(Common.Cleanstr(reader[2]))) 
-                    StudentsDataGrid.Items.Add(new Student {
-                        ID = Convert.ToInt16(reader[0]),
-                        Name = Common.Cleanstr(reader[1]),
-                        EmailAddress = Common.Cleanstr(reader[2]),
+                        StudentsDataGrid.Items.Add(new Student {
+                            ID = Convert.ToInt16(reader[0]),
+                            Name = Common.Cleanstr(reader[1]),
+                            EmailAddress = Common.Cleanstr(reader[2]),
+                            InClass = Classemailslist.Contains(Common.Cleanstr(reader[2]))
                     });
                 }
             }
@@ -88,7 +88,7 @@ namespace The_Email_Client
                 try {
                     cnctDTB.Open();
                     foreach (Student student in StudentsDataGrid.SelectedItems) {
-                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Students WHERE ID ='{student.ID}';", cnctDTB);
+                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Students WHERE ID ={student.ID};", cnctDTB);
                         cmd.ExecuteNonQuery(); //removes the student from the database
                         cnctDTB.Close(); cnctDTB.Open(); //reopens connection
                         cmd.CommandText = $"DELETE FROM Class_Lists WHERE Student_ID = {student.ID};";
@@ -140,15 +140,43 @@ namespace The_Email_Client
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
             try {
                 cnctDTB.Open(); //opens connection
-                foreach (Student student in StudentsDataGrid.SelectedItems){
-                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Class_Lists (Class_ID, Student_ID) " + 
-                        $"VALUES ({Class_ID},{student.ID});", cnctDTB);
-                    cmd.ExecuteNonQuery();
+                foreach (Student student in StudentsDataGrid.SelectedItems) {
+                    if (!student.InClass) {
+                        OleDbCommand cmd = new OleDbCommand($"INSERT INTO Class_Lists (Class_ID, Student_ID) " +
+                            $"VALUES ({Class_ID},{student.ID});", cnctDTB);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); } //closes connection
             Updatetable("", "");
         }
+
+        private void RemoveFromClassButton_Click(object sender, RoutedEventArgs e) {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+            try {
+                cnctDTB.Open();
+                foreach (Student student in StudentsDataGrid.SelectedItems) {
+                    if (student.InClass) {
+                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {Class_ID}" +
+                            $" AND Student_ID = {student.ID};", cnctDTB);
+                        cmd.ExecuteNonQuery();
+                        //cnctDTB.Close(); cnctDTB.Open();
+                        //cmd.CommandText = $"SELECT * FROM Class_Lists WHERE Student_ID = {student.ID};";
+                        //OleDbDataReader Reader = cmd.ExecuteReader();
+                        //if(!Reader.HasRows) {
+                        //    cnctDTB.Close(); cnctDTB.Open();
+                        //    cmd.CommandText = $"DELETE FROM Students WHERE Student_ID = {student.ID};";
+                        //    cmd.ExecuteNonQuery();
+                        //} //deleletes students which are in no classes [optional]
+                    }
+                }
+            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }
+            Updatetable("", "");
+        }
     }
 }
+

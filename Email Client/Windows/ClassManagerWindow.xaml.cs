@@ -19,10 +19,6 @@ namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for ClassManagerWindow.xaml
     /// </summary>
-    public class Class {
-        public string Name { get; set; }
-        public int ID { get; set; }
-    }
 public partial class ClassManagerWindow : Window
     {
         //List<string> ClassNames = new List<string>();

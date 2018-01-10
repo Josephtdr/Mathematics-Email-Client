@@ -9,6 +9,16 @@ using System.IO;
 using System.Net;
 namespace The_Email_Client 
 {
+    public class Student {
+        public string Name { get; set; }
+        public string EmailAddress { get; set; }
+        public int ID { get; set; }
+        public bool InClass { get; set; }
+    }
+    public class Class {
+        public string Name { get; set; }
+        public int ID { get; set; }
+    }
     public class Profiles {
         public string ID { get; set; }
         public string Email { get; set; }

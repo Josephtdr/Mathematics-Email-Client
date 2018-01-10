@@ -23,44 +23,44 @@ namespace The_Email_Client {
     /// 
     
     public partial class selectingcontactWindow : Window {
+        public Object[] SelectedEmails { get; protected set; }
 
-        List<string> emaillist = new List<string>();
-        public Student[] SelectedContacts { get; protected set; }
         public string[] preexistingcontacts;
+        public string[] preexistingclasses;
 
-        public selectingcontactWindow(string[] contacts) {
+        public selectingcontactWindow(string[] preexistingcontacts, string[] preexistingclasses) {
             InitializeComponent();
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
-            SelectedContacts = new Student[0];
-            this.preexistingcontacts = contacts;
-            updatetable("","");
+            SelectedEmails = null;
+            this.preexistingclasses = preexistingclasses;
+            this.preexistingcontacts = preexistingcontacts;
+            updatetable("","", "Students", true, studensDataGrid);
+            updatetable("", "", "Classes", false, classDataGrid);
         }
-
-
-
-
-        public void updatetable(string searchemailValue, string searchnameValue) {
+        public void updatetable(string searchemailValue, string searchnameValue, string DBTable, bool Nameandemail, DataGrid datagrid) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            
             try {
                 cnctDTB.Open();
-                string InsertSql = $"SELECT * FROM Students WHERE Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';"; 
+                OleDbCommand cmd = new OleDbCommand("", cnctDTB);
+                if (Nameandemail)
+                    cmd.CommandText = $"SELECT * FROM {DBTable} WHERE Email LIKE '%{searchemailValue}%' AND Name LIKE '%{searchnameValue}%';";
+                else
+                    cmd.CommandText = $"SELECT * FROM {DBTable} WHERE Name LIKE '%{searchnameValue}%';";
 
-                OleDbCommand cmdInsert = new OleDbCommand(InsertSql, cnctDTB);
-                OleDbDataReader reader = cmdInsert.ExecuteReader();
+                OleDbDataReader reader = cmd.ExecuteReader();
+                datagrid.Items.Clear();
 
-                contactsDataGrid.Items.Clear();
-                emaillist.Clear();
                 bool includecontact = true;
                 while (reader.Read()) {
                     includecontact = true;
-                    foreach (var contact in preexistingcontacts) {  
-                        if (contact == Common.Cleanstr(reader[2]))
-                            includecontact = false;  
-                    }
+                    if ((Nameandemail && preexistingcontacts.Contains(reader[2])) || preexistingclasses.Contains($"{{{reader[1]}}}"))
+                        includecontact = false;
+
                     if (includecontact) {
-                        contactsDataGrid.Items.Add(new Student { Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
-                        emaillist.Add(Common.Cleanstr(reader[2]));
+                        if (Nameandemail)
+                            datagrid.Items.Add(new Student { Name = Common.Cleanstr(reader[1]), EmailAddress = Common.Cleanstr(reader[2]) });
+                        else
+                            datagrid.Items.Add(new Class { Name = Common.Cleanstr(reader[1]) });
                     }
                 }
             }
@@ -69,16 +69,26 @@ namespace The_Email_Client {
         }
 
         private void addcontacttoemailButton_Click(object sender, RoutedEventArgs e) {
-            List<Student> contacts = new List<Student>();
-            foreach(Student contact in contactsDataGrid.SelectedItems)
-                contacts.Add(contact);
+            List<object> emails = new List<object>();
+            foreach(var contact in (((Button)sender).Name == "addstudenstoemailButton" ? studensDataGrid.SelectedItems : classDataGrid.SelectedItems) )
+                emails.Add(contact);
             
-            SelectedContacts = contacts.ToArray();
+            SelectedEmails = emails.ToArray();
             Close();
         }
-
+        
         private void searchTextBoxes_TextChanged(object sender, TextChangedEventArgs e) {
-            updatetable(searchEmailTextBox.Text, searchNameTextBox.Text);
+            switch (((TextBox)sender).Name) {
+                case "searchclassNameTextBox":
+                    updatetable("", searchclassNameTextBox.Text, "Classes", false, studensDataGrid);
+                    break;
+                case "searchNameTextBox":
+                    updatetable(searchEmailTextBox.Text, searchNameTextBox.Text, "Students", true, classDataGrid);
+                    break;
+                case "searchEmailTextBox":
+                    updatetable(searchEmailTextBox.Text, searchNameTextBox.Text, "Students", true, classDataGrid);
+                    break;
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,6 +50,20 @@ namespace The_Email_Client {
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
             ProfilesWindow settingswindow = new ProfilesWindow();
             settingswindow.ShowDialog();
+        }
+
+        //Prevents user from typing anything bar numbers, x and operators +,-,^,/ in text boxes this check is applied to.
+        private void AnswerBox_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            Regex regex = new Regex("[^0-9-/+/^/x]+"); //regex that matches disallowed text
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void SumbitButton_Click(object sender, RoutedEventArgs e) {
+            List<Term> ParsedString = Equation.ParseString(AnswerBox.Text);
+            Diferentiation DifEqu = new Diferentiation(ParsedString);
+            Integration IntEqu = new Integration(ParsedString);
+            DifAnswerBlock.Text = DifEqu.FprimeEquationToString();
+            IntAnswerBlock.Text = IntEqu.FprimeEquationToString();
         }
     }
 }

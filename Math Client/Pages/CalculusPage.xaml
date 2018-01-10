@@ -3,11 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      gif:ImageBehavior.AnimateInDesignMode="True"
       xmlns:local="clr-namespace:The_Email_Client"
       mc:Ignorable="d"
       Title="DifferentiationPage">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE2EAFF"  Width="426" Height="371">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE8DEF1"  Width="426" Height="371">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -19,11 +21,15 @@
             <ColumnDefinition Width="150*"/>
         </Grid.ColumnDefinitions>
 
+        <Image x:Name="LoadingGif" gif:ImageBehavior.AnimatedSource="sendingemail.gif"  HorizontalAlignment="Center" VerticalAlignment="Center" 
+               gif:ImageBehavior.RepeatBehavior="Forever" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="2" Margin="12,0,13,35" Grid.Column="1" Height="88"/>
 
         <ToolBar Grid.ColumnSpan="3" VerticalAlignment="Top">
             <Button Content="Home"  Click="HomeButton_Click"/>
             <Separator/>
             <Button Content="Profile" Click="ProfileButton_Click"/>
+            <Separator/>
+            <Button Content="Classes" Click="ClassButton_Click"/>
             <Separator/>
             <TextBlock Text="Page: " VerticalAlignment="Center"/>
             <ComboBox Name="PageSelectionComboBox" SelectionChanged="PageSelectionComboBox_SelectionChanged" >
@@ -34,8 +40,7 @@
             </ComboBox>
             <Separator/>
             <TextBlock Text="Class: " VerticalAlignment="Center"/>
-            <ComboBox IsEditable="True" Name="ClassesCombobox" ItemsSource="{Binding}" DisplayMemberPath="Name" SelectedValuePath="ID" Margin="0" Width="63" />
-            <Button Content="Classes" Click="ClassButton_Click"/>
+            <ComboBox IsEditable="True" Name="ClassesCombobox" ItemsSource="{Binding}" DisplayMemberPath="Name" SelectedValuePath="ID" Margin="0" Width="63"/>
         </ToolBar>
 
 
@@ -88,9 +93,9 @@
         <Button x:Name="Reveal_AnswerButton" Content="Show Answer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Click="ShowRevealButton_Click"/>
 
         <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="46,86,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PdfButton_Click"/>
-        <Button x:Name="CreatePDFButton" Content="Create PDF" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="28" Margin="5,24,74,0" Click="CreatePDFButton_Click"  />
-        <Button x:Name="CreateEmailPDFButton" Content="  Create + &#x0a; Email PDF " Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Margin="73,20,6,0" Click="CreateEmailPDFButton_Click"  />
-        <Button x:Name="EndPdfButton" Content="Cancel PDF" Grid.Column="2" HorizontalAlignment="Center" Height="28" Margin="40,74,40,0" Grid.Row="2" VerticalAlignment="Top" Click="EndPdfButton_Click"/>
+        <Button x:Name="CreatePDFButton" IsEnabled="False" Content="Create PDF" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="28" Margin="5,24,74,0" Click="CreatePDFButton_Click"  />
+        <Button x:Name="CreateEmailPDFButton" IsEnabled="False" Content="  Create + &#x0a; Email PDF " Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Margin="73,20,6,0" Click="CreateEmailPDFButton_Click"  />
+        <Button x:Name="EndPdfButton" Content="Cancel PDF" IsEnabled="False" Grid.Column="2" HorizontalAlignment="Center" Height="28" Margin="40,74,40,0" Grid.Row="2" VerticalAlignment="Top" Click="EndPdfButton_Click"/>
 
         <Separator HorizontalAlignment="Left" Height="12" Margin="111,70,-31,0" VerticalAlignment="Top" Width="346" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Grid.Row="1">
             <Separator.RenderTransform>

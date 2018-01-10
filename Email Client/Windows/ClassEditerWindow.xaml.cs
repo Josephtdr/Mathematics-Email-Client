@@ -17,12 +17,6 @@ namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for ClassEditerWindow.xaml
     /// </summary>
-    public class Student {
-        public string Name { get; set; }
-        public string EmailAddress { get; set; }
-        public int ID { get; set; }
-        
-    }
     public partial class ClassEditerWindow : Window {
         private List<string> emaillist = new List<string>();
         private Class editableclass = new Class();
