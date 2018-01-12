@@ -64,8 +64,7 @@ namespace The_Email_Client
             UpdateClassemailslist();
             try {
                 cnctDTB.Open(); //opens connection
-                string InsertSql = $"SELECT * FROM Students;";
-                OleDbCommand cmd = new OleDbCommand(InsertSql, cnctDTB);
+                OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Students;", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 StudentsDataGrid.Items.Clear();
                 while (reader.Read()) {

@@ -31,6 +31,7 @@ namespace The_Email_Client
             ShowLoginPage();
         }
         private void ShowIndiciesPage() {
+            IndiciesPage.Initialize();
             ShowPage(IndiciesPage);
         }
         private void ShowEmailPage() {
@@ -58,8 +59,14 @@ namespace The_Email_Client
             ShowPage(LoginPage);
         }
         private void ShowPreviousPage() {
-            if (PreviousPage.GetType() == typeof(CalculusPage))
-                CalculusPage.Initiaize();
+            switch (PreviousPage.GetType().ToString()) {
+                case "CalculusPage":
+                    CalculusPage.Initiaize();
+                    break;
+                case "IndiciesPage":
+                    IndiciesPage.Initialize();
+                    break;
+            }
             ShowPage(PreviousPage);
         }
         private void ShowPage(Page page) {

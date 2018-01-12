@@ -3,8 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:gif="http://wpfanimatedgif.codeplex.com"
-      gif:ImageBehavior.AnimateInDesignMode="True"
       xmlns:local="clr-namespace:The_Email_Client"
       mc:Ignorable="d"
       Title="DifferentiationPage">
@@ -20,9 +18,6 @@
             <ColumnDefinition Width="150*"/>
             <ColumnDefinition Width="150*"/>
         </Grid.ColumnDefinitions>
-
-        <Image x:Name="LoadingGif" gif:ImageBehavior.AnimatedSource="sendingemail.gif"  HorizontalAlignment="Center" VerticalAlignment="Center" 
-               gif:ImageBehavior.RepeatBehavior="Forever" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="2" Margin="12,0,13,35" Grid.Column="1" Height="88"/>
 
         <ToolBar Grid.ColumnSpan="3" VerticalAlignment="Top">
             <Button Content="Home"  Click="HomeButton_Click"/>

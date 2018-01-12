@@ -252,11 +252,6 @@
     <Resource Include="emailicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Math Client\Pages\sendingemail.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Email Client\Pages\sendingemail.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
