@@ -261,7 +261,7 @@ namespace The_Email_Client
                             disposition.DispositionType = DispositionTypeNames.Attachment;
                             message.Attachments.Add(attachment);
                             Console.WriteLine(Attachment);
-                        }
+                        }   
                     
                     smtp.Send(message);
                  }

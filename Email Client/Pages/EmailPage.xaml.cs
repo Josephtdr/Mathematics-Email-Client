@@ -54,13 +54,13 @@ namespace The_Email_Client
             else if (MB < 20) MBValueLable.Foreground = Brushes.Yellow;
             else if (MB <= 25) MBValueLable.Foreground = Brushes.Red;
             if (bytes != 0) ClearAttachments_Button.IsEnabled = true;
-        }
+        }//updates the displayed MB value to show the user the number of MB of files currently attached to their email
 
         private void AttachmentButton_Click(object sender, RoutedEventArgs e) {
             MangerAttachmentsWindow MangerAttachmentsWindow = new MangerAttachmentsWindow();
             MangerAttachmentsWindow.ShowDialog();
             UpdateMBValue(Common.TotalFileLength);
-        }
+        }//opens the manage attachment window 
 
         private void ClearAttachments_Button_Click(object sender, RoutedEventArgs e) {
             Common.Attachments.Clear();
@@ -91,9 +91,9 @@ namespace The_Email_Client
                 UserEmail = Common.Profile.Email,
                 UserPassword = Common.Profile.Password,
                 UserName = Common.Profile.Name,
-                Recipients = CreateRecipientsList(RecipientsBox.Text.Split(';')),
-                CC = CCBox.Text.Split(';'),
-                BCC = BCCBox.Text.Split(';'),
+                Recipients = CreateEmailsList(RecipientsBox.Text.Split(';')),
+                CC = CreateEmailsList(CCBox.Text.Split(';')),
+                BCC = CreateEmailsList(BCCBox.Text.Split(';')),
                 Subject = SubjectBox.Text,
                 Body = new TextRange(BodyBox.Document.ContentStart, BodyBox.Document.ContentEnd).Text,
                 AttachmentNames = Common.Attachments
@@ -102,18 +102,18 @@ namespace The_Email_Client
             //runs sending email in the background.
         }
 
-        private string[] CreateRecipientsList(string[] recipients) {
+        private string[] CreateEmailsList(string[] rawEmails) {
             List<string> templist = new List<string>();
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            foreach (string recipient in recipients) {
-                if (!recipient.Contains("}"))
-                    templist.Add(recipient);
+            foreach (string email in rawEmails) {
+                if (!email.Contains("}"))
+                    templist.Add(email);
                 else {
                     try {
                         cnctDTB.Open();
                         OleDbCommand cmd = new OleDbCommand($"Select Students.Email FROM Students, Class_Lists, Classes WHERE " +
                             $"Students.ID = Class_Lists.Student_ID AND Classes.ID = Class_Lists.Class_ID "+
-                            $"AND Classes.Name = '{ recipient.Replace("{","").Replace("}","") }';", cnctDTB);
+                            $"AND Classes.Name = '{ email.Replace("{","").Replace("}","") }';", cnctDTB);
                         OleDbDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
                             templist.Add(reader[0].ToString());
