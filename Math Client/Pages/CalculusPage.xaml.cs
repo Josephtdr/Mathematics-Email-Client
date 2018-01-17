@@ -193,26 +193,56 @@ namespace The_Email_Client
             PdfButton.IsEnabled = false; 
         }
 
-        //Function to create a PDF from a list of Equations
-        private bool CreatePDFfromList(List<Equation> EquList, bool email) {
-            if (email && ClassesCombobox.SelectedItem == null) {
-                MessageBox.Show("You must select a class to email.", "Error!");
-                return false;
+        private List<Tuple<Equation, bool>> SortEquationList(List<Equation> EquList, bool dif) {
+            List<Tuple<Equation, bool>> tupleList = new List<Tuple<Equation, bool>>();
+            List<Term> tempTermList = new List<Term>();
+            int length = 0;
+            int itterations = 0;
+            foreach (Equation equ in EquList) {
+                itterations = 0;
+                foreach (Term term in equ.Components) {
+                    length += term.ToString().Length;
+                    if (length < 37)
+                        tempTermList.Add(term);
+                    else {
+                        if (dif) tupleList.Add(new Tuple<Equation, bool>( new Diferentiation(tempTermList), itterations == 0 ? true : false));
+                        else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), itterations == 0 ? true : false));
+
+                        tempTermList = new List<Term>();
+                        tempTermList.Add(term);
+                        length = term.ToString().Length;
+                        ++itterations;
+                    }
+                }
+                if (tempTermList[0] != null) {
+                    if (dif) tupleList.Add(new Tuple<Equation, bool>(new Diferentiation(tempTermList), itterations == 0 ? true : false));
+                    else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), itterations == 0 ? true : false));
+                }
             }
+            return tupleList;
+        }
+
+
+        private string CreatePDF(List<Equation> EquList, bool dif) { //40 characters?
             PdfDocument document = new PdfDocument();
             PdfPage page;
             XGraphics gfx;
             XFont font = new XFont("Verdana", 20, XFontStyle.Bold); //sets chosen font and style
-            int numpages = EquList.Count / 14; //Workout the number of pages which will be required for the number of given questions
+            List<Tuple<Equation, bool>> TupleList = SortEquationList(EquList, dif);
+
+            int numpages = TupleList.Count / 14; //Workout the number of pages which will be required for the number of given questions
+            int QuestionNum = 0;
             //Creates Question Pages
             for (int i = 0; i < numpages + 1; i++) {
                 page = document.AddPage();
                 gfx = XGraphics.FromPdfPage(page);
                 if (i == 0) gfx.DrawString("Questions:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
                 for (int j = 0; j < 14; j++) {
-                    if (j + (14 * i) < EquList.Count)
-                        gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(EquList[j + (14 * i)].ToString(), "[^0-9-/+/^/x ]+", "") }",
+                    if (j + (14 * i) < TupleList.Count) {
+                        QuestionNum += TupleList[j + (14 * i)].Item2 == true ? 1 : 0;
+                        gfx.DrawString($"{  (TupleList[j + (14 * i)].Item2 == true ? $"{QuestionNum}." : "") }\t { Regex.Replace(TupleList[j + (14 * i)].Item1.ToString(), "[^0-9-/+/^/x ]+", "") }",
                             font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
+                    }
                 }
             }
             //Creates Answer Pages
@@ -221,19 +251,32 @@ namespace The_Email_Client
                 gfx = XGraphics.FromPdfPage(page);
                 if (i == 0) gfx.DrawString("Answers:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
                 for (int j = 0; j < 14; j++) {
-                    if (j + (14 * i) < EquList.Count)
-                        gfx.DrawString($"{j + 1 + (14 * i)}.\t { Regex.Replace(EquList[j + (14 * i)].FprimeEquationToString(), "[^0-9-/+/^/x ]+", "") }",
+                    if (j + (14 * i) < TupleList.Count) { 
+                        QuestionNum += TupleList[j + (14 * i)].Item2 == true ? 1 : 0;
+                        gfx.DrawString($"{ (TupleList[j + (14 * i)].Item2 == true ? $"{QuestionNum}." : "") }\t { Regex.Replace(TupleList[j + (14 * i)].Item1.FprimeEquationToString(), "[^0-9-/+/^/x ]+", "") }",
                             font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
+                    }
                 }
             }
 
             string datetime = DateTime.Now.ToString().Replace('/', '-').Replace(':', '.');
             string filename = $"{datetime}.pdf";
             document.Save(filename);
-            Process.Start(filename);
+            return filename;
+        }
 
+
+        //Function to create a PDF from a list of Equations
+        private bool CreatePDFfromList(List<Equation> EquList, bool email) {
+            if (email && ClassesCombobox.SelectedItem == null) {
+                MessageBox.Show("You must select a class to email.", "Error!");
+                return false;
+            }
+            string filename = CreatePDF(EquList, EquList[0].GetType() ==  typeof(Diferentiation) ? true : false);
             if (email)
                 SendPDFEmail(filename);
+            else
+                Process.Start(filename);
             return true;
         }
 

@@ -197,7 +197,7 @@ namespace The_Email_Client
             list.AddRange(array.Where(item => item.Power.Value == 0).ToList());
 
             return list;
-        }
+        }//bubblesort funtion + combing variables of same power
     }
 
     public class Diferentiation : Equation {
