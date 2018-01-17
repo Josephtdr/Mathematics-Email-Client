@@ -222,7 +222,6 @@ namespace The_Email_Client
             return tupleList;
         }
 
-
         private string CreatePDF(List<Equation> EquList, bool dif) { //40 characters?
             PdfDocument document = new PdfDocument();
             PdfPage page;
@@ -245,6 +244,7 @@ namespace The_Email_Client
                     }
                 }
             }
+            QuestionNum = 0;
             //Creates Answer Pages
             for (int i = 0; i < numpages + 1; i++) {
                 page = document.AddPage();

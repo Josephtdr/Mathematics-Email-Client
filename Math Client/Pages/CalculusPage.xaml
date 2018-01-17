@@ -51,7 +51,7 @@
             <Button x:Name="cmdDown2" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Margin="77,49,15,53" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Margin="75,49,17,53" HorizontalAlignment="Center">
             <Button x:Name="cmdUp3" Content="^"  Click="Cmd_Click" Width="19" />
             <TextBox x:Name="NumofQuestionsBox" Text="0" DataObject.Pasting="TextBoxPasting" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
             <Button x:Name="cmdDown3" Content="˅"  Click="Cmd_Click" Width="19" />
