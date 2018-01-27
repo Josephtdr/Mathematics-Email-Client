@@ -30,12 +30,13 @@ namespace The_Email_Client
             int Remainder;
             int a = Numerator;
             int b = Denominator;
-
+            //Calculates the greatest common divisor between the Numerator and Denominator
             while (b != 0) {
                 Remainder = a % b;
                 a = b;
                 b = Remainder;
             }
+            //Updates values to their simplest form
             Numerator /= a;
             Denominator /= a;
         }
@@ -43,6 +44,24 @@ namespace The_Email_Client
             Fraction tempfraction = new Fraction {
                 Numerator = ((left.Numerator * right.Denominator) + (right.Numerator * left.Denominator)),
                 Denominator = (left.Denominator * right.Denominator)
+            };
+            tempfraction.GCD(); //simplifies fraction
+            return tempfraction;
+        }
+
+        public static Fraction operator *(Fraction left, Fraction right) {
+            Fraction tempfraction = new Fraction {
+                Numerator = (left.Numerator * right.Numerator),
+                Denominator = (left.Denominator * right.Denominator)
+            };
+            tempfraction.GCD(); //simplifies fraction
+            return tempfraction;
+        }
+
+        public static Fraction operator /(Fraction left, Fraction right) {
+            Fraction tempfraction = new Fraction {
+                Numerator = (left.Numerator * right.Denominator),
+                Denominator = (left.Denominator * right.Numerator)
             };
             tempfraction.GCD(); //simplifies fraction
             return tempfraction;
@@ -64,13 +83,8 @@ namespace The_Email_Client
         }
 
         public static Term operator +(Term left, Term right) {
-            Fraction tempfraction = new Fraction {
-                Numerator = ((left.Coefficient.Numerator * right.Coefficient.Denominator) + (right.Coefficient.Numerator * left.Coefficient.Denominator)),
-                Denominator = (left.Coefficient.Denominator * right.Coefficient.Denominator)
-            };
-            tempfraction.GCD(); //simplifies fraction
             return new Term {
-                Coefficient = tempfraction,
+                Coefficient = left.Coefficient + right.Coefficient,
                 Power = left.Power
             };
         }
@@ -163,38 +177,39 @@ namespace The_Email_Client
             }
             return true;
         }
-        public float Fprime(float x) {
+        public float F(float x) {
             float Fofx = 0;
             foreach (Term term in FprimeComponents)
                 Fofx += ((float)(term.Coefficient.Value * (Math.Pow(x, term.Power.Value))));
             return Fofx;
         }//Calculates the gradient of the function F at the given point x
-        public static List<Term> BubbleSort(List<Term> array) {
+        public static List<Term> BubbleSort(List<Term> termList) {
             Term temp = new Term();
 
-            for (int write = 0; write < array.Count; write++) {
-                for (int sort = 1; sort < array.Count; sort++) {
-                    if (array[sort].Power.Value > array[sort - 1].Power.Value) {
-                        temp = array[sort - 1];
-                        array[sort- 1] = array[sort];
-                        array[sort] = temp;
-                    }
-                    if (array[sort].Coefficient.Value != 0 && array[sort].Power.Value == array[sort - 1].Power.Value) {
-                        array[sort] = array[sort] + array[sort - 1];
-                        array[sort - 1] = new Term {
+            for (int write = 0; write < termList.Count; write++) {
+                for (int sort = 1; sort < termList.Count; sort++) {
+                    //if the first term is great than the second term swap the terms positions
+                    if (termList[sort].Power.Value > termList[sort - 1].Power.Value) {
+                        temp = termList[sort - 1];
+                        termList[sort- 1] = termList[sort];
+                        termList[sort] = temp;
+                    }//if both terms power have the same value which is not 0 combine them
+                    if (termList[sort].Coefficient.Value != 0 && termList[sort].Power.Value == termList[sort - 1].Power.Value) {
+                        termList[sort] = termList[sort] + termList[sort - 1];//combines terms by adding coefficients together
+                        termList[sort - 1] = new Term {//Overites term to be 'null'
                             Coefficient = new Fraction { Numerator = 0, Denominator = 1},
                             Power = new Fraction { Numerator = 0, Denominator = 1 }
                         };
                     }
                 }
             }
-            array.RemoveAll(item => item.Coefficient.Value == 0);
-
+            termList.RemoveAll(item => item.Coefficient.Value == 0); //Removes all null entires 
+            //Moves the term with a power of 0 to the end of the list
             List<Term> list = new List<Term>();
-            foreach(Term term in array) {
+            foreach(Term term in termList) {
                 if (term.Power.Value != 0) list.Add(term);
             }
-            list.AddRange(array.Where(item => item.Power.Value == 0).ToList());
+            list.AddRange(termList.Where(item => item.Power.Value == 0).ToList());
 
             return list;
         }//bubblesort funtion + combing variables of same power
@@ -202,23 +217,14 @@ namespace The_Email_Client
 
     public class Diferentiation : Equation {
         public Diferentiation(List<Term> Components)  : base(Components) {
-            FprimeComponents = new List<Term>();
-            
+            FprimeComponents = new List<Term>(); //Initialises the List
+            //Add new elements to the list
             foreach (Term term in Components) {
                 if (term.Power.Numerator != 0) {
-                    int Coe_numerator = term.Coefficient.Numerator * term.Power.Numerator;
-                    int Coe_denominator = term.Coefficient.Denominator * term.Power.Denominator;
-                    Fraction Coefficient = new Fraction {
-                        Numerator = Coe_numerator,
-                        Denominator = Coe_denominator
-                    };
-                    Coefficient.GCD();
-
-
                     FprimeComponents.Add(new Term {
-                        Coefficient = Coefficient,
-                        Power = new Fraction {
-                            Numerator = term.Power.Numerator- term.Power.Denominator,
+                        Coefficient = term.Coefficient * term.Power, //Multiplies the coeficient by the power and simplifies
+                        Power = new Fraction {//Reduces the magnitude of the power by 1
+                            Numerator = term.Power.Numerator - term.Power.Denominator,
                             Denominator = term.Power.Denominator
                         }
                     });
@@ -226,33 +232,29 @@ namespace The_Email_Client
             }
         }
         public override float CalculateAnswer(float x1, float? x2 = null) {
-            return Fprime(x1);
+            return F(x1);
         }
     }
 
     public class Integration : Equation {
-        public Integration(List<Term> Components)  : base(Components) {
+        public Integration(List<Term> Components) : base(Components) {
             FprimeComponents = new List<Term>();
             foreach (Term term in Components) {
-                int Coe_numerator = term.Coefficient.Numerator * term.Power.Denominator; int Coe_denominator = term.Coefficient.Denominator * (term.Power.Numerator + term.Power.Denominator);
-                Fraction Coefficient = new Fraction {
-                    Numerator = Coe_numerator,
-                    Denominator = Coe_denominator
+                //Calculates the new power of the term
+                Fraction NewPower = new Fraction {
+                    Numerator = term.Power.Numerator + term.Power.Denominator,
+                    Denominator = term.Power.Denominator
                 };
-                Coefficient.GCD();
-
+                NewPower.GCD(); //Converts the fraction to its simplest form
+                //Adds the new term to the list
                 FprimeComponents.Add(new Term {
-                    Coefficient = Coefficient,
-                    Power = new Fraction {
-                        Numerator = term.Power.Numerator + term.Power.Denominator,
-                        Denominator = term.Power.Denominator
-                    }
+                    Coefficient = term.Coefficient / NewPower, //divides the coefficient by the new power and simplifies
+                    Power = NewPower
                 });
             }
-            
         }
         public override float CalculateAnswer(float x1, float? x2 = null) {
-            return Fprime(x1) - Fprime((float)x2);
+            return F(x1) - F((float)x2);
         }
     }
 }

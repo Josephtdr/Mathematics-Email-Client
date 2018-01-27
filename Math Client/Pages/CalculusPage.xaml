@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       Title="DifferentiationPage">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE8DEF1"  Width="426" Height="371">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFE8DEF1"  Width="562" Height="371">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -17,9 +17,10 @@
             <ColumnDefinition Width="150*"/>
             <ColumnDefinition Width="150*"/>
             <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="150*"/>
         </Grid.ColumnDefinitions>
 
-        <ToolBar Grid.ColumnSpan="3" VerticalAlignment="Top">
+        <ToolBar Grid.ColumnSpan="4" VerticalAlignment="Top">
             <Button Content="Home"  Click="HomeButton_Click"/>
             <Separator/>
             <Button Content="Profile" Click="ProfileButton_Click"/>
@@ -51,57 +52,46 @@
             <Button x:Name="cmdDown2" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Margin="75,49,17,53" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" Margin="65,61,26,41" HorizontalAlignment="Center">
             <Button x:Name="cmdUp3" Content="^"  Click="Cmd_Click" Width="19" />
             <TextBox x:Name="NumofQuestionsBox" Text="0" DataObject.Pasting="TextBoxPasting" PreviewTextInput="NumberTextbox_PreviewTextInput" TextChanged="NumberBoxes_TextChanged"/>
             <Button x:Name="cmdDown3" Content="˅"  Click="Cmd_Click" Width="19" />
         </StackPanel>
 
         <Button HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="   New&#x0a;Question" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GenerateRandomEquationButton_Click"/>
-        <Button x:Name="CreateRanPDFButton" Content=" Create &#x0a;" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFButton_Click" Margin="76,0,16,8"/>
-        <Button x:Name="CreateRanPDFEmailButton" Content=" Create&#x0a;+ Email" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFEmailButton_Click" Margin="22,0,70,8"/>
-        <Separator Grid.Column="2" VerticalAlignment="Bottom"/>
+        <Button x:Name="CreateRanPDFButton" Content=" Create &#x0a;" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFButton_Click" Margin="69,0,27,120" Grid.RowSpan="2"/>
+        <Button x:Name="CreateRanPDFEmailButton" Content=" Create&#x0a;+ Email" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Click="CreateRanPDFEmailButton_Click" Margin="15,0,82,120" Grid.RowSpan="2"/>
+        <Separator Grid.Column="2" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="131,0,10,114" Grid.Row="1"/>
 
-        <TextBox x:Name="AnswerBox" Grid.Column="1" HorizontalAlignment="Center" Height="88" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" PreviewTextInput="AnswerBox_PreviewTextInput"/>
+        <TextBox x:Name="AnswerBox" HorizontalAlignment="Stretch" Height="88" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="AnswerBox_PreviewTextInput" Grid.ColumnSpan="3" Margin="10,0"/>
 
         <Button Content="Submit" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Width="74" Click="SubmitButton_Click" Height="20" Margin="0,0,0,10"/>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Margin="6,44,30,19">
             <TextBlock Text = "Fractions:" />
             <RadioButton x:Name = "no" Checked = "FractionsUseHandleCheck"  Content = "None" GroupName = "Fractions" IsChecked="True"/>
             <RadioButton x:Name = "half"  Checked = "FractionsUseHandleCheck"   Content = "Coefficient Only" GroupName = "Fractions"/>
             <RadioButton x:Name = "full"  Checked = "FractionsUseHandleCheck"  Content = "Power + Coef" GroupName = "Fractions"/>
         </StackPanel>
 
-        <TextBlock x:Name="EquationTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Height="104" Width="142" TextAlignment="Center"/>
+        <TextBlock x:Name="EquationTextBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Height="88" Grid.ColumnSpan="3" TextAlignment="Center" Margin="10,0,10,10"/>
 
 
-        <TextBlock x:Name="FprimeTextBlock" Visibility="Hidden" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Dif Equation (=0 trust me)" VerticalAlignment="Top" Width="142" Height="95" TextAlignment="Center" Margin="0,0,0,0"/>
+        <TextBlock x:Name="FprimeTextBlock" Visibility="Hidden" HorizontalAlignment="Stretch" Grid.Row="2" TextWrapping="Wrap" Text="Dif Equation (=0 trust me)" VerticalAlignment="Top" Height="95" TextAlignment="Center"  Grid.Column="3" />
 
         <Label Content="Num of terms" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Margin="0,24,0,0"  />
         <Label Content="Magnitude" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Margin="0,0,0,26" />
         <Label Content="Answer" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Row="2" Margin="110,0,1,0" Height="26" Width="0"/>
-        <Label Content="Questions:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,46,59,0" />
-        <Label Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="32,24,32,0" >
+        <Label Content="Questions:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="139,58,76,0" Grid.ColumnSpan="2" />
+        <Label Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="23,36,42,0" >
             <TextBlock TextDecorations="Underline">Random PDF</TextBlock>
         </Label>
-        <Button x:Name="Reveal_AnswerButton" Content="Show Answer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Click="ShowRevealButton_Click"/>
+        <Button x:Name="Reveal_AnswerButton" Content="Show Answer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Click="ShowRevealButton_Click" Grid.Column="3" Margin="32,0,34,0"/>
 
-        <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="2" HorizontalAlignment="Left" Height="28" Margin="46,86,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PdfButton_Click"/>
-        <Button x:Name="CreatePDFButton" IsEnabled="False" Content="Create PDF" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="28" Margin="5,24,74,0" Click="CreatePDFButton_Click"  />
-        <Button x:Name="CreateEmailPDFButton" IsEnabled="False" Content="  Create + &#x0a; Email PDF " Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Margin="73,20,6,0" Click="CreateEmailPDFButton_Click"  />
-        <Button x:Name="EndPdfButton" Content="Cancel PDF" IsEnabled="False" Grid.Column="2" HorizontalAlignment="Center" Height="28" Margin="40,74,40,0" Grid.Row="2" VerticalAlignment="Top" Click="EndPdfButton_Click"/>
-
-        <Separator HorizontalAlignment="Left" Height="12" Margin="111,70,-31,0" VerticalAlignment="Top" Width="346" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Grid.Row="1">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-0.374"/>
-                    <RotateTransform Angle="90.333"/>
-                    <TranslateTransform Y="-0.327"/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
+        <Button x:Name="PdfButton" Content="Start PDF" Grid.Column="3" HorizontalAlignment="Left" Height="28" Margin="1,86,0,0" Grid.Row="1" VerticalAlignment="Top" Click="PdfButton_Click"/>
+        <Button x:Name="CreatePDFButton" IsEnabled="False" Content="Create PDF" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Height="28" Margin="137,40,82,0" Click="CreatePDFButton_Click" Grid.ColumnSpan="2"  />
+        <Button x:Name="CreateEmailPDFButton" IsEnabled="False" Content="  Create + &#x0a; Email PDF " Grid.Column="3" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Margin="65,15,14,0" Click="CreateEmailPDFButton_Click"  />
+        <Button x:Name="EndPdfButton" Content="Cancel PDF" IsEnabled="False" Grid.Column="3" HorizontalAlignment="Center" Height="28" Margin="61,86,20,0" Grid.Row="1" VerticalAlignment="Top" Click="EndPdfButton_Click"/>
         <Label Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top">
             <TextBlock TextDecorations="Underline">Question</TextBlock>
         </Label>

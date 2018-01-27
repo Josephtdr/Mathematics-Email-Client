@@ -140,7 +140,6 @@ namespace The_Email_Client
             finally { cnctDTB.Close(); }
         }
     }
-
     public class Encryption {
         public static string HashString(string stringtohash) {
             //Create the salt value with a cryptographic PRNG
@@ -205,9 +204,7 @@ namespace The_Email_Client
             return true;
         }
     }
-
-    public class Email
-    {
+    public class Email {
         public string Server { get; set; }
         public int Port { get; set; }
         public string UserEmail { get; set; }
@@ -220,19 +217,15 @@ namespace The_Email_Client
         public string Body { get; set; }
         public List<string> AttachmentNames { get; set; }
 
-        public Email()
-        {
+        public Email() {
             AttachmentNames = new List<string>();
         }
 
         public void Send()
         {
-            try
-            {
+            try {
                 MailAddress fromAddress = new MailAddress(UserEmail, UserName);
-
-                SmtpClient smtp = new SmtpClient
-                {
+                SmtpClient smtp = new SmtpClient {
                     Host = Server,
                     Port = Port,
                     EnableSsl = true,
@@ -240,17 +233,13 @@ namespace The_Email_Client
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(fromAddress.Address, UserPassword),
                 };
-
-                using (MailMessage message = new MailMessage() { From = fromAddress, Subject = Subject, Body = Body })
-                {
-
+                using (MailMessage message = new MailMessage() { From = fromAddress, Subject = Subject, Body = Body }) {
                     if (Recipients != null) foreach (string recipient in Recipients) message.To.Add(new MailAddress(recipient));
                     if (CC != null) if(CC[0] != "") foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
                     if (BCC != null) if(BCC[0] != "") foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
 
                     if(AttachmentNames != null)
-                        foreach (string Attachment in AttachmentNames)
-                        {
+                        foreach (string Attachment in AttachmentNames) {
                             Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
                             ContentDisposition disposition = attachment.ContentDisposition;
                             disposition.CreationDate = System.IO.File.GetCreationTime(Attachment);
@@ -261,8 +250,7 @@ namespace The_Email_Client
                             disposition.DispositionType = DispositionTypeNames.Attachment;
                             message.Attachments.Add(attachment);
                             Console.WriteLine(Attachment);
-                        }   
-                    
+                        }
                     smtp.Send(message);
                  }
             }

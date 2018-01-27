@@ -197,26 +197,26 @@ namespace The_Email_Client
             List<Tuple<Equation, bool>> tupleList = new List<Tuple<Equation, bool>>();
             List<Term> tempTermList = new List<Term>();
             int length = 0;
-            int itterations = 0;
+            int iterations = 0;
             foreach (Equation equ in EquList) {
-                itterations = 0;
+                iterations = 0;
+                length = 0;
                 foreach (Term term in equ.Components) {
                     length += term.ToString().Length;
                     if (length < 37)
                         tempTermList.Add(term);
                     else {
-                        if (dif) tupleList.Add(new Tuple<Equation, bool>( new Diferentiation(tempTermList), itterations == 0 ? true : false));
-                        else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), itterations == 0 ? true : false));
-
+                        if (dif) tupleList.Add(new Tuple<Equation, bool>( new Diferentiation(tempTermList), iterations == 0 ? true : false));
+                        else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), iterations == 0 ? true : false));
                         tempTermList = new List<Term>();
                         tempTermList.Add(term);
                         length = term.ToString().Length;
-                        ++itterations;
+                        ++iterations;
                     }
                 }
                 if (tempTermList[0] != null) {
-                    if (dif) tupleList.Add(new Tuple<Equation, bool>(new Diferentiation(tempTermList), itterations == 0 ? true : false));
-                    else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), itterations == 0 ? true : false));
+                    if (dif) tupleList.Add(new Tuple<Equation, bool>(new Diferentiation(tempTermList), iterations == 0 ? true : false));
+                    else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), iterations == 0 ? true : false));
                 }
             }
             return tupleList;
