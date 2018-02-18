@@ -18,25 +18,37 @@ namespace The_Email_Client
     /// <summary>
     /// Interaction logic for EnterResetCodePage.xaml
     /// </summary>
-    public partial class EnterResetCodePage : Page
-    {
+    public partial class EnterResetCodePage : Page {
         protected Action ShowResetPasswordPage { get; set; }
-        public EnterResetCodePage(Action ShowResetPasswordPage)
-        {
+        protected Action Close { get; set; }
+        private int Attempts { get; set; }
+        public EnterResetCodePage(Action ShowResetPasswordPage, Action Close){
             InitializeComponent();
             this.ShowResetPasswordPage = ShowResetPasswordPage;
-            KeyDown += delegate {
+            this.Close = Close;
+            KeyDown += delegate {//Allows the user to press enter to check their reset code
                 if (Keyboard.IsKeyDown(Key.Enter))
-                    if (Convert.ToInt32(ResetCodeTextbox.Text) == ForgottonPasswordPage.ResetCode)
-                        ShowResetPasswordPage();
+                    SubmitResetCode();
             };
         }
-
-        private void SumbitResetCode_Click(object sender, RoutedEventArgs e)
-        {
+        private void SubmitResetCode() {
+            if (Attempts >= 5) {//checks to see how many times the user has entered a code
+                //informs user they have had too many attempts and closes
+                MessageBox.Show("Too many Attempts, Closing Window", "Error!");
+                Close();
+            }
+            //Checks if the code entered by the user is correct
             if (Convert.ToInt32(ResetCodeTextbox.Text) == ForgottonPasswordPage.ResetCode)
-                ShowResetPasswordPage();
-            else MessageBox.Show("Code is incorrect.", "Error!");
+                ShowResetPasswordPage();//Moves the user to the page in which they can reset their password
+            else {
+                //informs the user they have entered an incorrect code
+                MessageBox.Show("Code is incorrect.", "Error!");
+                ++Attempts;//Itterates the number of attempts by the user
+            }
+        }
+
+        private void SumbitResetCode_Click(object sender, RoutedEventArgs e) {
+            SubmitResetCode();//Runs the reset code function when the user presses the button
         }
     }
 }

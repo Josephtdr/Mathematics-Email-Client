@@ -77,6 +77,17 @@ namespace The_Email_Client
             }
         }
 
+        //creates a random pdf according to user perameters
+        private void CreateRandomPDF(bool email) {
+            if (Convert.ToInt16(NumofQuestionsBox.Text) > 0) { //Makes sure the user has requested at least 1 question
+                List<Equation> EquList = new List<Equation>();
+                for (int i = 0; i < Convert.ToInt16(NumofQuestionsBox.Text); i++) {
+                    EquList.Add(CreateRandomEquation()); //Adds a random equation to the list 
+                }
+                PDF.CreatePDFfromList(EquList, email, (Class)ClassesCombobox.SelectedItem); //creates pdf
+            }
+        }
+
         //checks if what the user has submited is the same as the pre calculated answear
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
             if (!string.IsNullOrWhiteSpace(AnswerBox.Text)) { 
@@ -192,137 +203,7 @@ namespace The_Email_Client
             CreateEmailPDFButton.IsEnabled = true; EndPdfButton.IsEnabled = true; CreatePDFButton.IsEnabled = true;
             PdfButton.IsEnabled = false; 
         }
-
-        private List<Tuple<Equation, bool>> SortEquationList(List<Equation> EquList, bool dif) {
-            List<Tuple<Equation, bool>> tupleList = new List<Tuple<Equation, bool>>();
-            List<Term> tempTermList = new List<Term>();
-            int length = 0;
-            int iterations = 0;
-            foreach (Equation equ in EquList) {
-                iterations = 0;
-                length = 0;
-                foreach (Term term in equ.Components) {
-                    length += term.ToString().Length;
-                    if (length < 37)
-                        tempTermList.Add(term);
-                    else {
-                        if (dif) tupleList.Add(new Tuple<Equation, bool>( new Diferentiation(tempTermList), iterations == 0 ? true : false));
-                        else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), iterations == 0 ? true : false));
-                        tempTermList = new List<Term>();
-                        tempTermList.Add(term);
-                        length = term.ToString().Length;
-                        ++iterations;
-                    }
-                }
-                if (tempTermList[0] != null) {
-                    if (dif) tupleList.Add(new Tuple<Equation, bool>(new Diferentiation(tempTermList), iterations == 0 ? true : false));
-                    else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), iterations == 0 ? true : false));
-                }
-            }
-            return tupleList;
-        }
-
-        private string CreatePDF(List<Equation> EquList, bool dif) { //40 characters?
-            PdfDocument document = new PdfDocument();
-            PdfPage page;
-            XGraphics gfx;
-            XFont font = new XFont("Verdana", 20, XFontStyle.Bold); //sets chosen font and style
-            List<Tuple<Equation, bool>> TupleList = SortEquationList(EquList, dif);
-
-            int numpages = TupleList.Count / 14; //Workout the number of pages which will be required for the number of given questions
-            int QuestionNum = 0;
-            //Creates Question Pages
-            for (int i = 0; i < numpages + 1; i++) {
-                page = document.AddPage();
-                gfx = XGraphics.FromPdfPage(page);
-                if (i == 0) gfx.DrawString("Questions:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
-                for (int j = 0; j < 14; j++) {
-                    if (j + (14 * i) < TupleList.Count) {
-                        QuestionNum += TupleList[j + (14 * i)].Item2 == true ? 1 : 0;
-                        gfx.DrawString($"{  (TupleList[j + (14 * i)].Item2 == true ? $"{QuestionNum}." : "") }\t { Regex.Replace(TupleList[j + (14 * i)].Item1.ToString(), "[^0-9-/+/^/x ]+", "") }",
-                            font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
-                    }
-                }
-            }
-            QuestionNum = 0;
-            //Creates Answer Pages
-            for (int i = 0; i < numpages + 1; i++) {
-                page = document.AddPage();
-                gfx = XGraphics.FromPdfPage(page);
-                if (i == 0) gfx.DrawString("Answers:", font, XBrushes.Black, new XRect(0, 10, page.Width, page.Height), XStringFormat.TopCenter);
-                for (int j = 0; j < 14; j++) {
-                    if (j + (14 * i) < TupleList.Count) { 
-                        QuestionNum += TupleList[j + (14 * i)].Item2 == true ? 1 : 0;
-                        gfx.DrawString($"{ (TupleList[j + (14 * i)].Item2 == true ? $"{QuestionNum}." : "") }\t { Regex.Replace(TupleList[j + (14 * i)].Item1.FprimeEquationToString(), "[^0-9-/+/^/x ]+", "") }",
-                            font, XBrushes.Black, new XRect(10, 10 + ((j + 2) * 50), page.Width, page.Height), XStringFormat.TopLeft);
-                    }
-                }
-            }
-
-            string datetime = DateTime.Now.ToString().Replace('/', '-').Replace(':', '.');
-            string filename = $"{datetime}.pdf";
-            document.Save(filename);
-            return filename;
-        }
-
-
-        //Function to create a PDF from a list of Equations
-        private bool CreatePDFfromList(List<Equation> EquList, bool email) {
-            if (email && ClassesCombobox.SelectedItem == null) {
-                MessageBox.Show("You must select a class to email.", "Error!");
-                return false;
-            }
-            string filename = CreatePDF(EquList, EquList[0].GetType() ==  typeof(Diferentiation) ? true : false);
-            if (email)
-                SendPDFEmail(filename);
-            else
-                Process.Start(filename);
-            return true;
-        }
-
-        private void SendPDFEmail(string filename) {
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            string emaillist = "";
-            Class tempclass = new Class();
-            try {
-                tempclass = (Class)(ClassesCombobox.SelectedItem);
-                cnctDTB.Open();
-                OleDbCommand cmd = new OleDbCommand($"SELECT Students.Email FROM Class_Lists, Students WHERE " +
-                    $"Class_Lists.Student_ID = Students.ID AND Class_Lists.Class_ID = {tempclass.ID};", cnctDTB); //doesnt work btw
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    emaillist += $"{Common.Cleanstr(reader[0])};";
-                }
-            }
-            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-            finally { cnctDTB.Close(); }
-
-            Email tempemail = new Email {
-                Server = Common.Profile.Server,
-                Port = Convert.ToInt16(Common.Profile.Port),
-                UserEmail = Common.Profile.Email,
-                UserPassword = Common.Profile.Password,
-                UserName = Common.Profile.Name,
-                Recipients = (emaillist.Split(';')).Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList().ToArray(),
-                Subject = $"{filename} Worksheet for class {4}",
-                Body = "",
-                AttachmentNames = new List<string>() { filename }
-            };
-            tempemail.Send();
-        }
-    
-
-        //creates a random pdf according to user perameters
-        private void CreateRandomPDF(bool email) {
-            if (Convert.ToInt16(NumofQuestionsBox.Text) > 0) { //Makes sure the user has requested at least 1 question
-                List<Equation> EquList = new List<Equation>();
-                for (int i = 0; i < Convert.ToInt16(NumofQuestionsBox.Text); i++) {
-                    EquList.Add(CreateRandomEquation()); //Adds a random equation to the list 
-                }
-                CreatePDFfromList(EquList, email); //creates pdf
-            }
-        }
-    
+        
         //cancels the current pdf the user was creating
         private void EndPdfButton_Click(object sender, RoutedEventArgs e) {
             PdfButton.Content = "Start PDF"; //Indicates user can start a new pdf
@@ -382,14 +263,14 @@ namespace The_Email_Client
         }
 
         private void CreateEmailPDFButton_Click(object sender, RoutedEventArgs e) {
-            if (CreatePDFfromList(QuestionsforPDF, true)) { //Creates a pdf from the current list of equations 
+            if (PDF.CreatePDFfromList(QuestionsforPDF, true, (Class)ClassesCombobox.SelectedItem)) { //Creates a pdf from the current list of equations 
                 QuestionsforPDF = new List<Equation>(); //clears list of current questions
                 ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
             }
         }
 
         private void CreatePDFButton_Click(object sender, RoutedEventArgs e) {
-            CreatePDFfromList(QuestionsforPDF, false); //Creates a pdf from the current list of equations 
+            PDF.CreatePDFfromList(QuestionsforPDF, false, (Class)ClassesCombobox.SelectedItem); //Creates a pdf from the current list of equations 
             QuestionsforPDF = new List<Equation>(); //clears list of current questions
             ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
         }

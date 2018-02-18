@@ -101,34 +101,40 @@ namespace The_Email_Client
             this.Components = Components;
         }
         public static List<Term> ParseString(string stringtoparse) { //Converts a user entered string into a list of terms 
-            stringtoparse.ToLower();
-            string[] tempstrings = Regex.Split(Common.RemoveWhitespace(stringtoparse), @"(?<=[^^])(?=[-+])");
             List<Term> ParsedList = new List<Term>();
-            foreach (string str in tempstrings) 
-                if (!string.IsNullOrWhiteSpace(str)) {
-                    string tempstring = (str.Replace("^", "")).Replace("+", "");
-                    string[] components = tempstring.Split('x');
-                    string[] Coefficient_Fraction = components[0] == "" ? new string[] { "1", "1" } : components[0] == "-" ? new string[] { "-1", "1" } : components[0].Split('/');
-                    string[] Power_Fraction = components.Length < 2 ? new string[] { "0", "1" } : components[1] == "" ? new string[] { "1", "1" } : components[1].Split('/');
+            string[] TermList = Regex.Split(Common.RemoveWhitespace(stringtoparse.ToLower()), @"(?<=[^^])(?=[-+])");
+            //Splits the string wherever there is a '+' or '-' but not when it is preceded by a '^'
+
+            foreach (string str in TermList)//Loops through each term 
+                if (!string.IsNullOrWhiteSpace(str)) {//Checks if the term is empty
+                    string tempstring = (str.Replace("^", "")).Replace("+", "");//Removes '+' and '^' from the term
+                    string[] components = tempstring.Split('x');//splits the term into the sections before/after the 'x'
+                    string[] Coefficient_Fraction = components[0] == "" ? new string[] { "1", "1" } : 
+                        components[0] == "-" ? new string[] { "-1", "1" } : components[0].Split('/');
+                    string[] Power_Fraction = components.Length < 2 ? new string[] { "0", "1" } : 
+                        components[1] == "" ? new string[] { "1", "1" } : components[1].Split('/'); 
+                    //Creates a Term from the users string of said term 
 
                     ParsedList.Add(new Term {
                         Coefficient = new Fraction {
                             Numerator = Convert.ToInt16(Coefficient_Fraction[0]),
                             Denominator = Coefficient_Fraction.Length > 1 ? Convert.ToInt16(Coefficient_Fraction[1]) : 1
-                        },
+                        },//Creates the fraction representing the coefficient of each term
                         Power = new Fraction {
                             Numerator = Convert.ToInt16(Power_Fraction[0]),
                             Denominator = Power_Fraction.Length > 1 ? Convert.ToInt16(Power_Fraction[1]) : 1
-                        }
-                    });
+                        }//Creates the fraction representing the power of each term
+                    });//Adds the new term to the list of Terms ParsedList 
                 }
-            return Equation.BubbleSort(ParsedList);
+            return BubbleSort(ParsedList); //returns a sorted version of ParsedList
         }
+        //Creates a random equation based on user perameters. 
         public static List<Term> CreateRandomEquation(int Order, int Magnitude, int UsingFractions) {
             List<Term> RndEqu = new List<Term>();
-            for (int i = Order; i > -1; --i) {
-                //Generates random values for the Coefficient of the Value.
+            for (int i = Order; i > -1; --i) {//Loops n times where n = order which is specified by the user. 
+                //Generates random values for the Coefficient of the Value depending upon the users perameters.
                 int Coe_numerator = Rng.Next(-((Magnitude + 1) * 3), (Magnitude + 1) * 3);
+                //Creates a Denominator of either 1, -1 or a random value depending on the users perameters. 
                 int Coe_denominator = UsingFractions == 0 ? Rng.Next(-1, 2) : Rng.Next(-Magnitude, Magnitude + 1);
                 Coe_denominator = (Coe_denominator != 0 ? Coe_denominator : 1); //Makes sure the variable is not 0
                 Fraction Coefficient = new Fraction { //Creates a new Fraction with the generated values
@@ -136,24 +142,23 @@ namespace The_Email_Client
                     Denominator = Coe_denominator
                 };
                 Coefficient.GCD(); //Coverts the fraction to its simplest form
-
-                int Pow_numerator = i;
-                int Pow_denominator = UsingFractions != 2 ? 1 : Constants.Rnd.Next(-Magnitude, Magnitude + 1);
-                Pow_denominator = (Pow_denominator != 0 ? Pow_denominator : 1);
+                //Creates a Denominator of either 1, -1 or a random value depending on the users perameters. 
+                int Pow_denominator = UsingFractions != 2 ? 1 : Constants.Rnd.Next(-Magnitude, Magnitude + 1); 
+                Pow_denominator = (Pow_denominator != 0 ? Pow_denominator : 1);//Makes sure the variable is not 0
                 Fraction Power = new Fraction {
-                    Numerator = Pow_numerator,
+                    Numerator = i, //Numerator itterates up with i
                     Denominator = Pow_denominator
                 };
-                Power.GCD();
+                Power.GCD(); //Coverts the fraction to its simplest form
                 if (Coe_numerator != 0)
                     RndEqu.Add(
                         new Term {
                             Coefficient = Coefficient,
                             Power = Power
                         }
-                );
+                );//Adds a new term to the equation
             }
-            return BubbleSort(RndEqu);
+            return BubbleSort(RndEqu); //Returns a sorted version of the list
         } 
         public override string ToString() {
             string Equationstring = "";

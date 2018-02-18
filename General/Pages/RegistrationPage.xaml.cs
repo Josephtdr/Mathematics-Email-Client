@@ -39,41 +39,22 @@ namespace The_Email_Client {
         
         private void SignUpbutton_Click(object sender, RoutedEventArgs e) {
             if (Common.Inccorectemailformat(EmailTextBox.Text)
-                && UserNameAlreadyExists(UserNameTextBox.Text) && PasswordsMatch() && NonNullFields())
+                && UserNameAlreadyExists(UserNameTextBox.Text) 
+                && NonNullFields()
+                && PasswordsMatch())
                 RegisterUser();
         }
 
         private bool NonNullFields() {
-            if (!string.IsNullOrWhiteSpace(EmailTextBox.Text) && !string.IsNullOrWhiteSpace(NameTextBox.Text)
-                && !string.IsNullOrWhiteSpace(UserNameTextBox.Text)) return true;
+            if (!string.IsNullOrWhiteSpace(EmailTextBox.Text) 
+                && !string.IsNullOrWhiteSpace(NameTextBox.Text)
+                && !string.IsNullOrWhiteSpace(UserNameTextBox.Text)
+                && !string.IsNullOrWhiteSpace(Passwordbox.Password)
+                ) return true;
             else {
                 MessageBox.Show("No fields can be left empty.","Error!");
                 return false; }
         }//make email optional
-
-        private bool EmailAlreadyExists(string Email) {
-            //OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            //try
-            //{
-            //    cnctDTB.Open();
-            //    OleDbCommand cmd = new OleDbCommand("SELECT Email FROM Profiles", cnctDTB);
-            //    OleDbDataReader reader = cmd.ExecuteReader();
-
-            //    while (reader.Read()) if (Email == Common.Cleanstr(reader[0])) {
-            //            MessageBox.Show("Email Already Exists!", "Error!");
-            //            return false; }             
-            //}
-            //catch (Exception err)
-            //{
-
-            //    System.Windows.MessageBox.Show(err.Message);
-            //}
-            //finally
-            //{
-            //    cnctDTB.Close();
-            //}
-            return true;
-        }
 
         private bool UserNameAlreadyExists(string UserName) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);

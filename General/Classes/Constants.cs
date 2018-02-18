@@ -10,6 +10,8 @@ namespace The_Email_Client
         public const string VALIDPASSWORDPATTERN = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
         public const string DEFAULTEMAIL = "martinsmathematicsclient@gmail.com";
         public const string DEFAULTPASSWORD = "capitalutcreading";
+        public const int DEFAULTPORT = 587;
+        public const string DEFAULTSERVER = "smtp.gmail.com";
         public static Random Rnd { get; } = new Random();
     }
 }

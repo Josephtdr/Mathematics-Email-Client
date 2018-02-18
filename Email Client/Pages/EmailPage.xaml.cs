@@ -80,11 +80,14 @@ namespace The_Email_Client
             UpdateMBValue(Common.TotalFileLength);
             StatusLabel.Content = "Sent";
             LoadingGif.Visibility = Visibility.Hidden;
-        }
+        }   
+        //Procedure which runs when the users wishes to send an email
         private void send_button_Click(object sender, RoutedEventArgs e) {
+            //Both Used to indicate to the user the email is sending
             StatusLabel.Content = "Sending...";
             LoadingGif.Visibility = Visibility.Visible;
-            List<string> Attachments = Common.Attachments;
+            
+            //Gets all applicable values and creates a new Email
             Email tempemail = new Email() {
                 Server = Common.Profile.Server,
                 Port = Convert.ToInt16(Common.Profile.Port),
@@ -99,37 +102,41 @@ namespace The_Email_Client
                 AttachmentNames = Common.Attachments
             };
             new Thread(new ParameterizedThreadStart(SendEmail)) { IsBackground = true }.Start(tempemail); 
-            //runs sending email in the background.
+            //runs SendEmail in the background.
         }
 
+        //Takes a users string of desired recipients and returns a formatted list for the Gamil API
         private string[] CreateEmailsList(string[] rawEmails) {
-            List<string> templist = new List<string>();
+            List<string> RecipientsEmailList = new List<string>();//list which stores all the emails found in rawEmail 
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            foreach (string email in rawEmails) {
-                if (!email.Contains("}"))
-                    templist.Add(email);
+            foreach (string Recipients in rawEmails) {//loops through each set of recipients in rawEmails
+                if (!Recipients.Contains("}"))//checks if recipiets is a singular email or the name of a list of emails
+                    RecipientsEmailList.Add(Recipients);//if a singular email, adds to the list of emails
                 else {
                     try {
-                        cnctDTB.Open();
+                        cnctDTB.Open();//opens a connection to the database
+                        //SQL statment finding all relavent emails to said list of recipients
                         OleDbCommand cmd = new OleDbCommand($"Select Students.Email FROM Students, Class_Lists, Classes WHERE " +
                             $"Students.ID = Class_Lists.Student_ID AND Classes.ID = Class_Lists.Class_ID "+
-                            $"AND Classes.Name = '{ email.Replace("{","").Replace("}","") }';", cnctDTB);
+                            $"AND Classes.Name = '{ Recipients.Replace("{","").Replace("}","") }';", cnctDTB);
                         OleDbDataReader reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                            templist.Add(reader[0].ToString());
+                        while (reader.Read())//loops through each relavent item in the database and adds them to the list of emails
+                            RecipientsEmailList.Add(reader[0].ToString());
                     }
-                    catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-                    finally { cnctDTB.Close(); }
+                    catch (Exception err) { System.Windows.MessageBox.Show(err.Message); } //displays error to user
+                    finally { cnctDTB.Close(); } //closes connection to database
                 }
             }
-            return templist.ToArray();
+            return RecipientsEmailList.ToArray();//Returns the list of emails in the form of an array
         }
 
         private void SendEmail(object email) {
             try {
-                ((Email)email).Send();
+                ((Email)email).Send();//Sends the users email
+                //Indicates to the user the email has succesfully sent
                 Dispatcher.Invoke(() => ClearPage()); //calls function in a thread safe manor
             }
+            //Informs user in the case of an error
             catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
         }
 

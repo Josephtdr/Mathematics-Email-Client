@@ -20,13 +20,11 @@ namespace The_Email_Client
     /// <summary>
     /// Interaction logic for ForgottonPasswordPage.xaml
     /// </summary>
-    public partial class ForgottonPasswordPage : Page
-    {
+    public partial class ForgottonPasswordPage : Page {
         public static int ResetCode { get; set; }
         public static string UserName { get; set; }
         protected Action ShowenterResetCodePage { get; set; }
-        public ForgottonPasswordPage(Action ShowenterResetCodePage)
-        {
+        public ForgottonPasswordPage(Action ShowenterResetCodePage) {
             InitializeComponent();
             this.ShowenterResetCodePage = ShowenterResetCodePage;
             KeyDown += delegate {
@@ -35,45 +33,40 @@ namespace The_Email_Client
             };
         }
 
-        private void SendResetEmail()
-        {
-            if (Encryption.VerifyPasswordorEmail(UserNameTextBox.Text, EmailTextBox.Text, false))
-            {
-                UserName = UserNameTextBox.Text;
-                Random rnd = new Random();
-                ResetCode = rnd.Next(10000000, 99999999);
-                string[] emails = new string[1]; emails[0] = EmailTextBox.Text;
-                try
-                {
-                    Email tempemail = new Email()
-                    {
-                        Server = "smtp.gmail.com",
-                        Port = 587,
-                        UserEmail = "MartinsMathematicsClient@gmail.com",
-                        UserPassword = "capitalutcreading",
+        private void SendResetEmail() {//Verifys a users email, then sends them a reset code.
+            //Checks to see if the users entered email corraleates with their entered username.
+            if (Encryption.VerifyPasswordorEmail(UserNameTextBox.Text, EmailTextBox.Text, false)) {
+                ResetCode = Constants.Rnd.Next(10000000, 99999999);//Creates a random reset code
+                try {//Creates a default email to send to the user containing the 
+                    //reset code they need to reset their password
+                    Email tempemail = new Email() {
+                        Server = Constants.DEFAULTSERVER,
+                        Port = Constants.DEFAULTPORT,
+                        UserEmail = Constants.DEFAULTEMAIL,
+                        UserPassword = Constants.DEFAULTPASSWORD,
                         UserName = "MartinsMathematics Client Password Reset",
-                        Recipients = emails,
-                        CC = null,
-                        BCC = null,
+                        Recipients = new string[] { EmailTextBox.Text },
+                        CC = null, BCC = null, AttachmentNames = null,
                         Subject = "Reset Password Request",
-                        Body = "Somebody has Requested a Password Reset for this email.\nIf this was not you please ignore this email.\n" +
-                        $"If this was you, your email reset code is as follows: {ResetCode}.\nPlease copy this code down, " +
-                        "return to the email client and follow the on screen instructions.",
-                        AttachmentNames = null
+                        Body = "Somebody has Requested a Password Reset for this email.\n" +
+                        "If this was not you please ignore this email.\n" +
+                        $"If this was you, your email reset code is as follows: {ResetCode}.\n" +
+                        "Please copy this code down, " +
+                        "return to the email client and follow the on screen instructions."
                     };
-                    new Thread(new ParameterizedThreadStart(delegate { tempemail.Send(); })) { IsBackground = true }.Start();
+                    //Opens a new thread to send the email
+                    new Thread(new ParameterizedThreadStart(delegate { tempemail.Send(); })) 
+                    { IsBackground = true }.Start();
+                    //displays the next page to the user where they will input their reset code
                     ShowenterResetCodePage();
                 }
-                catch (Exception error)
-                {
-                    System.Windows.Forms.MessageBox.Show(error.Message);
-                }
+                //informs the user if there is an error
+                catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            SendResetEmail();
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            SendResetEmail(); //Runs the function which will reset the users email
         }
     }
 }

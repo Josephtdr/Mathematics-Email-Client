@@ -12,43 +12,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for ForgotPasswordWindow.xaml
     /// </summary>
-    public partial class ResettingPasswordWindow : Window
-    {
+    public partial class ResettingPasswordWindow : Window {
         protected ForgottonPasswordPage ForgottonPasswordPage{ get; set;}
         protected EnterResetCodePage EnterResetCodePage { get; set; }
         protected ResetPasswordPage ResetPasswordPage { get; set; }
 
-        public ResettingPasswordWindow()
-        {
+        public ResettingPasswordWindow() {
             InitializeComponent();
             ForgottonPasswordPage = new ForgottonPasswordPage(ShowEnterResetCodePage);
-            EnterResetCodePage = new EnterResetCodePage(ShowResetPasswordPage);
+            EnterResetCodePage = new EnterResetCodePage(ShowResetPasswordPage, Close);
             ResetPasswordPage = new ResetPasswordPage(Close);
             ShowForgottonPasswordPage();
         }
-
-        protected void ShowForgottonPasswordPage()
-        {
+        protected void ShowForgottonPasswordPage() {
             ShowPage(ForgottonPasswordPage);
         }
-
-        protected void ShowEnterResetCodePage()
-        {
+        protected void ShowEnterResetCodePage() {
             ShowPage(EnterResetCodePage);
         }
-        protected void ShowResetPasswordPage()
-        {
+        protected void ShowResetPasswordPage() {
             ShowPage(ResetPasswordPage);
         }
-
-
-        protected void ShowPage(Page page)
-        {
+        protected void ShowPage(Page page) {
             PageFrame.Content = page;
         }
     }
