@@ -1,4 +1,4 @@
-﻿using PdfSharp.Drawing;
+﻿    using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
@@ -51,21 +51,21 @@ namespace The_Email_Client
         private void GenerateRandomEquationButton_Click(object sender, RoutedEventArgs e) {
             Equation Equ = CreateRandomEquation(); //creates a random equation according to the users perameters
             if (Equ != null) { //checks the equation was succesfully created 
-
-                EquationTextBlock.Text = Equ.ToString(); //shows the question is a text box so the user can see it
-                FprimeTextBlock.Text = Equ.FprimeEquationToString(); //places the answer in a textbox that the user can look at if they wish to
+                //Converts the equation to a latex image and displays it to the user
+                formulaContainerElement.Visual = RenderLatex(Equ.EquationToLatex());
+                //places the answer in a textbox that the user can look at if they wish to
+                FprimeTextBlock.Text = Equ.FprimeEquationToString(); 
                 AnswerBox.Clear(); //clears the users answer for the previous question
                 //if the user is creating a pdf, will add the equation to the list of equations for said pdf
                 if ((string)PdfButton.Content == "PDF Started!") QuestionsforPDF.Add(Equ);
             }
-            //Converts the equation to a latex image and displays it to the user
-            
-            formulaContainerElement.Visual = RenderLatex(Equ.ToLatex());
         }
-
+        //Converts an equation to a latex render
         private DrawingVisual RenderLatex(string stringtoLatex) {
+            //Initialise and create Latex parser
             TexFormulaParser.Initialize();
             formulaParser = new TexFormulaParser();
+            //Convert string to latex formula
             TexFormula formula = formulaParser.Parse(stringtoLatex);
             // Render formula to visual.
             var visual = new DrawingVisual();
@@ -74,7 +74,7 @@ namespace The_Email_Client
             using (var drawingContext = visual.RenderOpen()) {
                 renderer.Render(drawingContext, 0, 1);
             }
-            return visual;
+            return visual; //Returns latex render
         }
 
         //created a random equation according to the users perameters
@@ -109,18 +109,14 @@ namespace The_Email_Client
 
         //checks if what the user has submited is the same as the pre calculated answear
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
-            if (!string.IsNullOrWhiteSpace(AnswerBox.Text)) { 
-                MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
-                if (Equ.VerifyAnswer(AnswerBox.Text)) {
-                    //informs the user they are correct
-                    MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(true);
-                    MathmaticsCorrectIncorrectWindow.ShowDialog();
-                }
-                else {
-                    //informs the user they are incorrect
-                    MathmaticsCorrectIncorrectWindow = new MathmaticsCorrectIncorrectWindow(false);
-                    MathmaticsCorrectIncorrectWindow.ShowDialog();
-                }
+            if (!string.IsNullOrWhiteSpace(AnswerBox.Text)) {
+                //Gets values stating if the user is correct or incorrect
+                Tuple<bool, bool> Correct = (Equ.VerifyAnswer(AnswerBox.Text));
+                if (!Correct.Item1) return;//Ends function is users answer has an error in it
+                //informs the user if they are correct or incorrect
+                var MathmaticsCorrectIncorrectWindow = 
+                    new MathmaticsCorrectIncorrectWindow(Correct.Item2);
+                MathmaticsCorrectIncorrectWindow.ShowDialog();
             }
         }
         

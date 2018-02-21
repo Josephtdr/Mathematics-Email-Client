@@ -66,7 +66,7 @@
     </Reference>
     <Reference Include="WpfMath, Version=0.3.1.40510, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\computing\Project\wpf-math-b44ded1cb7ad176a3c1180e9886e5531ca449b52\wpf-math-b44ded1cb7ad176a3c1180e9886e5531ca449b52\WpfMath\bin\Debug\WpfMath.dll</HintPath>
+      <HintPath>C:\Users\Joe\Downloads\WpfMath.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

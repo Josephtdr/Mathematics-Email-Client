@@ -46,7 +46,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <TextBox x:Name="emailtextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,165,20" TextChanged="Addcontacttextboxes_TextChanged">
+        <TextBox x:Name="emailtextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,165,20" TextChanged="Addstudenttextboxes_TextChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -70,7 +70,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <TextBox x:Name="nametextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,112,0" TextChanged="Addcontacttextboxes_TextChanged">
+        <TextBox x:Name="nametextbox" Height="20" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,112,0" TextChanged="Addstudenttextboxes_TextChanged">
             <TextBox.Style>
                 <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                     <Style.Resources>
@@ -94,8 +94,8 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button x:Name="addcontactButton" Content="Add " HorizontalAlignment="Right" Height="20" Margin="0,0,56,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="False"/>
-        <Button x:Name="removecontactButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" Command="{Binding Remove}" CommandParameter="{Binding ElementName=classStudentsDataGrid, Path=SelectedItem}">
+        <Button x:Name="addstudentButton" Content="Add " HorizontalAlignment="Right" Height="20" Margin="0,0,56,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddstudentButton_Click" IsEnabled="False"/>
+        <Button x:Name="removecontactButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovestudentButton_Click" HorizontalAlignment="Right" Command="{Binding Remove}" CommandParameter="{Binding ElementName=classStudentsDataGrid, Path=SelectedItem}">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="IsEnabled" Value="True" />

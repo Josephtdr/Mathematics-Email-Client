@@ -48,6 +48,7 @@ namespace The_Email_Client
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
             try {
                 cnctDTB.Open(); //opens connection
+                //SQL command that fetches emails of all students currently in the chosen class
                 OleDbCommand cmd = new OleDbCommand($"Select Students.Email FROM Students, Class_Lists WHERE " + 
                     $"Students.ID = Class_Lists.Student_ID AND Class_ID = { Class_ID };", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
@@ -59,9 +60,25 @@ namespace The_Email_Client
             finally { cnctDTB.Close(); } //closes connection
         }
 
+        private void UpdateEmailsList() {
+            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
+            try {
+                cnctDTB.Open(); //opens connection
+                //SQL command that fetches emails of all students currently in the chosen class
+                OleDbCommand cmd = new OleDbCommand($"Select Students.Email FROM Students", cnctDTB);
+                OleDbDataReader reader = cmd.ExecuteReader();
+                emaillist.Clear();
+                while (reader.Read())
+                    emaillist.Add(reader[0].ToString());
+            }
+            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); } //closes connection
+        }
+
         private void Updatetable() {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
             UpdateClassemailslist();
+            UpdateEmailsList();
             try {
                 cnctDTB.Open(); //opens connection
                 OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Students;", cnctDTB);
@@ -106,10 +123,11 @@ namespace The_Email_Client
                 Updatetable();
             }
         }
+        //Runs a command whenever the search text boxes text is changed
         private void SearchTextBoxes_TextChanged(object sender, TextChangedEventArgs e) {
             SearchTable(searchNameTextBox.Text, searchEmailTextBox.Text, StudentsDataGrid);
         }
-
+        //Updates the table to only display items which contain the users search term
         private void SearchTable(string searchname, string searchemail, DataGrid datagrid) {
             datagrid.Items.Clear();
             for (int i = 0; i < tempstudentdatagrid.Items.Count; i++) {
@@ -118,7 +136,7 @@ namespace The_Email_Client
                     datagrid.Items.Add(tempstudentdatagrid.Items[i]);
             }
         }
-
+        //runs whenever the create student button is clicked
         private void CreatestudentButton_Click(object sender, RoutedEventArgs e) {
             CreateStudent();
         }
@@ -127,7 +145,8 @@ namespace The_Email_Client
             if (Addcontacterrorchecking(emailtextbox.Text.ToString())) {//makes sure the student doesnt already exists and has a valid email
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
                 try {
-                    cnctDTB.Open();
+                    cnctDTB.Open();//opens connection
+                    //SQL command to add a new student to the database
                     OleDbCommand cmd = new OleDbCommand($"INSERT INTO Students (Name, Email) "+
                         $"VALUES ('{ nametextbox.Text }','{ emailtextbox.Text }');", cnctDTB);
                     cmd.ExecuteNonQuery();//creates a new student in the database
@@ -136,26 +155,27 @@ namespace The_Email_Client
                 finally { cnctDTB.Close(); } //closes connection
                 emailtextbox.Clear(); searchNameTextBox.Clear();
                 nametextbox.Clear(); searchEmailTextBox.Clear(); 
-                Updatetable();
+                Updatetable();//Updates table and clears textboxes
             }
         }
-
+        //checks if an email already exists in the list of students 
         private bool Addcontacterrorchecking(string email) {
-            if (Common.Preexistingemail(email, emaillist) && Common.Inccorectemailformat(email)) return true;
-            else return false;
+            return (Common.Preexistingemail(email, emaillist) && Common.Inccorectemailformat(email));
         }
-
+        //Runs whenever the text in the boxes to create a new student is changed
         private void Addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
-            addcontactButton.IsEnabled = (string.IsNullOrWhiteSpace(emailtextbox.Text) ||
-                string.IsNullOrWhiteSpace(nametextbox.Text)) ? false : true;
+            //Will disable the Add student button if both boxes dont have text in them
+            addcontactButton.IsEnabled = (!string.IsNullOrWhiteSpace(emailtextbox.Text) &&
+                !string.IsNullOrWhiteSpace(nametextbox.Text));
         }
-
+        //Adds selected students to the current class, as long as they are not already within it
         private void addstudentClassButton_Click(object sender, RoutedEventArgs e) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection to database
             try {
                 cnctDTB.Open(); //opens connection
                 foreach (Student student in StudentsDataGrid.SelectedItems) {
                     if (!student.InClass) {
+                        //Sql command to add a student to a class in the database
                         OleDbCommand cmd = new OleDbCommand($"INSERT INTO Class_Lists (Class_ID, Student_ID) " +
                             $"VALUES ({Class_ID},{student.ID});", cnctDTB);
                         cmd.ExecuteNonQuery();
@@ -164,32 +184,35 @@ namespace The_Email_Client
             }
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); } //closes connection
-            Updatetable();
+            Updatetable();//updates the table
         }
-
+        //Removes selected students from the current class
         private void RemoveFromClassButton_Click(object sender, RoutedEventArgs e) {
-            OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-            try {
-                cnctDTB.Open();
-                foreach (Student student in StudentsDataGrid.SelectedItems) {
-                    if (student.InClass) {
-                        OleDbCommand cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {Class_ID}" +
-                            $" AND Student_ID = {student.ID};", cnctDTB);
-                        cmd.ExecuteNonQuery();
-                        //cnctDTB.Close(); cnctDTB.Open();
-                        //cmd.CommandText = $"SELECT * FROM Class_Lists WHERE Student_ID = {student.ID};";
-                        //OleDbDataReader Reader = cmd.ExecuteReader();
-                        //if(!Reader.HasRows) {
-                        //    cnctDTB.Close(); cnctDTB.Open();
-                        //    cmd.CommandText = $"DELETE FROM Students WHERE Student_ID = {student.ID};";
-                        //    cmd.ExecuteNonQuery();
-                        //} //deleletes students which are in no classes [optional]
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to remove the students(s).", "Question?", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes) {
+                OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
+                try {
+                    cnctDTB.Open();
+                    foreach (Student student in StudentsDataGrid.SelectedItems) {
+                        if (student.InClass) {
+                            OleDbCommand cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {Class_ID}" +
+                                $" AND Student_ID = {student.ID};", cnctDTB);
+                            cmd.ExecuteNonQuery();
+                            //cnctDTB.Close(); cnctDTB.Open();
+                            //cmd.CommandText = $"SELECT * FROM Class_Lists WHERE Student_ID = {student.ID};";
+                            //OleDbDataReader Reader = cmd.ExecuteReader();
+                            //if(!Reader.HasRows) {
+                            //    cnctDTB.Close(); cnctDTB.Open();
+                            //    cmd.CommandText = $"DELETE FROM Students WHERE Student_ID = {student.ID};";
+                            //    cmd.ExecuteNonQuery();
+                            //} //deleletes students which are in no classes [optional]
+                        }
                     }
                 }
+                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                finally { cnctDTB.Close(); }
+                Updatetable();//Updates the table
             }
-            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-            finally { cnctDTB.Close(); }
-            Updatetable();
         }
     }
 }

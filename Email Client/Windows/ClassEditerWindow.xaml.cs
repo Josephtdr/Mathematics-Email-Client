@@ -28,7 +28,7 @@ namespace The_Email_Client {
             Title = $"ClassEditerWindow | {this.editableclass.Name}:";
             KeyDown += delegate {
                 if (Keyboard.IsKeyDown(Key.Enter)
-            && addcontactButton.IsEnabled) Addcontact();
+            && addstudentButton.IsEnabled) Addstudent();
             };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             Updatetable();
@@ -55,8 +55,8 @@ namespace The_Email_Client {
             finally { cnctDTB.Close(); }
         }
 
-        private void RemovecontactButton_Click(object sender, RoutedEventArgs e) {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the contact(s).", "Question?", MessageBoxButton.YesNo);
+        private void RemovestudentButton_Click(object sender, RoutedEventArgs e) {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to remove the students(s).", "Question?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes) {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
@@ -97,12 +97,12 @@ namespace The_Email_Client {
             }
         }
 
-        private void AddcontactButton_Click(object sender, RoutedEventArgs e) {
-            Addcontact();
+        private void AddstudentButton_Click(object sender, RoutedEventArgs e) {
+            Addstudent();
         }
 
-        private void Addcontact() {
-            if (Addcontacterrorchecking(emailtextbox.Text.ToString())) {
+        private void Addstudent() {
+            if (Addstudenterrorchecking(emailtextbox.Text.ToString())) {
                 int StudentID = 0; 
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
@@ -148,22 +148,22 @@ namespace The_Email_Client {
             }
         }
 
-        private bool Addcontacterrorchecking(string email) {
+        private bool Addstudenterrorchecking(string email) {
             if (Preexistingemail(email) && Common.Inccorectemailformat(email)) return true;
             else return false;
         }
 
         private bool Preexistingemail(string email) {
             if (emaillist.Contains(email)) {
-                MessageBox.Show("A contact with this email already exists!", "Error");
+                MessageBox.Show("A student with this email already exists!", "Error");
                 return false;
             }
             return true;
         }
 
-        private void Addcontacttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
-            if (emailtextbox.Text == "" || nametextbox.Text == "") addcontactButton.IsEnabled = false;
-            else addcontactButton.IsEnabled = true;
+        private void Addstudenttextboxes_TextChanged(object sender, TextChangedEventArgs e) {
+            if (emailtextbox.Text == "" || nametextbox.Text == "") addstudentButton.IsEnabled = false;
+            else addstudentButton.IsEnabled = true;
         }
 
         private void browsestudentsButton_Click(object sender, RoutedEventArgs e) {

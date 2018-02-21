@@ -42,6 +42,7 @@
 
         <Image x:Name="LoadingGif" gif:ImageBehavior.AnimatedSource="sendingemail.gif" Margin="302,202,302,63" HorizontalAlignment="Center" VerticalAlignment="Center" 
                gif:ImageBehavior.RepeatBehavior="Forever" Visibility="Hidden"/>
+        <Label Content="Subject:" HorizontalAlignment="Left" Margin="6,93,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>

@@ -5,20 +5,20 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace The_Email_Client
 {
     public class Fraction
     {
-        public int Numerator { get; set; }//Variable for the numerator (top half) of the fraction
-        public int Denominator { get; set; }//Variable for the denominator (bottom half) of the fraction
+        public long Numerator { get; set; }//Variable for the numerator (top half) of the fraction
+        public long Denominator { get; set; }//Variable for the denominator (bottom half) of the fraction
         public float Value { get { //Returns the decimal value of the fraction
                 return (float)Numerator / (float)Denominator;
             }
         }
         //Overrides the ToString command such that it displays a fraction correctly when called.
         public override string ToString() {
-            Console.WriteLine(Value);
             bool WholeNumber = (Value == Math.Floor(Value));
             string str = ((WholeNumber ? $"{ Math.Floor(Value) }" : $"{Numerator}/{Denominator}")
                 .Replace("-", "")).Replace("+", "");
@@ -26,18 +26,18 @@ namespace The_Email_Client
             return str;
         }
         //Function to return the string which represents this fraction in latex
-        public string ToLatex() {
-            Console.WriteLine(Value);
-            bool WholeNumber = (Value == Math.Floor(Value));
-            string str = ((WholeNumber ? $"{ Math.Floor(Value) }" : $"\\frac{{{Numerator}}}{{{Denominator}}}")
+        public string FractionToLatex() {
+            bool WholeNumber = (Value == Math.Floor(Value));//Bool to check if number is a whole number
+            string str = ((WholeNumber ? //Creates a latex string depending upon the type, removing any symbols
+                $"{ Math.Floor(Value) }" : $"\\frac{{{Numerator}}}{{{Denominator}}}")
                 .Replace("-", "")).Replace("+", "");
-            return str;
+            return str; //Returns the latex string
         }
         //Function to convert fraction to simplest form
         public void GCD() {
-            int Remainder;
-            int a = Numerator;
-            int b = Denominator;
+            long Remainder;
+            long a = Numerator;
+            long b = Denominator;
             //Calculates the greatest common divisor between the Numerator and Denominator
             while (b != 0) {
                 Remainder = a % b;
@@ -89,10 +89,17 @@ namespace The_Email_Client
             string posetivity = (Coefficient.Value > 0 ? $"+{coefficient}" : $"-{coefficient}");
             return (Coefficient.Numerator == 0 ? "" : $"{posetivity}{X}");
         }
-        public string ToLatex() {
-            string LateX = Power.Value == 0 ? "" : Power.Value == 1 ? "x" : Power.Value < 0 ? $"x^{{-{Power.ToLatex()}}}" : $"x^{{{Power.ToLatex()}}}";
-            string coefficient = (Power.Numerator != 0 ? (Coefficient.Value == 1 || Coefficient.Value == -1) ? "" : $"{Coefficient.ToLatex()}" : $"{Coefficient.ToLatex()}");
+        //Function to crate a latex string to represent the term
+        public string TermToLatex() {
+            //String which will change depending upon the power of the term
+            string LateX = Power.Value == 0 ? "" : Power.Value == 1 ? "x" : Power.Value < 0 ?
+                $"x^{{-{Power.FractionToLatex()}}}" : $"x^{{{Power.FractionToLatex()}}}";
+            //String which will change depending upon the coefficient of the term
+            string coefficient = (Power.Numerator != 0 ? (Coefficient.Value == 1 || Coefficient.Value == -1) ? 
+                "" : $"{Coefficient.FractionToLatex()}" : $"{Coefficient.FractionToLatex()}");
+            //String which determins the sign of the equation
             string posetivity = (Coefficient.Value > 0 ? $"+{coefficient}" : $"-{coefficient}");
+            //Returns the overall latex string 
             return (Coefficient.Numerator == 0 ? "" : $"{posetivity}{LateX}");
         }
 
@@ -107,7 +114,7 @@ namespace The_Email_Client
     public abstract class Equation {//class for each equation
         public static Random Rng = new Random(); //creates an instance of the random class
         public List<Term> Components { get; set; } //stores the equation
-        public List<Term> Answer { get; set; } //stores the users answer to said equation
+        public List<Term> equationAnswer { get; set; } //stores the users answer to said equation
         public List<Term> FprimeComponents { get; set; }//stores the answer to said equation
         public abstract float CalculateAnswer(float x1, float? x2 = null);
         
@@ -123,22 +130,27 @@ namespace The_Email_Client
                 if (!string.IsNullOrWhiteSpace(str)) {//Checks if the term is empty
                     string tempstring = (str.Replace("^", "")).Replace("+", "");//Removes '+' and '^' from the term
                     string[] components = tempstring.Split('x');//splits the term into the sections before/after the 'x'
-                    string[] Coefficient_Fraction = components[0] == "" ? new string[] { "1", "1" } : 
+                    string[] Coefficient_Fraction = components[0] == "" ? new string[] { "1", "1" } :
                         components[0] == "-" ? new string[] { "-1", "1" } : components[0].Split('/');
-                    string[] Power_Fraction = components.Length < 2 ? new string[] { "0", "1" } : 
-                        components[1] == "" ? new string[] { "1", "1" } : components[1].Split('/'); 
+                    string[] Power_Fraction = components.Length < 2 ? new string[] { "0", "1" } :
+                        components[1] == "" ? new string[] { "1", "1" } : components[1].Split('/');
                     //Creates a Term from the users string of said term 
-
-                    ParsedList.Add(new Term {
-                        Coefficient = new Fraction {
-                            Numerator = Convert.ToInt16(Coefficient_Fraction[0]),
-                            Denominator = Coefficient_Fraction.Length > 1 ? Convert.ToInt16(Coefficient_Fraction[1]) : 1
-                        },//Creates the fraction representing the coefficient of each term
-                        Power = new Fraction {
-                            Numerator = Convert.ToInt16(Power_Fraction[0]),
-                            Denominator = Power_Fraction.Length > 1 ? Convert.ToInt16(Power_Fraction[1]) : 1
-                        }//Creates the fraction representing the power of each term
-                    });//Adds the new term to the list of Terms ParsedList 
+                    try {//Attempts to converts strings to numbers 
+                        ParsedList.Add(new Term {
+                            Coefficient = new Fraction {
+                                Numerator = Convert.ToInt64(Coefficient_Fraction[0]),
+                                Denominator = Coefficient_Fraction.Length > 1 ? Convert.ToInt64(Coefficient_Fraction[1]) : 1
+                            },//Creates the fraction representing the coefficient of each term
+                            Power = new Fraction {
+                                Numerator = Convert.ToInt64(Power_Fraction[0]),
+                                Denominator = Power_Fraction.Length > 1 ? Convert.ToInt64(Power_Fraction[1]) : 1
+                            }//Creates the fraction representing the power of each term
+                        });//Adds the new term to the list of Terms ParsedList 
+                    }//If numbers entered by users are too large will display an error informing the user as such
+                    catch {
+                        MessageBox.Show("Entered Numbers are too large", "Error!");
+                        return null;
+                    }
                 }
             return BubbleSort(ParsedList); //returns a sorted version of ParsedList
         }
@@ -180,11 +192,13 @@ namespace The_Email_Client
                 Equationstring += $"[{term}] ";
             return Equationstring;
         }
-        public string ToLatex() {
-            string Equationstring = "";
-            foreach (Term term in Components)
-                Equationstring += $"{term.ToLatex()} ";
-            return Equationstring;
+        //Returns a latex string of an equation
+        public string EquationToLatex() {
+            string Equationstring = "";//Creates a blank string
+            foreach (Term term in Components)//loops through each term in the equation
+                //Adds each term to the string in order
+                Equationstring += $"{term.TermToLatex()} ";
+            return Equationstring; //returns the latex string
         }
         public string FprimeEquationToString() {
             string tempString = "";
@@ -192,15 +206,20 @@ namespace The_Email_Client
                 tempString += $"{term} ";
             return tempString;
         }
-        public bool VerifyAnswer(string answer) {
+        public string FprimeEquationToLatex() {
+            string Equationstring = "";
+            foreach (Term term in FprimeComponents)
+                Equationstring += $"{term.TermToLatex()} ";
+            return Equationstring;
+        }
+        public Tuple<bool, bool> VerifyAnswer(string stringAnswer) {
             //BubbleSort sorts the terms in order of power as so the answers ordering is not punished.
-            Answer = BubbleSort(ParseString(answer));
-            List<Term> AnswerCheck = BubbleSort(FprimeComponents);
-            for (int i = 0; i < FprimeComponents.Count; i++) {
-                if (Answer[i].ToString() == null || FprimeComponents[i].ToString() != Answer[i].ToString())
-                    return false;
-            }
-            return true;
+            equationAnswer = ParseString(stringAnswer);
+            //Makes sure the user entered a valid value
+            if(equationAnswer == null) return new Tuple<bool, bool>(false, false);
+            //Checks if the users answer is the correct answer and returns the case
+            return new Tuple<bool, bool>( true, 
+                (BubbleSort(equationAnswer).ToString() == BubbleSort(FprimeComponents).ToString()));
         }
         public float F(float x) {
             float Fofx = 0;

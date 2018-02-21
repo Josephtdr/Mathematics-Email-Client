@@ -74,8 +74,7 @@
             <RadioButton x:Name = "full"  Checked = "FractionsUseHandleCheck"  Content = "Power + Coef" GroupName = "Fractions"/>
         </StackPanel>
 
-        <TextBlock x:Name="EquationTextBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Height="88" Grid.ColumnSpan="3" TextAlignment="Center" Margin="10,0,10,10"/>
-        <ScrollViewer Padding="4" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="10,26,10,0">
+       <ScrollViewer Padding="4" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="10,26,10,0">
             <controls:VisualContainerElement x:Name="formulaContainerElement" Height="120" HorizontalAlignment="Center" SnapsToDevicePixels="True"/>
         </ScrollViewer>
 
@@ -85,7 +84,7 @@
         <Label Content="Magnitude" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Margin="0,0,0,26" />
         <Label Content="Answer" HorizontalAlignment="Center"  VerticalAlignment="Top" Grid.Row="2" Margin="110,0,1,0" Height="26" Width="0"/>
         <Label Content="Questions:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="139,58,76,0" Grid.ColumnSpan="2" />
-        <Label Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="23,36,42,0" >
+        <Label Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,26,0,0" >
             <TextBlock TextDecorations="Underline">Random PDF</TextBlock>
         </Label>
         <Button x:Name="Reveal_AnswerButton" Content="Show Answer" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Click="ShowRevealButton_Click" Grid.Column="3" Margin="32,0,34,0"/>

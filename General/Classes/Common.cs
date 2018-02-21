@@ -19,56 +19,40 @@ using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 
-namespace The_Email_Client
-{
-    internal static class Common
-    {
-        public static Profiles Profile { get; set; }
+namespace The_Email_Client {
+    internal static class Common {//Class for common variables and functions between pages/windows
+        public static Profiles Profile { get; set; }//Used to locally store users information
 
-        public static List<string> Attachments { get; set; }
+        public static List<string> Attachments { get; set; }//Used to store all current attachemnts
         public static List<OpenFileDialog> AttachmentsSource { get; set; }
 
-        public static long TotalFileLength { get; set; }
+        public static long TotalFileLength { get; set; }//Used to store total file length of attachments to an email
         
-        public static string Cleanstr(object unregexed)//Takes a string from DB and returns it without any formating
-        {
+        public static string Cleanstr(object unregexed) {//Takes a string from DB and returns it without any formating 
             return Regex.Replace(unregexed.ToString(), "<.*?>", String.Empty);
         }
-        public static string RemoveWhitespace(this string input)
-        {
+        //Used to remove whitespace from a string
+        public static string RemoveWhitespace(this string input) {
             return new string(input.ToCharArray()
                 .Where(c => !Char.IsWhiteSpace(c))
                 .ToArray());
         }
-        public static bool Inccorectemailformat(string email)
-        {
+        //Used to check if an email is of a correct format
+        public static bool Inccorectemailformat(string email) {
             if (Regex.IsMatch(email, Constants.VALIDEMAILPATTERN, RegexOptions.IgnoreCase)) return true;
-            else
-            {
+            else {
                 System.Windows.MessageBox.Show("Email is of an invalid type", "Error!");
                 return false;
             }
         }
-
+        //Used to check if an email already exists within a list
         public static bool Preexistingemail(string email, List<string> emaillist) {
             if (emaillist.Contains(email)) {
-                System.Windows.MessageBox.Show("A contact with this email already exists!", "Error");
+                System.Windows.MessageBox.Show("A student with this email already exists!", "Error");
                 return false;
             }
             return true;
         }
-
-        public static bool Inccorectpasswordformat(string password)
-        {
-            if (Regex.IsMatch(password, Constants.VALIDPASSWORDPATTERN)) return true;
-            else
-            {
-                System.Windows.MessageBox.Show("Invalid Password Format. Must Contain at least 1 captial letter, 1 lowercase letters, 1 digit and be a minimum of 8 characters in length.", "Error!");
-                return false;
-            }
-        }
-
         
-
     }
 }

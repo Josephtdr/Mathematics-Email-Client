@@ -50,7 +50,7 @@ namespace The_Email_Client {
         }
 
         private void RemovecontactButton_Click(object sender, RoutedEventArgs e) {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the Class('s).", "Question?", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the Class(es).", "Question?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes) {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 OleDbCommand cmd;
