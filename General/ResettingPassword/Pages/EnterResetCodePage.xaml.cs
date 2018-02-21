@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,13 +39,20 @@ namespace The_Email_Client
                 Close();
             }
             //Checks if the code entered by the user is correct
-            if (Convert.ToInt32(ResetCodeTextbox.Text) == ForgottonPasswordPage.ResetCode)
+            int tempnum;
+            if (int.TryParse(ResetCodeTextbox.Text, out tempnum) && 
+                tempnum == ForgottonPasswordPage.ResetCode)
                 ShowResetPasswordPage();//Moves the user to the page in which they can reset their password
             else {
                 //informs the user they have entered an incorrect code
                 MessageBox.Show("Code is incorrect.", "Error!");
                 ++Attempts;//Itterates the number of attempts by the user
             }
+        }
+
+        private void SubmitResetCodeTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void SumbitResetCode_Click(object sender, RoutedEventArgs e) {

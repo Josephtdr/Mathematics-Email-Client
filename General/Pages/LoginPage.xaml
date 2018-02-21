@@ -8,7 +8,7 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="LoginPage">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF82BCCB" Height="168" Width="259">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF" Height="168" Width="259">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>

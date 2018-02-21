@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using WpfMath;
 
 namespace The_Email_Client
 {
@@ -18,19 +20,18 @@ namespace The_Email_Client
     public partial class CalculusPage : Page
     {
         protected Action ShowHomePage { get; set; } //function to take user to home page
-        protected Action ShowIndiciesPage { get; set; } //function to take user to Indicies page
         protected Action ShowEmailPage { get; set; } //function to take user to Email page
         protected Equation Equ { get; set; }
         private int UsingFractions { get; set; } //variable which indicates which type of fraction user is using
         private string TypeofFunction { get; set; } //variable which indicated if user is user integration of differentiation
         private float[] X { get; set; } 
         private List<Equation> QuestionsforPDF { get; set; } //List to be used for pdf creation when user is creating a pdf
+        private TexFormulaParser formulaParser;
 
-        public CalculusPage(Action ShowHomePage, Action ShowIndiciesPage, Action ShowEmailPage) {
+        public CalculusPage(Action ShowHomePage, Action ShowEmailPage) {
             InitializeComponent();
             this.ShowHomePage = ShowHomePage; //initilises the function from the MainWindow.xaml.cs
             this.ShowEmailPage = ShowEmailPage; //initilises the function from the MainWindow.xaml.cs
-            this.ShowIndiciesPage = ShowIndiciesPage; //initilises the function from the MainWindow.xaml.cs
             QuestionsforPDF = new List<Equation>(); //sets the list to a blank list
             Initiaize();
         }
@@ -49,13 +50,31 @@ namespace The_Email_Client
         //creates and displays a random equation to the user
         private void GenerateRandomEquationButton_Click(object sender, RoutedEventArgs e) {
             Equation Equ = CreateRandomEquation(); //creates a random equation according to the users perameters
-            if (Equ != null) { //checks the equation was succesfully created
+            if (Equ != null) { //checks the equation was succesfully created 
+
                 EquationTextBlock.Text = Equ.ToString(); //shows the question is a text box so the user can see it
                 FprimeTextBlock.Text = Equ.FprimeEquationToString(); //places the answer in a textbox that the user can look at if they wish to
                 AnswerBox.Clear(); //clears the users answer for the previous question
                 //if the user is creating a pdf, will add the equation to the list of equations for said pdf
-                if ((string)PdfButton.Content == "PDF Started!") QuestionsforPDF.Add(Equ); 
+                if ((string)PdfButton.Content == "PDF Started!") QuestionsforPDF.Add(Equ);
             }
+            //Converts the equation to a latex image and displays it to the user
+            
+            formulaContainerElement.Visual = RenderLatex(Equ.ToLatex());
+        }
+
+        private DrawingVisual RenderLatex(string stringtoLatex) {
+            TexFormulaParser.Initialize();
+            formulaParser = new TexFormulaParser();
+            TexFormula formula = formulaParser.Parse(stringtoLatex);
+            // Render formula to visual.
+            var visual = new DrawingVisual();
+            var renderer = formula.GetRenderer(TexStyle.Display, 20d);
+            var formulaSize = renderer.RenderSize;
+            using (var drawingContext = visual.RenderOpen()) {
+                renderer.Render(drawingContext, 0, 1);
+            }
+            return visual;
         }
 
         //created a random equation according to the users perameters
@@ -236,9 +255,6 @@ namespace The_Email_Client
                     break;
                 case "Intergration": //If selected, functions created will be solved with intergration
                     TypeofFunction = "integration";
-                    break;
-                case "Indicies": //If selected, will display the Indicies Page
-                    ShowIndiciesPage();
                     break;
                 case "Email": //If Selected, will display the Email Page
                     ShowEmailPage();

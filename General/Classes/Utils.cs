@@ -225,9 +225,9 @@ namespace The_Email_Client
             AttachmentNames = new List<string>();
         }
 
-        public void Send()
-        {
+        public void Send() {
             try {
+                //Initilises credentials for email
                 MailAddress fromAddress = new MailAddress(UserEmail, UserName);
                 SmtpClient smtp = new SmtpClient {
                     Host = Server,
@@ -237,27 +237,24 @@ namespace The_Email_Client
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(fromAddress.Address, UserPassword),
                 };
-                using (MailMessage message = new MailMessage() { From = fromAddress, Subject = Subject, Body = Body }) {
-                    if (Recipients != null) foreach (string recipient in Recipients) message.To.Add(new MailAddress(recipient));
-                    if (CC != null) if(CC[0] != "") foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
-                    if (BCC != null) if(BCC[0] != "") foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
-
+                using (MailMessage message = new MailMessage()
+                { From = fromAddress, Subject = Subject, Body = Body }) {
+                    //Gets and formats the emails the user wishes to email.
+                    if (!string.IsNullOrWhiteSpace(Recipients[0]))
+                        foreach (string rec in Recipients) message.To.Add(new MailAddress(rec));
+                    if (CC != null && !string.IsNullOrWhiteSpace(CC[0]))
+                        foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
+                    if (BCC != null && !string.IsNullOrWhiteSpace(BCC[0]))
+                        foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
+                    //Gets attachments
                     if(AttachmentNames != null)
                         foreach (string Attachment in AttachmentNames) {
                             Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
-                            ContentDisposition disposition = attachment.ContentDisposition;
-                            disposition.CreationDate = System.IO.File.GetCreationTime(Attachment);
-                            disposition.ModificationDate = System.IO.File.GetLastWriteTime(Attachment);
-                            disposition.ReadDate = System.IO.File.GetLastAccessTime(Attachment);
-                            disposition.FileName = System.IO.Path.GetFileName(Attachment);
-                            disposition.Size = new FileInfo(Attachment).Length;
-                            disposition.DispositionType = DispositionTypeNames.Attachment;
                             message.Attachments.Add(attachment);
-                            Console.WriteLine(Attachment);
                         }
-                    smtp.Send(message);
+                    smtp.Send(message); //Sends email
                  }
-            }
+            }//prevents the program from crashing and outputs any errors to the user
             catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.ToString()); }
         }
     }

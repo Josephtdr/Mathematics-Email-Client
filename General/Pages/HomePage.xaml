@@ -4,26 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:The_Email_Client"
-      mc:Ignorable="d" d:DesignWidth="600"
+      mc:Ignorable="d"
       Background="#FFD9D0FF"
       Title="HomePage">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF" Height="110">
         <Grid.RowDefinitions>
-            <RowDefinition Height="87*"/>
-            <RowDefinition Height="23*"/>
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="113*"/>
+            <ColumnDefinition Width="112*"/>
 
         </Grid.ColumnDefinitions>
-        <Button x:Name="EmailButton" Content="Email" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="3" Click="Button_Click"/>
-        <Button x:Name="DifferentiationButton" Content="Calculus" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="125" Height="79" Grid.Column="1" Click=" Button_Click"/>
-        <Button x:Name="IndiciesButton" Content="Indicies" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="125" Height="79" Grid.Column="2" Click="Button_Click"/>
-        <Button Content="Log Out" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Click="LogOutButton_Click" Grid.ColumnSpan="4" Height="20" Grid.Row="1"/>
+        <Button x:Name="EmailButton" Content="Email" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="60" Grid.Column="1" Click="Button_Click"/>
+        <Button x:Name="DifferentiationButton" Content="Calculus" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="60" Grid.Column="0" Click=" Button_Click"/>
+        <Button Content="Log Out" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Click="LogOutButton_Click" Grid.ColumnSpan="2" Height="20" Grid.Row="1" Margin="74,1,75,12"/>
 
 
 

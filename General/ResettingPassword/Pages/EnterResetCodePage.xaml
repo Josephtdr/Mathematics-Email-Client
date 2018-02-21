@@ -4,27 +4,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:The_Email_Client"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      mc:Ignorable="d"
       Title="EnterResetCodePage">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD9D0FF" Width="170" Height="89">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-       
-        <TextBox x:Name="ResetCodeTextbox" HorizontalAlignment="Center" Height="18" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+
+        <TextBox x:Name="ResetCodeTextbox" PreviewTextInput="SubmitResetCodeTextbox_PreviewTextInput" HorizontalAlignment="Center" Height="18" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
         <Label Content="Enter Reset Code" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
-        <Button Grid.ColumnSpan="2" Grid.Row="2" Margin="0,10,0,0" Content="Submit" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="SumbitResetCode_Click"/>
+        <Button Grid.ColumnSpan="2" Grid.Row="2" Content="Submit" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="SumbitResetCode_Click"/>
 
     </Grid>
 </Page>

@@ -25,6 +25,14 @@ namespace The_Email_Client
 
             return str;
         }
+        //Function to return the string which represents this fraction in latex
+        public string ToLatex() {
+            Console.WriteLine(Value);
+            bool WholeNumber = (Value == Math.Floor(Value));
+            string str = ((WholeNumber ? $"{ Math.Floor(Value) }" : $"\\frac{{{Numerator}}}{{{Denominator}}}")
+                .Replace("-", "")).Replace("+", "");
+            return str;
+        }
         //Function to convert fraction to simplest form
         public void GCD() {
             int Remainder;
@@ -80,6 +88,12 @@ namespace The_Email_Client
             string coefficient = (Power.Numerator != 0 ? (Coefficient.Value == 1 || Coefficient.Value == -1) ? "" : $"{Coefficient}" : $"{Coefficient}");
             string posetivity = (Coefficient.Value > 0 ? $"+{coefficient}" : $"-{coefficient}");
             return (Coefficient.Numerator == 0 ? "" : $"{posetivity}{X}");
+        }
+        public string ToLatex() {
+            string LateX = Power.Value == 0 ? "" : Power.Value == 1 ? "x" : Power.Value < 0 ? $"x^{{-{Power.ToLatex()}}}" : $"x^{{{Power.ToLatex()}}}";
+            string coefficient = (Power.Numerator != 0 ? (Coefficient.Value == 1 || Coefficient.Value == -1) ? "" : $"{Coefficient.ToLatex()}" : $"{Coefficient.ToLatex()}");
+            string posetivity = (Coefficient.Value > 0 ? $"+{coefficient}" : $"-{coefficient}");
+            return (Coefficient.Numerator == 0 ? "" : $"{posetivity}{LateX}");
         }
 
         public static Term operator +(Term left, Term right) {
@@ -164,6 +178,12 @@ namespace The_Email_Client
             string Equationstring = "";
             foreach (Term term in Components)
                 Equationstring += $"[{term}] ";
+            return Equationstring;
+        }
+        public string ToLatex() {
+            string Equationstring = "";
+            foreach (Term term in Components)
+                Equationstring += $"{term.ToLatex()} ";
             return Equationstring;
         }
         public string FprimeEquationToString() {

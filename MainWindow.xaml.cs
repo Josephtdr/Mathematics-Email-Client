@@ -15,24 +15,18 @@ namespace The_Email_Client
         protected RegistrationPage RegistrationPage { get; set; }
         protected HomePage HomePage { get; set; }
         protected CalculusPage CalculusPage { get; set; }
-        protected IndiciesPage IndiciesPage { get; set; }
         protected Page PreviousPage { get; set; }
         public MainWindow() {
             InitializeComponent();
             Common.AttachmentsSource = new List<OpenFileDialog>();
             Common.Attachments = new List<string>();
             Common.Profile = new Profiles();
-            HomePage = new HomePage(ShowEmailPage, ShowLoginPage, ShowCalculusPage, ShowIndiciesPage);
-            CalculusPage = new CalculusPage(ShowHomePage, ShowIndiciesPage, ShowEmailPage);
-            IndiciesPage = new IndiciesPage(ShowHomePage, ShowCalculusPage, ShowEmailPage);
+            HomePage = new HomePage(ShowEmailPage, ShowLoginPage, ShowCalculusPage);
+            CalculusPage = new CalculusPage(ShowHomePage, ShowEmailPage);
             LoginPage = new LoginPage(LogintoHomePage, ShowRegistrationPage);
             EmailPage = new EmailPage(ShowPreviousPage, ShowHomePage);
             RegistrationPage = new RegistrationPage(ShowLoginPage);
             ShowLoginPage();
-        }
-        private void ShowIndiciesPage() {
-            IndiciesPage.Initialize();
-            ShowPage(IndiciesPage);
         }
         private void ShowEmailPage() {
             ShowPage(EmailPage);
@@ -62,9 +56,6 @@ namespace The_Email_Client
             switch (PreviousPage.GetType().ToString()) {
                 case "CalculusPage":
                     CalculusPage.Initiaize();
-                    break;
-                case "IndiciesPage":
-                    IndiciesPage.Initialize();
                     break;
             }
             ShowPage(PreviousPage);

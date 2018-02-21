@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:The_Email_Client"
         mc:Ignorable="d"
-        Title="MangerAttachmentsWindow" Height="330" Width="510">
+        Title="MangeAttachmentsWindow" Height="330" Width="510">
     <Grid>
         <DataGrid x:Name="fileDataGrid" Margin="0,0,0,27" IsReadOnly="True" Background="#FFD9D0FF">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="File Name" IsReadOnly="True"  Binding="{Binding Path=FileName}" Width="*"/>
-                <DataGridTextColumn Header="File Size" IsReadOnly="True"  Binding="{Binding Path=FileLength}" Width="*"/>
+                <DataGridTextColumn Header="File Size (KB)" IsReadOnly="True"  Binding="{Binding Path=FileLength}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="AddButton" Content="Add File" HorizontalAlignment="Left" Height="27" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="101" Click="AddButton_Click"/>
