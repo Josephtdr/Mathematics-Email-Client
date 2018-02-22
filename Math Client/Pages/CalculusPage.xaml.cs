@@ -1,9 +1,6 @@
-﻿    using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -12,8 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WpfMath;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
     /// Interaction logic for CalculusPage.xaml
     /// </summary>
@@ -27,7 +23,7 @@ namespace The_Email_Client
         private float[] X { get; set; } 
         private List<Equation> QuestionsforPDF { get; set; } //List to be used for pdf creation when user is creating a pdf
         private TexFormulaParser formulaParser;
-
+        //Constuctor
         public CalculusPage(Action ShowHomePage, Action ShowEmailPage) {
             InitializeComponent();
             this.ShowHomePage = ShowHomePage; //initilises the function from the MainWindow.xaml.cs
@@ -35,7 +31,7 @@ namespace The_Email_Client
             QuestionsforPDF = new List<Equation>(); //sets the list to a blank list
             Initiaize();
         }
-
+        //Code to set up Page whenever page is loaded
         public void Initiaize() {
             TypeofFunction = "diferentiation";
             PageSelectionComboBox.SelectedIndex = 0; 
@@ -82,10 +78,10 @@ namespace The_Email_Client
             if (!string.IsNullOrWhiteSpace(OrderBox.Text) && !string.IsNullOrWhiteSpace(MagnitudeBox.Text)) {
                 switch (TypeofFunction) {
                     case "diferentiation": //creates an eqaution to be solved with diferentiation
-                        Equ = new Diferentiation(Equation.CreateRandomEquation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions));
+                        Equ = new Diferentiation(Equation.CreateRandomEquation(Convert.ToInt16(OrderBox.Text)-1, Convert.ToInt16(MagnitudeBox.Text), UsingFractions));
                         break;
                     case "integration": //creates an eqaution to be solved with intergration
-                        Equ = new Integration(Equation.CreateRandomEquation(Convert.ToInt16(OrderBox.Text), Convert.ToInt16(MagnitudeBox.Text), UsingFractions));
+                        Equ = new Integration(Equation.CreateRandomEquation(Convert.ToInt16(OrderBox.Text)-1, Convert.ToInt16(MagnitudeBox.Text), UsingFractions));
                         break;
                 }
                 return Equ;
@@ -110,13 +106,25 @@ namespace The_Email_Client
         //checks if what the user has submited is the same as the pre calculated answear
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
             if (!string.IsNullOrWhiteSpace(AnswerBox.Text)) {
+                MathmaticsCorrectIncorrectWindow MathmaticsCorrectIncorrectWindow;
                 //Gets values stating if the user is correct or incorrect
-                Tuple<bool, bool> Correct = (Equ.VerifyAnswer(AnswerBox.Text));
-                if (!Correct.Item1) return;//Ends function is users answer has an error in it
+                UsersResult Correct = (Equ.VerifyAnswer(AnswerBox.Text));
                 //informs the user if they are correct or incorrect
-                var MathmaticsCorrectIncorrectWindow = 
-                    new MathmaticsCorrectIncorrectWindow(Correct.Item2);
-                MathmaticsCorrectIncorrectWindow.ShowDialog();
+                switch (Correct) {
+                    case UsersResult.Correct:
+                        MathmaticsCorrectIncorrectWindow =
+                            new MathmaticsCorrectIncorrectWindow(true);
+                        MathmaticsCorrectIncorrectWindow.ShowDialog();
+                        break;
+                    case UsersResult.Incorrect:
+                        MathmaticsCorrectIncorrectWindow =
+                            new MathmaticsCorrectIncorrectWindow(false);
+                        MathmaticsCorrectIncorrectWindow.ShowDialog();
+                        break;
+                    case UsersResult.Error:
+                        //Ends function is users answer has an error in it
+                        return;
+                }
             }
         }
         
@@ -206,10 +214,10 @@ namespace The_Email_Client
             if (e.DataObject.GetDataPresent(typeof(String))) {
                 String text = (String)e.DataObject.GetData(typeof(String));
                 if(regex.IsMatch(text)) 
-                    e.CancelCommand();
+                    e.CancelCommand();//Stops user pasting if paste is not only numbers
             }
             else 
-                e.CancelCommand();
+                e.CancelCommand();//Stops user pasting if paste is not only numbers
         }
         
         private void PdfButton_Click(object sender, RoutedEventArgs e) {
@@ -282,9 +290,13 @@ namespace The_Email_Client
         }
 
         private void CreatePDFButton_Click(object sender, RoutedEventArgs e) {
-            PDF.CreatePDFfromList(QuestionsforPDF, false, (Class)ClassesCombobox.SelectedItem); //Creates a pdf from the current list of equations 
-            QuestionsforPDF = new List<Equation>(); //clears list of current questions
-            ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
+            if (QuestionsforPDF.Count > 0) {
+                PDF.CreatePDFfromList(QuestionsforPDF, false, (Class)ClassesCombobox.SelectedItem); //Creates a pdf from the current list of equations 
+                QuestionsforPDF = new List<Equation>(); //clears list of current questions
+                ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
+            }
+            else
+                MessageBox.Show("Please add at least one question to the PDF.", "Error!");
         }
 
         //currently doesnt work in specific cases such as when a new class is created on the email window. 

@@ -114,7 +114,7 @@ namespace The_Email_Client
     public abstract class Equation {//class for each equation
         public static Random Rng = new Random(); //creates an instance of the random class
         public List<Term> Components { get; set; } //stores the equation
-        public List<Term> equationAnswer { get; set; } //stores the users answer to said equation
+        public List<Term> Answer { get; set; } //stores the users answer to said equation
         public List<Term> FprimeComponents { get; set; }//stores the answer to said equation
         public abstract float CalculateAnswer(float x1, float? x2 = null);
         
@@ -200,6 +200,14 @@ namespace The_Email_Client
                 Equationstring += $"{term.TermToLatex()} ";
             return Equationstring; //returns the latex string
         }
+        //Returns a string representing the users Answer
+        public string AnswerToString() {
+            string tempString = "";
+            foreach (Term term in Answer)
+                tempString += $"{term} ";
+            return tempString;
+        }
+        //Returns a string representing the F Prime of the equation
         public string FprimeEquationToString() {
             string tempString = "";
             foreach (Term term in FprimeComponents)
@@ -212,14 +220,13 @@ namespace The_Email_Client
                 Equationstring += $"{term.TermToLatex()} ";
             return Equationstring;
         }
-        public Tuple<bool, bool> VerifyAnswer(string stringAnswer) {
+        public UsersResult VerifyAnswer(string stringAnswer) {
             //BubbleSort sorts the terms in order of power as so the answers ordering is not punished.
-            equationAnswer = ParseString(stringAnswer);
+            Answer = ParseString(stringAnswer);
             //Makes sure the user entered a valid value
-            if(equationAnswer == null) return new Tuple<bool, bool>(false, false);
+            if(Answer == null) return UsersResult.Error;
             //Checks if the users answer is the correct answer and returns the case
-            return new Tuple<bool, bool>( true, 
-                (BubbleSort(equationAnswer).ToString() == BubbleSort(FprimeComponents).ToString()));
+            return AnswerToString() == FprimeEquationToString() ? UsersResult.Correct : UsersResult.Incorrect;
         }
         public float F(float x) {
             float Fofx = 0;

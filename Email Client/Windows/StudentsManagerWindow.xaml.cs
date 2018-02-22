@@ -16,19 +16,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 
-namespace The_Email_Client
-{
-    /// <summary>
-    /// Interaction 
-    /// 
-    /// 
-    /// 
-    /// 
-    /// ic for ContactsManagerWindows.xaml
-    /// </summary>
-    /// 
-    
-
+namespace The_Email_Client {
     public partial class StudentsManagerWindow : Window {
         List<string> Classemailslist = new List<string>();
         List<string> emaillist = new List<string>();

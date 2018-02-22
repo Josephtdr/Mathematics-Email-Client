@@ -13,8 +13,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Diagnostics;
 
-namespace The_Email_Client 
-{
+namespace The_Email_Client {
     public class Student {
         public string Name { get; set; }
         public string EmailAddress { get; set; }
@@ -387,6 +386,11 @@ namespace The_Email_Client
             };
             tempemail.Send();//Sends email
         }
+    }
+    public enum UsersResult {
+        Correct,
+        Incorrect,
+        Error,
     }
 
 }
