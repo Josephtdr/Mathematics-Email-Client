@@ -53,6 +53,12 @@ namespace The_Email_Client {
             }
             return true;
         }
-        
+        //Returns true if a list is not null, not empty and the first element is not blank
+        public static bool AnyAndNotNull<T>(this IEnumerable<T> source) {
+            if (source != null && source.Any())
+                return true;
+            else
+                return false;
+        }
     }
 }

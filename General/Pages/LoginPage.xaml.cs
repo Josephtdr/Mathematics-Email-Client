@@ -36,23 +36,11 @@ namespace The_Email_Client
             
             DataContext = this;
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
-                { Password = Passwordbox.Password; UserName = UserNameTextBox.Text; Email = EmailTextBox.Text;
-                    if (Encryption.VerifyPasswordorEmail(UserName, Password, true)) {
-                        if (String.IsNullOrWhiteSpace(Email)) {
-                            UserNameTextBox.Clear();
-                            ShowHomePage?.Invoke();
-                        }
-                        else if (Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
-                            UserNameTextBox.Clear(); EmailTextBox.Clear();
-                            ShowHomePage?.Invoke();
-                        }
-                    }
-                }
-                
+                { VerifyLogIn(); }
             };
         }
 
-        private void SubmitButton_Click(object sender, RoutedEventArgs e) {
+        private void VerifyLogIn() {
             Password = Passwordbox.Password; UserName = UserNameTextBox.Text; Email = EmailTextBox.Text;
             if (Encryption.VerifyPasswordorEmail(UserName, Password, true)) {
                 if (String.IsNullOrWhiteSpace(Email)) {
@@ -64,6 +52,10 @@ namespace The_Email_Client
                     ShowHomePage?.Invoke();
                 }
             }
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e) {
+            VerifyLogIn();
         }
 
         private void Registrationbutton_Click(object sender, RoutedEventArgs e) {

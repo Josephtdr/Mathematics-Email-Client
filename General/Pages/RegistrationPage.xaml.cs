@@ -36,13 +36,13 @@ namespace The_Email_Client {
                  }
             };
         }
-        
         private void SignUpbutton_Click(object sender, RoutedEventArgs e) {
-            if (Common.Inccorectemailformat(EmailTextBox.Text)
-                && UserNameAlreadyExists(UserNameTextBox.Text) 
+            if (UserNameAlreadyExists(UserNameTextBox.Text)
+                && Common.Inccorectemailformat(EmailTextBox.Text)
                 && NonNullFields()
-                && PasswordsMatch())
+                && PasswordsMatch()) {
                 RegisterUser();
+            }
         }
 
         private bool NonNullFields() {

@@ -16,8 +16,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
     /// Interaction 
     /// 
@@ -27,18 +26,15 @@ namespace The_Email_Client
     /// 
     /// ic for SettingsWindow.xaml
     /// </summary>
-    public partial class ProfilesWindow : Window
-    {
+    public partial class ProfilesWindow : Window {
         protected BindingExpression[] expressions;
         private List<string> ProfileResetValues { get; set; }
         private List<string> EditableSettings { get; set; }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (Title == "Profile Window - Unsaved")
-            {
-                switch (MessageBox.Show("Are you sure you want to Quit without Saving?", "Unsaved Data!", MessageBoxButton.YesNo))
-                {
+            if (Title == "Profile Window - Unsaved") {
+                switch (MessageBox.Show("Are you sure you want to Quit without Saving?", "Unsaved Data!", MessageBoxButton.YesNo)){
                     case MessageBoxResult.Yes:
                         break;
                     case MessageBoxResult.No:
@@ -51,8 +47,7 @@ namespace The_Email_Client
         }
 
 
-        public ProfilesWindow()
-        {
+        public ProfilesWindow() {
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             
             ProfileResetValues = new List<string>();
@@ -82,8 +77,7 @@ namespace The_Email_Client
         }
 
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void SaveButton_Click(object sender, RoutedEventArgs e) {
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
             Common.Profile.UpdateDatabasefromProfile(Common.Profile);
             SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
@@ -100,20 +94,17 @@ namespace The_Email_Client
             Common.Profile.UpdateDatabasefromProfile(Common.Profile);
             Close();
         }
-        private void TextChanged(object sender, TextChangedEventArgs e)
-       {
+        private void TextChanged(object sender, TextChangedEventArgs e) {
             bool defaultvalues = true;
             if (EditableSettings[1] != PortBox.Text || EditableSettings[2] != ServerBox.Text
                 || EditableSettings[0] != UserNameBox.Text || EditableSettings[3] != UserUserNameBox.Text)
                defaultvalues = false;
             
-            if (!defaultvalues)
-            {
+            if (!defaultvalues) {
                 Title = "Profile Window - Unsaved";
                 SaveButton.IsEnabled = true; SaveExitButton.IsEnabled = true;
             }
-            else
-            {
+            else {
                 Title = "Profile Window";
                 SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             }
@@ -124,16 +115,14 @@ namespace The_Email_Client
             else ResetButton.IsEnabled = false;
         }
 
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void ResetButton_Click(object sender, RoutedEventArgs e) {
             UserNameBox.Text = ProfileResetValues[0];
             PortBox.Text = ProfileResetValues[1];
             ServerBox.Text = ProfileResetValues[2];
             UserUserNameBox.Text = ProfileResetValues[3];
         }
 
-        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e) {
             ResettingPasswordWindow ForgotPasswordWindow = new ResettingPasswordWindow();
             ForgotPasswordWindow.ShowDialog();
         }

@@ -41,14 +41,15 @@ namespace The_Email_Client {
                 OleDbCommand cmd = new OleDbCommand($"SELECT ID FROM Profiles WHERE Settings_ID = {Settings_ID};", cnctDTB);
                 OleDbDataReader Reader = cmd.ExecuteReader();
                 if (!Reader.HasRows) { //checks no other profiles use the same old settings values
-                    cnctDTB.Close(); cnctDTB.Open();
+                    cnctDTB.Close(); cnctDTB.Open();//reopens connection
                     cmd.CommandText = $"DELETE FROM Settings WHERE ID = {Settings_ID};";
-                    cmd.ExecuteNonQuery();//if none have it, deletes there now redundant old settings
+                    cmd.ExecuteNonQuery();//if none have it, deletes the now redundant settings
                 }
                 cnctDTB.Close();//closes the connection}
             }
+            //if there is an error, displays it to the user
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-            finally { cnctDTB.Close(); }
+            finally { cnctDTB.Close(); } //closes connection
         }
         private static void CreateNewSettings(Profiles profile) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
@@ -223,38 +224,37 @@ namespace The_Email_Client {
         public Email() {
             AttachmentNames = new List<string>();
         }
-
+        
         public void Send() {
-            try {
-                //Initilises credentials for email
-                MailAddress fromAddress = new MailAddress(UserEmail, UserName);
-                SmtpClient smtp = new SmtpClient {
-                    Host = Server,
-                    Port = Port,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, UserPassword),
-                };
-                using (MailMessage message = new MailMessage()
-                { From = fromAddress, Subject = Subject, Body = Body }) {
-                    //Gets and formats the emails the user wishes to email.
-                    if (!string.IsNullOrWhiteSpace(Recipients[0]))
-                        foreach (string rec in Recipients) message.To.Add(new MailAddress(rec));
-                    if (CC != null && !string.IsNullOrWhiteSpace(CC[0]))
-                        foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
-                    if (BCC != null && !string.IsNullOrWhiteSpace(BCC[0]))
-                        foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
-                    //Gets attachments
-                    if(AttachmentNames != null)
-                        foreach (string Attachment in AttachmentNames) {
-                            Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
-                            message.Attachments.Add(attachment);
-                        }
-                    smtp.Send(message); //Sends email
-                 }
-            }//prevents the program from crashing and outputs any errors to the user
-            catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.ToString()); }
+            //Initilises credentials for email
+            MailAddress fromAddress = new MailAddress(UserEmail, UserName);
+            SmtpClient smtp = new SmtpClient {
+                Host = Server,
+                Port = Port,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, UserPassword),
+            };
+            using (MailMessage message = new MailMessage() { From = fromAddress, Subject = Subject, Body = Body }) {
+                //Gets and formats the emails addresses the user wishes to email.
+                if (Recipients != null && !string.IsNullOrWhiteSpace(Recipients[0]))
+                    foreach (string rec in Recipients) message.To.Add(new MailAddress(rec));
+                if (CC != null && !string.IsNullOrWhiteSpace(CC[0]))
+                    foreach (string cc in CC) message.CC.Add(new MailAddress(cc));
+                if (BCC != null && !string.IsNullOrWhiteSpace(BCC[0]))
+                    foreach (string bcc in BCC) message.Bcc.Add(new MailAddress(bcc));
+                //Gets attachments
+                if (Common.AnyAndNotNull(AttachmentNames)) {
+                    foreach (string Attachment in AttachmentNames) {
+                        Attachment attachment = new Attachment(Attachment, MediaTypeNames.Application.Octet);
+                        message.Attachments.Add(attachment);
+                    }
+                }
+                try { smtp.Send(message); } //Sends email
+                //prevents the program from crashing and outputs any errors to the user
+                catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message, "Error!"); }
+            }
         }
     }
     public class PDF {

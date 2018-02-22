@@ -11,7 +11,7 @@
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         SizeChanged="Window_SizeChanged"
-        Title="Gmail Only Email Sender">
+        Title="Math Client">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#6ca1af">
         <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

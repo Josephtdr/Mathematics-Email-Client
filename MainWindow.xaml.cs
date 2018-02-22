@@ -3,6 +3,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace The_Email_Client
 {
@@ -36,7 +37,8 @@ namespace The_Email_Client
         }
         private void LogintoHomePage() {
             Common.Profile.GetInfofromDB(Common.Profile, Common.Profile.UserName);
-            if (String.IsNullOrWhiteSpace(Common.Profile.Email) || !Common.Inccorectemailformat(Common.Profile.Email)) {
+            if (String.IsNullOrWhiteSpace(Common.Profile.Email) || 
+                !Regex.IsMatch(Common.Profile.Email, Constants.VALIDEMAILPATTERN, RegexOptions.IgnoreCase)) {
                 Common.Profile.Email = Constants.DEFAULTEMAIL;
                 Common.Profile.Password = Constants.DEFAULTPASSWORD;
             }

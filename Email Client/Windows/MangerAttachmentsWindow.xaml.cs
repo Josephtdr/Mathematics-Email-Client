@@ -22,27 +22,21 @@ namespace The_Email_Client
     /// 
     /// ic for MangerAttachmentsWindow.xaml
     /// </summary>
-    public class File
-    {
+    public class File {
         public string FileName { get; set; }
         public long FileLength { get; set; }
     }
-    public partial class MangerAttachmentsWindow : Window
-    {
+    public partial class MangerAttachmentsWindow : Window {
 
-        public MangerAttachmentsWindow()
-        {
+        public MangerAttachmentsWindow() {
             InitializeComponent();
             DataContext = this;
             UpdateMBValue(Common.TotalFileLength);
         }
-        private void updateTable()
-        {
+        private void updateTable() {
             fileDataGrid.Items.Clear();
-            foreach (OpenFileDialog attachment in Common.AttachmentsSource)
-            {
-                fileDataGrid.Items.Add(new File
-                {
+            foreach (OpenFileDialog attachment in Common.AttachmentsSource) {
+                fileDataGrid.Items.Add(new File {
                     FileName = attachment.FileName,
                     FileLength = (long)(Convert.ToInt32(new FileInfo(attachment.FileName).Length) / (Math.Pow(1024, 1))) + 1
                 });
@@ -55,10 +49,9 @@ namespace The_Email_Client
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == (DialogResult)1)
             {
-                if (new FileInfo(openFileDialog.FileName).Length > 25 * Math.Pow(1024, 2) || Common.TotalFileLength + new FileInfo(openFileDialog.FileName).Length > 25 * Math.Pow(1024, 2))
+                if (Common.TotalFileLength + new FileInfo(openFileDialog.FileName).Length > 25 * Math.Pow(1024, 2))
                 { System.Windows.MessageBox.Show("The total size of all included files excedes the limit of 25MB.", "Files too Large"); }
-                else
-                {
+                else {
                     Common.AttachmentsSource.Add(openFileDialog);
                     Common.TotalFileLength += (new FileInfo(openFileDialog.FileName).Length);
                     Common.Attachments.Add(openFileDialog.FileName);
@@ -69,20 +62,17 @@ namespace The_Email_Client
             }
         }
 
-        private void UpdateMBValue(long bytes)
-        {
+        private void UpdateMBValue(long bytes) {
             int MB = (int)(bytes) / (int)(Math.Pow(1024, 2));
             MBValueLable.Content = MB.ToString();
             if (MB < 10) MBValueLable.Foreground = Brushes.Green;
-            else if (MB < 20) MBValueLable.Foreground = Brushes.Yellow;
+            else if (MB < 20) MBValueLable.Foreground = Brushes.Orange;
             else if (MB <= 25) MBValueLable.Foreground = Brushes.Red;
         }
 
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void RemoveButton_Click(object sender, RoutedEventArgs e) {
             List<OpenFileDialog> FilesforDeletion = new List<OpenFileDialog>();
-            foreach (File file in fileDataGrid.SelectedItems)
-            {
+            foreach (File file in fileDataGrid.SelectedItems) {
                 foreach (OpenFileDialog File in Common.AttachmentsSource)
                     if (file.FileName == File.FileName)
                         FilesforDeletion.Add(File);  
@@ -96,8 +86,7 @@ namespace The_Email_Client
             updateTable();
          }
 
-        private void RemoveAllButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void RemoveAllButton_Click(object sender, RoutedEventArgs e) {
             Common.Attachments.Clear();
             Common.AttachmentsSource.Clear();
             RemoveAllButton.IsEnabled = false;
