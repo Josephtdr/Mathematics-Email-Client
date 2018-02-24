@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 
-namespace The_Email_Client
-{
-    public class Fraction
-    {
+namespace The_Email_Client {
+    /// <summary>
+    /// stores classes related to mathmatical functions within the program
+    /// </summary>
+    public class Fraction {
         public long Numerator { get; set; }//Variable for the numerator (top half) of the fraction
         public long Denominator { get; set; }//Variable for the denominator (bottom half) of the fraction
         public float Value { get { //Returns the decimal value of the fraction
@@ -48,6 +46,7 @@ namespace The_Email_Client
             Numerator /= a;
             Denominator /= a;
         }
+        //overrites the + operator so that it functions with my fractions
         public static Fraction operator +(Fraction left, Fraction right) {
             Fraction tempfraction = new Fraction {
                 Numerator = ((left.Numerator * right.Denominator) + (right.Numerator * left.Denominator)),
@@ -56,7 +55,7 @@ namespace The_Email_Client
             tempfraction.GCD(); //simplifies fraction
             return tempfraction;
         }
-
+        //overrites the * operator so that it functions with my fractions
         public static Fraction operator *(Fraction left, Fraction right) {
             Fraction tempfraction = new Fraction {
                 Numerator = (left.Numerator * right.Numerator),
@@ -65,7 +64,7 @@ namespace The_Email_Client
             tempfraction.GCD(); //simplifies fraction
             return tempfraction;
         }
-
+        //overrites the / operator so that it functions with my fractions
         public static Fraction operator /(Fraction left, Fraction right) {
             Fraction tempfraction = new Fraction {
                 Numerator = (left.Numerator * right.Denominator),
@@ -83,7 +82,7 @@ namespace The_Email_Client
                 return Power.Value == 0 ? "" : Power.Value == 1? "x" : Power.Value < 0 ? $"x^-{Power}" : $"x^{Power}";
             }
         }
-
+        //overites ToString such that a string is properly displayed
         public override string ToString() {
             string coefficient = (Power.Numerator != 0 ? (Coefficient.Value == 1 || Coefficient.Value == -1) ? "" : $"{Coefficient}" : $"{Coefficient}");
             string posetivity = (Coefficient.Value > 0 ? $"+{coefficient}" : $"-{coefficient}");
@@ -102,7 +101,7 @@ namespace The_Email_Client
             //Returns the overall latex string 
             return (Coefficient.Numerator == 0 ? "" : $"{posetivity}{LateX}");
         }
-
+        //overites the + operate such that it functions correctly
         public static Term operator +(Term left, Term right) {
             return new Term {
                 Coefficient = left.Coefficient + right.Coefficient,
@@ -117,7 +116,7 @@ namespace The_Email_Client
         public List<Term> Answer { get; set; } //stores the users answer to said equation
         public List<Term> FprimeComponents { get; set; }//stores the answer to said equation
         public abstract float CalculateAnswer(float x1, float? x2 = null);
-        
+        //constructor
         public Equation(List<Term> Components) {
             this.Components = Components;
         }
@@ -186,6 +185,7 @@ namespace The_Email_Client
             }
             return BubbleSort(RndEqu); //Returns a sorted version of the list
         } 
+        //overwrites the tostring function such that a sting is properly displayed
         public override string ToString() {
             string Equationstring = "";
             foreach (Term term in Components)
@@ -214,6 +214,7 @@ namespace The_Email_Client
                 tempString += $"{term} ";
             return tempString;
         }
+        //creates a latex formula for the fprime of the equation
         public string FprimeEquationToLatex() {
             string Equationstring = "";
             foreach (Term term in FprimeComponents)
@@ -228,6 +229,7 @@ namespace The_Email_Client
             //Checks if the users answer is the correct answer and returns the case
             return AnswerToString() == FprimeEquationToString() ? UsersResult.Correct : UsersResult.Incorrect;
         }
+        //calculates the value of the equation at X
         public float F(float x) {
             float Fofx = 0;
             foreach (Term term in FprimeComponents)
@@ -282,6 +284,7 @@ namespace The_Email_Client
                 }
             }
         }
+        //calcluates the value of fprime at x1
         public override float CalculateAnswer(float x1, float? x2 = null) {
             return F(x1);
         }
@@ -304,6 +307,7 @@ namespace The_Email_Client
                 });
             }
         }
+        //calcluates the value of fprime between x1 and x2
         public override float CalculateAnswer(float x1, float? x2 = null) {
             return F(x1) - F((float)x2);
         }

@@ -1,30 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for EnterResetCodePage.xaml
+    /// Page in which the user enters the reset code 
     /// </summary>
     public partial class EnterResetCodePage : Page {
         protected Action ShowResetPasswordPage { get; set; }
         protected Action Close { get; set; }
-        private int Attempts { get; set; }
+        private int Attempts { get; set; }//stores the number of attempts the user has had
+        //constructor
         public EnterResetCodePage(Action ShowResetPasswordPage, Action Close){
             InitializeComponent();
+            //sets up actions
             this.ShowResetPasswordPage = ShowResetPasswordPage;
             this.Close = Close;
             KeyDown += delegate {//Allows the user to press enter to check their reset code
@@ -49,7 +40,7 @@ namespace The_Email_Client
                 ++Attempts;//Itterates the number of attempts by the user
             }
         }
-
+        //prevents the user from typing anything but number into the relevant textbox
         private void SubmitResetCodeTextbox_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             Regex regex = new Regex("[^0-9]+"); //regex that matches disallowed text
             e.Handled = regex.IsMatch(e.Text);

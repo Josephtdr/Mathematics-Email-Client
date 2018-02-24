@@ -1,34 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using The_Email_Client;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for ForgottonPasswordPage.xaml
+    /// Page for user to input email and username to get code to reset password
     /// </summary>
     public partial class ForgottonPasswordPage : Page {
-        public static int ResetCode { get; set; }
-        public static string UserName { get; set; }
+        public static int ResetCode { get; set; }//variable to store reset code
+        public static string UserName { get; set; }//variable to store user name of user
         protected Action ShowenterResetCodePage { get; set; }
+        //constructor
         public ForgottonPasswordPage(Action ShowenterResetCodePage) {
             InitializeComponent();
             this.ShowenterResetCodePage = ShowenterResetCodePage;
             KeyDown += delegate {
                 if (Keyboard.IsKeyDown(Key.Enter))
+                    //allows user to send reset email with the enter key
                     SendResetEmail();
             };
         }

@@ -1,29 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.OleDb;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Page used to log into the program
     /// </summary>
-    public partial class LoginPage : Page
-    {
+    public partial class LoginPage : Page {
         protected Action ShowHomePage { get; set; }
         protected Action ShowRegistationPage { get; set; }
         public string Email { get; set; }
@@ -33,35 +17,39 @@ namespace The_Email_Client
             this.ShowHomePage = ShowHomePage;
             this.ShowRegistationPage = ShowRegistationPage;
             InitializeComponent();
-            
-            DataContext = this;
+            DataContext = this; //enables databinding
+
+            //alows the user to login with the enter key
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter))
                 { VerifyLogIn(); }
             };
         }
-
+        //function to log into the program
         private void VerifyLogIn() {
             Password = Passwordbox.Password; UserName = UserNameTextBox.Text; Email = EmailTextBox.Text;
+            //checks if the users password is correct
             if (Encryption.VerifyPasswordorEmail(UserName, Password, true)) {
+                //checks if the user entered an email
                 if (String.IsNullOrWhiteSpace(Email)) {
                     UserNameTextBox.Clear();
                     ShowHomePage?.Invoke();
                 }
+                //checks if the users email is correct
                 else if (Encryption.VerifyPasswordorEmail(UserName, Email, false)) {
                     UserNameTextBox.Clear(); EmailTextBox.Clear();
                     ShowHomePage?.Invoke();
                 }
             }
         }
-
+        //button to log into the program
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
             VerifyLogIn();
         }
-
+        //button to open the registration page
         private void Registrationbutton_Click(object sender, RoutedEventArgs e) {
             ShowRegistationPage?.Invoke();
         }
-
+        //button to open the forgotten password window 
         private void ForgottenPassword_Click(object sender, RoutedEventArgs e) {
             ResettingPasswordWindow forgotPasswordWindow = new ResettingPasswordWindow();
             forgotPasswordWindow.ShowDialog();

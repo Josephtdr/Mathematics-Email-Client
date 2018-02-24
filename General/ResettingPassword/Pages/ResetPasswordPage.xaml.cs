@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.OleDb;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for ResetPasswordPage.xaml
+    /// Page for resetting users password
     /// </summary>
     public partial class ResetPasswordPage : Page {
         protected Action Close { get; set; }
+        //constructor
         public ResetPasswordPage(Action Close) {
             InitializeComponent();
             this.Close = Close;
@@ -29,6 +20,7 @@ namespace The_Email_Client {
                     ResetPassword();
             };
         }
+        //function to reset a users password
         private void ResetPassword() {
             //Checks both passwords match and are not null
             if (!string.IsNullOrWhiteSpace(PasswordBox.Password) &&
@@ -51,6 +43,7 @@ namespace The_Email_Client {
             //informs user their passwords do not match
             else MessageBox.Show("Passwords Do not Match", "Error!");
         }
+        //runs when user presses reset password button
         private void ResetPasswordButton_Click(object sender, RoutedEventArgs e) {
             ResetPassword();
         }

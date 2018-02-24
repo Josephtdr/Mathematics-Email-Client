@@ -22,7 +22,9 @@
         <TextBox x:Name="UserUserNameBox" Height="23" Margin="0,55,10,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="{Binding UserName, UpdateSourceTrigger=Explicit}" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
         <Button x:Name="ResetPasswordButton"  Content="Reset Password" HorizontalAlignment="Left" Margin="145,33,0,0" VerticalAlignment="Top" Height="22" Click="ResetPasswordButton_Click"/>
         <TextBox x:Name="UserNameBox" Height="23" Margin="0,79,10,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=Explicit}" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
-        <TextBox x:Name="ServerBox" Height="23" Margin="0,103,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Server, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
+        <TextBox x:Name="ServerBox" Height="23" Margin="0,103,10,0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                 Text="{Binding Server, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" 
+                 TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
         <TextBox x:Name="PortBox" Height="23" Margin="0,127,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Port, UpdateSourceTrigger=Explicit}" VerticalContentAlignment="Center" TextChanged="TextChanged" HorizontalAlignment="Right" Width="251"/>
 
         <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Width="88" Background="#FFF0F0F0" Click="ResetButton_Click" Margin="0,0,173,0" IsEnabled="False"/>

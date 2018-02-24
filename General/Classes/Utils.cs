@@ -5,7 +5,6 @@ using System.Data.OleDb;
 using System.Security.Cryptography;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.IO;
 using System.Net;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
@@ -14,17 +13,23 @@ using System.Linq;
 using System.Diagnostics;
 
 namespace The_Email_Client {
+    /// <summary>
+    /// Stores all the clases used through various locations within the program
+    /// </summary>
     public class Student {
+        //Class to store students from the database locally
         public string Name { get; set; }
         public string EmailAddress { get; set; }
         public int ID { get; set; }
         public bool InClass { get; set; }
     }
     public class Class {
+        //Class to store classes from the database locally
         public string Name { get; set; }
         public int ID { get; set; }
     }
     public class Profiles {
+        //Class to store profiles from the database locally
         public string ID { get; set; }
         public string Email { get; set; }
         public string Port { get; set; }
@@ -34,6 +39,7 @@ namespace The_Email_Client {
         public string UserName { get; set; }
         public int Settings_ID { get; set; }
         
+        //function to delete any redundant settings
         private static void DeleteRedundantSettings(int Settings_ID) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
             try {
@@ -51,6 +57,7 @@ namespace The_Email_Client {
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); } //closes connection
         }
+        //function to create new settings
         private static void CreateNewSettings(Profiles profile) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
             try {
@@ -70,7 +77,7 @@ namespace The_Email_Client {
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
         }
-
+        
         public void GetInfofromDB(Profiles Profile, string UserName) { //updates local profile from database    
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up connection
             try {
@@ -93,7 +100,7 @@ namespace The_Email_Client {
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }//displays error in the event of an error
             finally { cnctDTB.Close(); } //closes connection
         }
-
+        //updates database from local entries
         public void UpdateDatabasefromProfile(Profiles profile) {
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING); //sets up a connection to the database
             OleDbCommand cmd = new OleDbCommand("", cnctDTB);
@@ -341,6 +348,10 @@ namespace The_Email_Client {
 
         //Function to create a PDF from a list of Equations
         public static bool CreatePDFfromList(List<Equation> EquList, bool email, Class ClasstoEmail) {
+            if (Common.AnyAndNotNull(EquList)) {
+                MessageBox.Show("You cannot create a PDF with an empty list of Equations", "Error!");
+                return false;
+            }
             //Checks if the user has selected to email the PDF and if so checks to make sure they have chosen a class to send the PDF too
             if (email && ClasstoEmail == null) {
                 MessageBox.Show("You must select a class to email.", "Error!");
@@ -387,6 +398,7 @@ namespace The_Email_Client {
             tempemail.Send();//Sends email
         }
     }
+    //Enum for the result of a user answering a question
     public enum UsersResult {
         Correct,
         Incorrect,

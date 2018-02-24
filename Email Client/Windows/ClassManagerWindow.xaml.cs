@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Data.OleDb;
-using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for ClassManagerWindow.xaml
+    /// used to manage the classes in the database
     /// </summary>
     public partial class ClassManagerWindow : Window {
         List<string> ClassNames = new List<string>();
@@ -48,18 +38,23 @@ namespace The_Email_Client {
             catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
             finally { cnctDTB.Close(); }
         }
-
+        //Deletes selected classes and any entries in class_Lists relevant to said classes
         private void RemovecontactButton_Click(object sender, RoutedEventArgs e) {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the Class(es).", "Question?", MessageBoxButton.YesNo);
+            //Messagebox to make sure they 
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the Class(es).",
+                "Question?", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes) {
+                //sets up database connection
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
-                OleDbCommand cmd;
+                OleDbCommand cmd;//Sets up sql command variable
                 try {
-                    cnctDTB.Open();
-                    foreach (Class Class in classDataGrid.SelectedItems) {
+                    cnctDTB.Open();//opens database connection
+                    foreach (Class Class in classDataGrid.SelectedItems) {//loops through each class
+                        //SQL command to delete the class
                         cmd = new OleDbCommand($"DELETE FROM Classes WHERE ID = {Class.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
-                        cnctDTB.Close(); cnctDTB.Open();
+                        cnctDTB.Close(); cnctDTB.Open();//reopens connection
+                        //SQL command to delete now redundant data as to keep referential integrity
                         cmd = new OleDbCommand($"DELETE FROM Class_Lists WHERE Class_ID = {Class.ID};", cnctDTB);
                         cmd.ExecuteNonQuery();
                         cnctDTB.Close(); cnctDTB.Open();

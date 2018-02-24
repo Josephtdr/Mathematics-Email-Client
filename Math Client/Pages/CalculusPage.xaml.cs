@@ -17,10 +17,9 @@ namespace The_Email_Client {
     {
         protected Action ShowHomePage { get; set; } //function to take user to home page
         protected Action ShowEmailPage { get; set; } //function to take user to Email page
-        protected Equation Equ { get; set; }
+        protected Equation Equ { get; set; } //function which stores the current equation in the program
         private int UsingFractions { get; set; } //variable which indicates which type of fraction user is using
         private string TypeofFunction { get; set; } //variable which indicated if user is user integration of differentiation
-        private float[] X { get; set; } 
         private List<Equation> QuestionsforPDF { get; set; } //List to be used for pdf creation when user is creating a pdf
         private TexFormulaParser formulaParser;
         //Constuctor
@@ -29,7 +28,7 @@ namespace The_Email_Client {
             this.ShowHomePage = ShowHomePage; //initilises the function from the MainWindow.xaml.cs
             this.ShowEmailPage = ShowEmailPage; //initilises the function from the MainWindow.xaml.cs
             QuestionsforPDF = new List<Equation>(); //sets the list to a blank list
-            Initiaize();
+            Initiaize(); //sets up elements of the page for the user
         }
         //Code to set up Page whenever page is loaded
         public void Initiaize() {
@@ -250,6 +249,7 @@ namespace The_Email_Client {
 
         //runs code depending upon values chosen by user in a combobox
         private void PageSelectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            //if the page is not currently loaded to not run the function
             if (!IsLoaded) {
                 return;
             }
@@ -295,25 +295,31 @@ namespace The_Email_Client {
                 QuestionsforPDF = new List<Equation>(); //clears list of current questions
                 ResetPdfButtons(); //resets pdf buttons to indicate a new pdf can be started
             }
-            else
+            else //error message informing user
                 MessageBox.Show("Please add at least one question to the PDF.", "Error!");
         }
 
-        //currently doesnt work in specific cases such as when a new class is created on the email window. 
+        //selects all classes from the database and puts them into a combobox. 
         public void UpdateClassCombobox() {
+            //sets up connection
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             List<Class> classes = new List<Class>();
             try {
-                cnctDTB.Open();
+                cnctDTB.Open();//opens connecction
+                //sql command to retrieve all classes from the database
                 OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Classes;", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    classes.Add(new Class { ID = Convert.ToInt16(Common.Cleanstr(reader[0])), Name = Common.Cleanstr(reader[1]) });
+                while (reader.Read()) {//loops through each class
+                    //adds the class to the list of classes
+                    classes.Add(new Class { ID = Convert.ToInt16(Common.Cleanstr(reader[0])),
+                        Name = Common.Cleanstr(reader[1]) });
                 }
+                //sets the list of items in the combobox to the list of classes
                 ClassesCombobox.ItemsSource = classes;
             }
-            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-            finally { cnctDTB.Close(); }
+            //displays error to user if there is one
+            catch (Exception err) { MessageBox.Show(err.Message); }
+            finally { cnctDTB.Close(); }//closes connection
         }
     }
 }

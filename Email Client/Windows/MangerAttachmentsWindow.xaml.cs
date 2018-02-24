@@ -1,26 +1,14 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
 using System.Windows;
-using System.Windows.Documents;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Data.OleDb;
-using System.Text.RegularExpressions;
-using System.Windows.Controls;
 
 namespace The_Email_Client
 {
     /// <summary>
-    /// Interaction 
-    /// 
-    /// 
-    /// 
-    /// ic for MangerAttachmentsWindow.xaml
+    /// Manage attachemnts to the email
     /// </summary>
     public class File {
         public string FileName { get; set; }

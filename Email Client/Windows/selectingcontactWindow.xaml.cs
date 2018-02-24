@@ -1,26 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Data.OleDb;
-using System.Globalization;
-using System.Text.RegularExpressions;
-
 
 namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for ContactsManagerWindows.xaml
+    /// used to imput emails and classes into the To, Cc, BCc boxes in the email page
     /// </summary>
-    /// 
     
     public partial class selectingcontactWindow : Window {
         public Object[] SelectedEmails { get; protected set; }

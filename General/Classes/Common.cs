@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.OleDb;
-using System.Globalization;
 using System.Text.RegularExpressions;
-using System.ComponentModel;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace The_Email_Client {
+    /// <summary>
+    /// Class for common functions/variables used throughout the code
+    /// </summary>
     internal static class Common {//Class for common variables and functions between pages/windows
         public static Profiles Profile { get; set; }//Used to locally store users information
 
