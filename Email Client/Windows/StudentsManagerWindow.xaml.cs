@@ -17,8 +17,10 @@ namespace The_Email_Client {
         //constuctor
         public StudentsManagerWindow(Class editableclass) {
             InitializeComponent();
-            KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Enter) 
-                && addcontactButton.IsEnabled) CreateStudent(); };
+            KeyDown += delegate {
+                if (Keyboard.IsKeyDown(Key.Enter)
+                    && addcontactButton.IsEnabled) CreateStudent();
+            };
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             Class_ID = editableclass.ID;//specifies the class window was opened from 
             Updatetable();//updates the table
@@ -29,7 +31,7 @@ namespace The_Email_Client {
             try {
                 cnctDTB.Open(); //opens connection
                 //SQL command that fetches emails of all students currently in the chosen class
-                OleDbCommand cmd = new OleDbCommand($"Select Students.Email FROM Students, Class_Lists WHERE " + 
+                OleDbCommand cmd = new OleDbCommand($"Select Students.Email FROM Students, Class_Lists WHERE " +
                     $"Students.ID = Class_Lists.Student_ID AND Class_ID = { Class_ID };", cnctDTB);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 Classemailslist.Clear();
@@ -86,9 +88,9 @@ namespace The_Email_Client {
             finally { cnctDTB.Close(); } //closes connection
         }
 
-        private void RemovecontactButton_Click(object sender, RoutedEventArgs e) {
+        private void DeletestudentButton_Click(object sender, RoutedEventArgs e) {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the students(s) and remove them from all classes.", "Question?", MessageBoxButton.YesNo);
-            if ( result == MessageBoxResult.Yes) {
+            if (result == MessageBoxResult.Yes) {
                 OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
                 try {
                     cnctDTB.Open();
@@ -97,13 +99,14 @@ namespace The_Email_Client {
                         cmd.ExecuteNonQuery(); //removes the student from the database
                         cnctDTB.Close(); cnctDTB.Open(); //reopens connection
                         cmd.CommandText = $"DELETE FROM Class_Lists WHERE Student_ID = {student.ID};";
+                        cmd.ExecuteNonQuery(); //removes the student from the database
                     }
                 }
-                catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                catch (Exception err) { MessageBox.Show(err.Message); }
                 finally { cnctDTB.Close(); }
                 searchEmailTextBox.Clear();
                 searchNameTextBox.Clear();
-                Updatetable();
+                Updatetable();//updates table
             }
         }
         //Runs a command whenever the search text boxes text is changed
@@ -130,14 +133,14 @@ namespace The_Email_Client {
                 try {
                     cnctDTB.Open();//opens connection
                     //SQL command to add a new student to the database
-                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Students (Name, Email) "+
+                    OleDbCommand cmd = new OleDbCommand($"INSERT INTO Students (Name, Email) " +
                         $"VALUES ('{ nametextbox.Text }','{ emailtextbox.Text }');", cnctDTB);
                     cmd.ExecuteNonQuery();//creates a new student in the database
                 }
                 catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
                 finally { cnctDTB.Close(); } //closes connection
                 emailtextbox.Clear(); searchNameTextBox.Clear();
-                nametextbox.Clear(); searchEmailTextBox.Clear(); 
+                nametextbox.Clear(); searchEmailTextBox.Clear();
                 Updatetable();//Updates table and clears textboxes
             }
         }
@@ -198,10 +201,11 @@ namespace The_Email_Client {
                 }
                 //outputs error to the user
                 catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
-                finally { cnctDTB.Close(); //closes connection
-                Updatetable();//Updates the table
+                finally {
+                    cnctDTB.Close(); //closes connection
+                    Updatetable();//Updates the table
+                }
             }
         }
     }
 }
-

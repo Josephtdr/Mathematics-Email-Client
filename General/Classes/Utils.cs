@@ -227,7 +227,7 @@ namespace The_Email_Client {
         public string Subject { get; set; }
         public string Body { get; set; }
         public List<string> AttachmentNames { get; set; }
-
+        //constructor
         public Email() {
             AttachmentNames = new List<string>();
         }
@@ -284,8 +284,10 @@ namespace The_Email_Client {
                         //Covertes the list of terms into an equation of the correct type, then into a Tuple which is added to the list of tuples 
                         if (dif) tupleList.Add(new Tuple<Equation, bool>(new Diferentiation(tempTermList), iterations == 0 ? true : false));
                         else tupleList.Add(new Tuple<Equation, bool>(new Integration(tempTermList), iterations == 0 ? true : false));
-                        tempTermList = new List<Term>();//resets the current list of terms
-                        tempTermList.Add(term);//adds the term which could not be previously added to this new list of terms
+                        tempTermList = new List<Term> {
+                            term
+                          //resets the current list of terms and
+                        };//adds the term which could not be previously added to this new list of terms
                         length = term.ToString().Length;//adds the length of said term to the length variable
                         ++iterations;//itterates the itterations variable
                     }
@@ -348,7 +350,7 @@ namespace The_Email_Client {
 
         //Function to create a PDF from a list of Equations
         public static bool CreatePDFfromList(List<Equation> EquList, bool email, Class ClasstoEmail) {
-            if (Common.AnyAndNotNull(EquList)) {
+            if (!Common.AnyAndNotNull(EquList)) { //Checks if the list is null or has no entries
                 MessageBox.Show("You cannot create a PDF with an empty list of Equations", "Error!");
                 return false;
             }

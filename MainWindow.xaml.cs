@@ -72,7 +72,7 @@ namespace The_Email_Client {
         //function used to display the last page
         private void ShowPreviousPage() {
             switch (PreviousPage.GetType().ToString()) {
-                case "CalculusPage":
+                case "The_Email_Client.CalculusPage":
                     CalculusPage.Initiaize();
                     break;
             }

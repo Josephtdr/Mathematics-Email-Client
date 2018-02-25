@@ -51,7 +51,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Button x:Name="CreateClassButton" Content="Create&#xD;&#xA;  New " HorizontalAlignment="Right" Height="40" Margin="0,0,112,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="AddcontactButton_Click" IsEnabled="{Binding ElementName=nametextbox,Path=Text.Length}"/>
+        <Button x:Name="CreateClassButton" Content="Create&#xD;&#xA;  New " HorizontalAlignment="Right" Height="40" Margin="0,0,112,0" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="CreateClassButton_Click" IsEnabled="{Binding ElementName=nametextbox,Path=Text.Length}"/>
         <Button x:Name="RemoveClassButton" Content="Remove&#xD;&#xA;Selected" Height="40" VerticalAlignment="Bottom" Width="56" Background="#FFF0F0F0" Click="RemovecontactButton_Click" HorizontalAlignment="Right" Command="{Binding Remove}" CommandParameter="{Binding ElementName=classDataGrid, Path=SelectedItem}">
         <Button.Style>
             <Style TargetType="Button">

@@ -52,7 +52,11 @@ namespace The_Email_Client {
                 FprimeTextBlock.Text = Equ.FprimeEquationToString(); 
                 AnswerBox.Clear(); //clears the users answer for the previous question
                 //if the user is creating a pdf, will add the equation to the list of equations for said pdf
-                if ((string)PdfButton.Content == "PDF Started!") QuestionsforPDF.Add(Equ);
+                if ((string)PdfButton.Content == "PDF Started!") {
+                    QuestionsforPDF.Add(Equ);
+                    //increments the questions counter
+                    QuestionsNum.Content = Convert.ToString((Convert.ToInt16(QuestionsNum.Content) + 1));
+                }
             }
         }
         //Converts an equation to a latex render
@@ -237,7 +241,10 @@ namespace The_Email_Client {
         private void ResetPdfButtons() {
             PdfButton.Content = "Start PDF"; //Indicated user can start another Pdf now
             //Stops user from using buttons relavent to pdf creation
-            CreateEmailPDFButton.IsEnabled = false; EndPdfButton.IsEnabled = false; CreatePDFButton.IsEnabled = false;
+            CreateEmailPDFButton.IsEnabled = false;
+            EndPdfButton.IsEnabled = false;
+            CreatePDFButton.IsEnabled = false;
+            QuestionsNum.Content = "0"; //Resets the question counter
             QuestionsforPDF = new List<Equation>(); //Clears current list
             PdfButton.IsEnabled = true; //enables user to start a new pdf
         }

@@ -24,6 +24,7 @@ namespace The_Email_Client {
         }
 
         private void SendResetEmail() {//Verifys a users email, then sends them a reset code.
+            UserName = UserNameTextBox.Text;//sets this variable to the users username so it can be used later
             //Checks to see if the users entered email corraleates with their entered username.
             if (Encryption.VerifyPasswordorEmail(UserNameTextBox.Text, EmailTextBox.Text, false)) {
                 ResetCode = Constants.Rnd.Next(10000000, 99999999);//Creates a random reset code
@@ -51,7 +52,7 @@ namespace The_Email_Client {
                     ShowenterResetCodePage();
                 }
                 //informs the user if there is an error
-                catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
+                catch (Exception error) { MessageBox.Show(error.Message); }
             }
         }
 

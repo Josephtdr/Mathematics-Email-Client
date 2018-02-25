@@ -11,11 +11,12 @@ namespace The_Email_Client {
     /// </summary>
     public partial class ProfilesWindow : Window {
         protected BindingExpression[] expressions;
+        //Temporarily stores user details from when window first opened as to allow them to restore their details
         private List<string> ProfileResetValues { get; set; }
+        //Used to check if the user has changed their details from their saved values. 
         private List<string> EditableSettings { get; set; }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
+        //Overites OnClosing function to check if user has saved their details before closing
+        protected override void OnClosing(CancelEventArgs e) {
             if (Title == "Profile Window - Unsaved") {
                 switch (MessageBox.Show("Are you sure you want to Quit without Saving?", "Unsaved Data!", MessageBoxButton.YesNo)){
                     case MessageBoxResult.Yes:
@@ -29,8 +30,9 @@ namespace The_Email_Client {
             }
         }
 
-
+        //Constuctor
         public ProfilesWindow() {
+            //allows user to close window with the escape key
             KeyDown += delegate { if (Keyboard.IsKeyDown(Key.Escape)) Close(); };
             
             ProfileResetValues = new List<string>();
@@ -46,7 +48,7 @@ namespace The_Email_Client {
                 Close();
             }
             InitializeComponent();
-
+            //Sets up binding from database
             DataContext = Common.Profile;
             BindingExpression EmailBind = UserEmailBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression UserNameBind = UserUserNameBox.GetBindingExpression(TextBox.TextProperty);
@@ -54,28 +56,32 @@ namespace The_Email_Client {
             BindingExpression PortBind = PortBox.GetBindingExpression(TextBox.TextProperty);
             BindingExpression ServerBind = ServerBox.GetBindingExpression(TextBox.TextProperty);
             expressions = new BindingExpression[] { EmailBind, UserNameBind, NameBind, PortBind, ServerBind};
-
+            //If the user did not sign in with an email, prevents them from changing their password
             if (Common.Profile.Email == Constants.DEFAULTEMAIL)
                 ResetPasswordButton.IsEnabled = false;
         }
 
-
+        //Function to save used details to database
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
+            //updates local user values
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
+            //updates database values
             Common.Profile.UpdateDatabasefromProfile(Common.Profile);
+            //changes values to be inform user saving has ocoured 
             SaveButton.IsEnabled = false; SaveExitButton.IsEnabled = false;
             Title = "Profile Window - Saved";
             EditableSettings.Clear();
             EditableSettings.Add(UserNameBox.Text); EditableSettings.Add(PortBox.Text);
             EditableSettings.Add(ServerBox.Text); EditableSettings.Add(UserUserNameBox.Text);
         }
-        
-        private void SaveExitButton_Click(object sender, RoutedEventArgs e)
-        {
+        //Function to save users details and close the window
+        private void SaveExitButton_Click(object sender, RoutedEventArgs e) {
             Title = "Profile Window - Saved";
+            //updates the local user values
             foreach (BindingExpression bind in expressions) bind.UpdateSource();
+            //updates the database
             Common.Profile.UpdateDatabasefromProfile(Common.Profile);
-            Close();
+            Close();//closes window
         }
         private void TextChanged(object sender, TextChangedEventArgs e) {
             bool defaultvalues = true;
@@ -97,18 +103,19 @@ namespace The_Email_Client {
 
             else ResetButton.IsEnabled = false;
         }
-
+        //Function to change values in text boxes to values when window was opened
         private void ResetButton_Click(object sender, RoutedEventArgs e) {
             UserNameBox.Text = ProfileResetValues[0];
             PortBox.Text = ProfileResetValues[1];
             ServerBox.Text = ProfileResetValues[2];
             UserUserNameBox.Text = ProfileResetValues[3];
         }
-
+        //Function to open the Pasword Reset windows to allow the user to reset their password
         private void ResetPasswordButton_Click(object sender, RoutedEventArgs e) {
             ResettingPasswordWindow ForgotPasswordWindow = new ResettingPasswordWindow();
-            ForgotPasswordWindow.ShowDialog();
+            ForgotPasswordWindow.ShowDialog(); //opens window
+
         }
-    }
+    } 
     
 }

@@ -27,8 +27,9 @@ namespace The_Email_Client {
         private void SignUp() {
             //checks if the user has entered valid information
             if (UserNameAlreadyExists(UserNameTextBox.Text)
-                && NonNullFields()
-                && PasswordsMatch()) {
+                && PasswordsMatch()
+                && Common.Inccorectemailformat(EmailTextBox.Text)
+                && NonNullFields()) {
                 RegisterUser();//funtion to register user
             }
         }

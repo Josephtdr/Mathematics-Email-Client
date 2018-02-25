@@ -1,52 +1,43 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
 using System.Windows;
 using System.Windows.Documents;
 using System.Collections.Generic;
-using System.Net.Mime;
-using System.IO;
 using System.Threading;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Data.OleDb;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using System.Threading.Tasks;
 using System.Linq;
 
-namespace The_Email_Client
-{
+namespace The_Email_Client {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Page to send emails from
     /// </summary>
-    public partial class EmailPage : Page
-    {
+    public partial class EmailPage : Page {
         public List<string> SelectedContacts = new List<string>();
         public List<string> SelectedClasses = new List<string>();
         protected Action ShowPreviousPage { get; set; }
         protected Action ShowHomePage { get; set; }
+        //constructor
         public EmailPage(Action ShowPreviousPage, Action ShowHomePage) {
             this.ShowPreviousPage = ShowPreviousPage;
             this.ShowHomePage = ShowHomePage;
             InitializeComponent();
             MBValueLable.Foreground = Brushes.Green;
         }
-        
-
+        //takes the user to the previous page
         private void BackButton_Click(object sender, RoutedEventArgs e) {
             ShowPreviousPage?.Invoke();
         }
-
+        //takes the user to the home page
         private void HomeButton_Click(object sender, RoutedEventArgs e) {
             ShowHomePage();
         }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            ProfilesWindow settingswindow = new ProfilesWindow();
-            settingswindow.ShowDialog();
+        //opens the profile window
+        private void ProfileButton_Click(object sender, RoutedEventArgs e) {
+            ProfilesWindow profileswindow = new ProfilesWindow();
+            profileswindow.ShowDialog();
         }
-
+        //function to update the MB indicator to the current value
         private void UpdateMBValue(long bytes) {
             int MB = (int)(bytes) / (int)(Math.Pow(1024, 2));
             MBValueLable.Content = MB.ToString();
@@ -62,6 +53,7 @@ namespace The_Email_Client
             UpdateMBValue(Common.TotalFileLength);
         }//opens the manage attachment window 
 
+        //function to clear all attachments
         private void ClearAttachments_Button_Click(object sender, RoutedEventArgs e) {
             Common.Attachments.Clear();
             Common.AttachmentsSource.Clear();
@@ -69,7 +61,7 @@ namespace The_Email_Client
             Common.TotalFileLength = 0;
             UpdateMBValue(Common.TotalFileLength);
         }
-
+        //functions to clear all elements on the page
         private void ClearPage() {
             BCCBox.Clear(); CCBox.Clear(); RecipientsBox.Clear();
             BodyBox.Document.Blocks.Clear(); SubjectBox.Clear(); 
@@ -82,7 +74,7 @@ namespace The_Email_Client
             LoadingGif.Visibility = Visibility.Hidden;
         }   
         //Procedure which runs when the users wishes to send an email
-        private void send_button_Click(object sender, RoutedEventArgs e) {
+        private void Send_button_Click(object sender, RoutedEventArgs e) {
             //Both Used to indicate to the user the email is sending
             StatusLabel.Content = "Sending...";
             LoadingGif.Visibility = Visibility.Visible;
@@ -123,13 +115,13 @@ namespace The_Email_Client
                         while (reader.Read())//loops through each relavent item in the database and adds them to the list of emails
                             RecipientsEmailList.Add(reader[0].ToString());
                     }
-                    catch (Exception err) { System.Windows.MessageBox.Show(err.Message); } //displays error to user
+                    catch (Exception err) { MessageBox.Show(err.Message); } //displays error to user
                     finally { cnctDTB.Close(); } //closes connection to database
                 }
             }
             return RecipientsEmailList.ToArray();//Returns the list of emails in the form of an array
         }
-
+        //function to send a users email
         private void SendEmail(object email) {
             try {
                 ((Email)email).Send();//Sends the users email
@@ -137,22 +129,24 @@ namespace The_Email_Client
                 Dispatcher.Invoke(() => ClearPage()); //calls function in a thread safe manor
             }
             //Informs user in the case of an error
-            catch (Exception error) { System.Windows.Forms.MessageBox.Show(error.Message); }
+            catch (Exception error) { MessageBox.Show(error.Message); }
         }
-
-        private void addemailstotextboxes(Object[] contacts, System.Windows.Controls.TextBox textbox) {
+        //Adds emails to the specified textbox
+        private void Addemailstotextboxes(Object[] contacts, TextBox textbox) {
+            //sets up database connection
             OleDbConnection cnctDTB = new OleDbConnection(Constants.DBCONNSTRING);
             if (contacts != null) {
-                if(contacts[0].GetType() == typeof(Class)) {
-                        foreach (Class Class in contacts)
+                if(contacts[0].GetType() == typeof(Class)) {//checks if the user is adding classes or students
+                        foreach (Class Class in contacts)//loops through each class
                             try {
-                                cnctDTB.Open();
+                                cnctDTB.Open();//opens conenction
+                            //SQL statement to select all emails from the class
                                 OleDbCommand cmd = new OleDbCommand($"SELECT * FROM Classes WHERE Name = '{Class.Name}';", cnctDTB);
                                 OleDbDataReader Reader = cmd.ExecuteReader();
-                                while (Reader.Read())
+                                while (Reader.Read())//adds each email to the specified textbox
                                     textbox.Text += string.IsNullOrWhiteSpace(textbox.Text) ? $"{{{Reader[1].ToString()}}}" : $";{{{Reader[1].ToString()}}}";
-                            }
-                            catch (Exception err) { System.Windows.MessageBox.Show(err.Message); }
+                            }//informs the user in the case of an error
+                            catch (Exception err) { MessageBox.Show(err.Message); }
                             finally { cnctDTB.Close(); }
                 }
                 else {
@@ -161,30 +155,35 @@ namespace The_Email_Client
                 }
             }
         }
-
-        private void addemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)  {
+        //function which is used to add students/classes from database to recipients
+        private void AddemailTO_CC_BCCbuttons_Click(object sender, RoutedEventArgs e)  {
             SelectedContacts.Clear(); SelectedClasses.Clear();
+            //loops through each email and class in the recipients, Cc, and BCc textboxes
             foreach (string email in (((RecipientsBox.Text).Split(';')).Union((CCBox.Text).Split(';'))).Union((BCCBox.Text).Split(';'))) {
-                if (!string.IsNullOrEmpty(email) && !email.Contains("{")) SelectedContacts.Add(email);
-                else if (!string.IsNullOrEmpty(email)) SelectedClasses.Add(email);
+                if(!string.IsNullOrEmpty(email))//makes sure email is not null or empty
+                    //checks if the email is an email or class name and adds it to the apropriate list
+                    if (!email.Contains("{")) SelectedContacts.Add(email);
+                    else SelectedClasses.Add(email);
             }
+            //opens the window for the user to select the classes/emails to add to the correct textbox
             selectingcontactWindow selectingcontactWindow = new selectingcontactWindow(SelectedContacts.ToArray(), SelectedClasses.ToArray());
             selectingcontactWindow.ShowDialog();
 
-            switch ((string)(((System.Windows.Controls.Button)sender).Content)) {
+            //checks which textbox the email/class is being added to and adds it to it
+            switch ((string)(((Button)sender).Content)) {
                 case "To...":
-                    addemailstotextboxes(selectingcontactWindow.SelectedEmails, RecipientsBox);
+                    Addemailstotextboxes(selectingcontactWindow.SelectedRecipients, RecipientsBox);
                     break;
                 case "Cc...":
-                    addemailstotextboxes(selectingcontactWindow.SelectedEmails, CCBox);
+                    Addemailstotextboxes(selectingcontactWindow.SelectedRecipients, CCBox);
                     break;
                 case "BCc...":
-                    addemailstotextboxes(selectingcontactWindow.SelectedEmails, BCCBox);
+                    Addemailstotextboxes(selectingcontactWindow.SelectedRecipients, BCCBox);
                     break;
             }
         }
         //opens a new instance of the ClassManagerWindow
-        private void classmanagerbutton_Click(object sender, RoutedEventArgs e) {
+        private void Classmanagerbutton_Click(object sender, RoutedEventArgs e) {
             ClassManagerWindow classmanagerwindow = new ClassManagerWindow();
             classmanagerwindow.ShowDialog();
             //CalculusPage.UpdateClassCombobox();
